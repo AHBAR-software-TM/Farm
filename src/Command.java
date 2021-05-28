@@ -4,6 +4,9 @@ public enum Command {
     //USERNAMEIN,
     //PASSWORD,
     NOTRECOG,
+    START,
+    LOGOUT,
+    EXIT,
     ;
 
     Object obj;

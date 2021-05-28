@@ -1,14 +1,120 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class ConsoleReader {
 
+    Menu firstMenu =new Menu(null, "first", new Execute() {
+        @Override
+        public void execute(User user) {
+            Command command = getCommandFromConsole();
+            if (command == Command.LOGIN)
+                loginMenu.execute.execute(null);
+            else if (command == Command.SIGNUP){
+                signupMenu.execute.execute(null);
+            }
+            else if (command == Command.NOTRECOG) {
+                System.out.println("Command not recognized. Try again");
+                firstMenu.execute.execute(null);
+            }
+        }
+    });
+    Menu loginMenu = new Menu(firstMenu, "login", new Execute() {
+        @Override
+        public void execute(User user) {
+           // Command command = getCommandFromConsole();
+            User user1 = logIn();
+            if (user == null)
+                firstMenu.execute.execute(user1);
+            else {
+
+                Command command = getCommandFromConsole();
+                do {
+                    if (command == Command.START){
+                        //todo: !!!IMPORTANT!!! add start func here
+                    }
+                    else if (command == Command.NOTRECOG) {
+                        System.out.println("Command not recognized. Try again");
+                        command = getCommandFromConsole();
+                    }
+                    else if (command == Command.LOGOUT){
+                        //todo: !!!IMPORTANT!!! handle logout
+                    }
+                    else if (command == Command.EXIT){
+                        //todo: !!!IMPORTANT!!! handle exit
+                    }
+
+                }while (command == Command.NOTRECOG);
+
+            }
+
+
+
+        }
+    });
+    Menu signupMenu = new Menu(firstMenu, "signup", new Execute() {
+        @Override
+        public void execute(User user) {
+            User user1 = signUp();
+            if (user == null)
+                firstMenu.execute.execute(user1);
+            else {
+
+                Command command = getCommandFromConsole();
+                do {
+                    if (command == Command.START){
+                        //todo: !!!IMPORTANT!!! add start func here
+                    }
+                    else if (command == Command.NOTRECOG) {
+                        System.out.println("Command not recognized. Try again");
+                        command = getCommandFromConsole();
+                    }
+                    else if (command == Command.LOGOUT){
+                        //todo: !!!IMPORTANT!!! handle logout
+                    }
+                    else if (command == Command.EXIT){
+                        //todo: !!!IMPORTANT!!! handle exit
+                    }
+
+                }while (command == Command.NOTRECOG);
+
+            }
+
+
+        }
+    });
+    Menu startMenu = new Menu(null, "start", new Execute() {
+        @Override
+        public void execute(User user) {
+            //todo: !!!IMPORTANT!!! handle start  strat() and etc...
+
+        }
+    });
+    Menu gameMenu= new Menu(null, "game", new Execute() {
+        @Override
+        public void execute(User user) {
+            Mission mission = Main.getMissionInfoByLvl(user.level);
+
+        }
+    });
 
 
 
 
+    boolean submitNewUser(User user){
 
-    //todo:Code this func :  User submitNewUser() for file;
+        try {
+            FileWriter f = new FileWriter("users.txt",true);
+            f.write(Main.gson.toString() + "\n");
+            f.flush();
+            f.close();
+        }catch (IOException e){
+            return false;
+        }
+        return true;
+
+
+    }
 
     boolean isUserSignedBefore(LinkedList<User> users,String enteredUserName){
         for (User u:users){
@@ -21,20 +127,20 @@ public class ConsoleReader {
         return isUserSignedBefore(Main.allUsers,enteredUserName);
     }
 
-    boolean isPasswordCorrect(String password,User user){
-        return password.equals(user.password);
-    }
-
-    /**
-     * gives user obj according to its id. DOESN'T handle undefine user. You should be
-     * sure that the user exists in the database and then use this.
-     * @param password entered password
-     * @param userName the user name
-     * @return returns if the password is correct or not(boolean)
-     */
-    boolean isPasswordCorrect(String password,String userName){
-        return password.equals(getUserByUserName(userName).password);
-    }
+//    boolean isPasswordCorrect(String password,User user){
+//        return password.equals(user.password);
+//    }
+//
+//    /**
+//     * gives user obj according to its id. DOESN'T handle undefine user. You should be
+//     * sure that the user exists in the database and then use this.
+//     * @param password entered password
+//     * @param userName the user name
+//     * @return returns if the password is correct or not(boolean)
+//     */
+//    boolean isPasswordCorrect(String password,String userName){
+//        return password.equals(getUserByUserName(userName).password);
+//    }
     User getUserByUserName(String userName){
         for (User u: Main.allUsers) {
             if (u.userName.equals(userName))
@@ -45,7 +151,8 @@ public class ConsoleReader {
 
 
     Command getCommandFromConsole(){
-        String line = Main.sc.nextLine();
+        String[] fullLine = Main.sc.nextLine().trim().split(" ",0);
+        String line = fullLine[0];
 
 
         switch (line){
@@ -55,6 +162,24 @@ public class ConsoleReader {
 
             case "LOG IN":
                 return Command.LOGIN;
+
+            case "START":
+                try {
+                    Command.START.obj = Integer.getInteger(fullLine[1]);
+                    return Command.START;
+                }
+                catch (Exception r){
+                    return Command.NOTRECOG;
+                }
+
+            case "LOG":
+                if (fullLine[1].equals("OUT"))
+                    return Command.LOGOUT;
+                else return Command.NOTRECOG;
+
+            case "EXIT":
+                return Command.EXIT;
+
 
 
         }
@@ -104,8 +229,11 @@ public class ConsoleReader {
             return null;
         User user = new User(userName,password);
         Main.allUsers.add(user);
-        //todo: !!!IMPORTANT!!! add user in the file users.txt , and handle other things the may be necessary...
-        return user;
+        if (submitNewUser( user )){
+            return user;
+        }
+        System.out.println("User not added to the database due to an error. Please fill form again.");
+        return signUp();
     }
     String getNewUserName(){
 
@@ -199,6 +327,24 @@ public class ConsoleReader {
         return true;
 
     }
+    static class Menu {
+        Menu parent;
+        //Menu [] destination;
+        String name;
+        Execute execute;
+
+        public Menu(Menu parent, String name, Execute execute) {
+            this.parent = parent;
+            this.name = name;
+            this.execute = execute;
+
+        }
+
+
+    }
+
+
+
 
 
 
