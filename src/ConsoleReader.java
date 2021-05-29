@@ -88,12 +88,15 @@ public class ConsoleReader {
         public void execute(User user) {
             //todo: !!!IMPORTANT!!! handle start  strat() and etc...
 
+
         }
     });
     Menu gameMenu= new Menu(null, "game", new Execute() {
         @Override
         public void execute(User user) {
             Mission mission = Main.getMissionInfoByLvl(user.level);
+
+
 
         }
     });
@@ -342,6 +345,7 @@ public class ConsoleReader {
 
 
     }
+
 
 
 
