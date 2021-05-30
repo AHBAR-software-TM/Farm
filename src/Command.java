@@ -7,6 +7,8 @@ public enum Command {
     START,
     LOGOUT,
     EXIT,
+    BUY,
+    PICKUP,
     ;
 
     Object obj;

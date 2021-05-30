@@ -95,6 +95,26 @@ public class ConsoleReader {
         @Override
         public void execute(User user) {
             Mission mission = Main.getMissionInfoByLvl(user.level);
+            World world = new World(mission);
+            Command command = getCommandFromConsole();
+            while (command != Command.EXIT){
+
+                switch (command){
+                    case BUY:
+                        Animal boughtAnimal = world.buy((String) Command.BUY.obj);
+                        if (boughtAnimal == null){
+                            System.out.printf("Animal not bought! Be sure you have enough money.\nMoney: %d",world.coin);
+                            break;
+                        }
+                        System.out.printf("%s bought.\nMoney: %d",boughtAnimal.getClass().getSimpleName(),world.coin);
+                        break;
+
+
+
+                }
+                command = getCommandFromConsole();
+            }
+
 
 
 
@@ -160,30 +180,67 @@ public class ConsoleReader {
 
         switch (line){
             case "SIGNUP":
+            case "signup":
+            case "Signup":
                 //System.out.println("Please enter your preferred username.");
                 return Command.SIGNUP;
 
-            case "LOG IN":
-                return Command.LOGIN;
 
             case "START":
+            case "start":
+            case "Start":
                 try {
                     Command.START.obj = Integer.getInteger(fullLine[1]);
                     return Command.START;
                 }
                 catch (Exception r){
+                    Command.START.obj = null;
                     return Command.NOTRECOG;
                 }
 
             case "LOG":
-                if (fullLine[1].equals("OUT"))
+            case "log":
+            case "Log":
+                if (fullLine[1].equalsIgnoreCase("OUT"))
                     return Command.LOGOUT;
+                else if (fullLine[1].equalsIgnoreCase("IN"))
+                    return Command.LOGIN;
                 else return Command.NOTRECOG;
 
             case "EXIT":
+            case "exit":
+            case "Exit":
                 return Command.EXIT;
 
+            case "Buy":
+            case "BUY":
+            case "buy":
+                try {
+                    Command.BUY.obj = fullLine[1];
+                    return Command.BUY;
+                }
+                catch (Exception e){
+                    Command.BUY.obj = null;
+                    System.out.println("Wrong syntax.");
+                    return Command.NOTRECOG;
+                }
 
+            case "PICKUP":
+            case "Pickup":
+            case "pickup":
+                try {
+                    int[] coord = new int[2];
+                    coord[0]= Integer.parseInt(fullLine[1]);
+                    coord[1]= Integer.parseInt(fullLine[2]);
+
+                    Command.PICKUP.obj = coord;
+                    return Command.PICKUP;
+                }
+                catch (Exception e){
+                    Command.PICKUP.obj = null;
+                    System.out.println("Wrong syntax.");
+                    return Command.NOTRECOG;
+                }
 
         }
 
@@ -345,6 +402,9 @@ public class ConsoleReader {
 
 
     }
+
+
+    // World related commands
 
 
 
