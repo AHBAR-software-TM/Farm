@@ -1,10 +1,10 @@
 public class Map {
 
     Map(){
-        this.is_grass=false;
+        this.is_grass=0;
     }
 
-    public boolean is_grass;
+    public int is_grass;
 
 
 }
