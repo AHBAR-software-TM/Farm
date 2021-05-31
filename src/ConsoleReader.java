@@ -109,6 +109,26 @@ public class ConsoleReader {
                         System.out.printf("%s bought.\nMoney: %d",boughtAnimal.getClass().getSimpleName(),world.coin);
                         break;
 
+                    case PICKUP:
+                        world.pickUp(((int[]) Command.PICKUP.obj)[0],((int[]) Command.PICKUP.obj)[1]);
+                    break;
+
+                    case WELL_CHARGE:
+                        world.wellCharge();
+                        break;
+
+                    case PLANT:
+                        if(world.plant(((int[]) Command.PLANT.obj)[0],((int[]) Command.PLANT.obj)[1]))
+                        {
+                            System.err.println(("Planted on: "+ ((int[]) Command.PLANT.obj)[0])
+                                 +    ((int[]) Command.PLANT.obj)[1]);
+                        } else {
+                            System.out.println("Well was empty.");
+                        }
+                        break;
+
+
+
 
 
                 }
@@ -241,6 +261,50 @@ public class ConsoleReader {
                     System.out.println("Wrong syntax.");
                     return Command.NOTRECOG;
                 }
+
+            case "WELL":
+            case "Well":
+            case "well":
+                return Command.WELL_CHARGE;
+
+
+            case "PLANT":
+            case "Plant":
+            case "plant":
+                try {
+                    int[] coord = new int[2];
+                    coord[0]= Integer.parseInt(fullLine[1]);
+                    coord[1]= Integer.parseInt(fullLine[2]);
+
+                    Command.PLANT.obj = coord;
+                    return Command.PLANT;
+                }
+                catch (Exception e){
+                    Command.PLANT.obj = null;
+                    System.out.println("Wrong syntax.");
+                    return Command.NOTRECOG;
+                }
+
+
+            case "TRUCK":
+            case "Truck":
+            case "truck":
+                try {
+                    int[] coord = new int[2];
+                    coord[0]= Integer.parseInt(fullLine[1]);
+                    coord[1]= Integer.parseInt(fullLine[2]);
+
+                    Command.COROAS.obj = coord;
+                    return Command.COROAS;
+                }
+                catch (Exception e){
+                    Command.COROAS.obj = null;
+                    System.out.println("Wrong syntax or no ");
+                    return Command.NOTRECOG;
+                }
+
+
+            //todo : string index change
 
         }
 
@@ -406,7 +470,8 @@ public class ConsoleReader {
 
     // World related commands
 
-
+    //todo: handle removeing from map or lists
+    //todo: add map for every animal while comming in
 
 
 

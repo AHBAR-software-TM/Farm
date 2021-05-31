@@ -9,6 +9,9 @@ public enum Command {
     EXIT,
     BUY,
     PICKUP,
+    WELL_CHARGE,
+    PLANT,
+        COROAS,
     ;
 
     Object obj;
