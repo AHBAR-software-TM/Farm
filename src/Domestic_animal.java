@@ -32,7 +32,7 @@ public abstract class Domestic_animal extends Animal {
     void eat(int grass){
         //todo
     }
-     void huted(){
+     void hunted(){
         //todo
          // will be executed by map
          // shouldnt be in update

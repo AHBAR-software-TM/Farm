@@ -18,10 +18,9 @@ public class Map {
 //        this.animalsInside.remove(animal);
 //    }
 
-    public LinkedList<Product> pickup() {
-        LinkedList<Product> picked = (LinkedList<Product>) productsInside.clone();
-        this.productsInside.clear();
-        return picked;
+    public LinkedList<Product> pickup(ٌٌWorld world) {
+        world.pickUp(this);
+
     }
 
 //    public void update(boolean eat, LinkedList<Product> produced) {
