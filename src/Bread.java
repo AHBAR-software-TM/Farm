@@ -6,4 +6,5 @@ public class Bread extends Product{
         this.disappear_time=6;
     }
 
+
 }

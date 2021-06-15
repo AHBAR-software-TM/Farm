@@ -1,9 +1,7 @@
 public abstract class Domestic_animal extends Animal{
     
-    public abstract void produce(int a);
-    
+    public abstract Product produce();
     public int price;
-    
     public int life;
 
     @Override
