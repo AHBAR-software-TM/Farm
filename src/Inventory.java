@@ -31,4 +31,26 @@ public class Inventory {
         }
         return false;
     }
+    Product getProduct(String productName){
+        Product goingOut=null;
+        for (Product p: products){
+            if(p.getClass().getSimpleName().equals(productName)){
+                goingOut = p;
+                products.remove(p);
+                break;
+            }
+        }
+        return goingOut;
+    }
+    Wild_animal getWildAnimal(String animalName){
+        Wild_animal goingOut=null;
+        for (Wild_animal w: wild_animals){
+            if(w.getClass().getSimpleName().equals(animalName)){
+                goingOut = w;
+                wild_animals.remove(w);
+                break;
+            }
+        }
+        return goingOut;
+    }
 }

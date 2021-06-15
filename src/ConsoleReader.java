@@ -103,10 +103,10 @@ public class ConsoleReader {
                     case BUY:
                         Animal boughtAnimal = world.buy((String) Command.BUY.obj);
                         if (boughtAnimal == null){
-                            System.out.printf("Animal not bought! Be sure you have enough money.\nMoney: %d",world.coin);
+                            System.out.printf("Animal not bought! Be sure you have enough money.\nMoney: %d\n",world.coin);
                             break;
                         }
-                        System.out.printf("%s bought.\nMoney: %d",boughtAnimal.getClass().getSimpleName(),world.coin);
+                        System.out.printf("%s bought.\nMoney: %d\n",boughtAnimal.getClass().getSimpleName(),world.coin);
                         break;
 
                     case PICKUP:
@@ -126,6 +126,35 @@ public class ConsoleReader {
                             System.out.println("Well was empty.");
                         }
                         break;
+
+                    case TRUCKLOAD:
+                        String itemName = ((String) Command.TRUCKLOAD.obj);
+                        if(!world.addToTruck(itemName)){
+                            System.out.printf("Not enough space in truck, Current space: %s\n",world.truck.getEmpty());
+                        }
+                        break;
+
+                    case TRUCKUNLOAD:
+                        String itemName2 = ((String) Command.TRUCKLOAD.obj);
+                        if(!world.removeFromTruck(itemName2)){
+                            System.out.printf("Not enough space in inventory, Current space: %s\n",
+                                    (world.inventory.size-world.inventory.getFilledVolume()));
+                        }
+                        break;
+
+                    case TRUCKGO:
+                        world.truck.go();
+                        break;
+
+                    case OPENWORK:
+                        Workshop w = world.openWorkShop(((String) Command.OPENWORK.obj));
+                        if (w!=null){
+                            System.out.printf("%s successfully created.\n",w.getClass().getSimpleName());
+                        }
+                        break;
+
+
+
 
 
 
@@ -290,18 +319,49 @@ public class ConsoleReader {
             case "Truck":
             case "truck":
                 try {
-                    int[] coord = new int[2];
-                    coord[0]= Integer.parseInt(fullLine[1]);
-                    coord[1]= Integer.parseInt(fullLine[2]);
+                    switch (fullLine[1]){
+                        case "LOAD":
+                        case "load":
+                        case "Load":
+                            Command.TRUCKLOAD.obj = fullLine[2];
+                            return Command.TRUCKLOAD;
 
-                    Command.COROAS.obj = coord;
-                    return Command.COROAS;
+                        case "Unload":
+                        case "UNLOAD":
+                        case "unload":
+                            Command.TRUCKUNLOAD.obj = fullLine[2];
+                            return Command.TRUCKUNLOAD;
+
+                        case "GO":
+                        case "Go":
+                        case "go":
+                            Command.TRUCKGO.obj = fullLine[2];
+                            return Command.TRUCKGO;
+                    }
+
                 }
                 catch (Exception e){
-                    Command.COROAS.obj = null;
-                    System.out.println("Wrong syntax or no ");
+                    Command.TRUCKLOAD.obj = null;
+                    Command.TRUCKUNLOAD.obj =null;
+                    Command.TRUCKGO.obj = null;
+                    System.out.println("Wrong syntax");
                     return Command.NOTRECOG;
                 }
+                break;
+
+            case "WORK":
+            case "Work":
+            case "work":
+                try {
+                    Command.OPENWORK.obj = fullLine[1];
+                    return Command.OPENWORK;
+                }
+                catch (Exception e){
+                    Command.OPENWORK.obj = null;
+                    System.out.println("Wrong syntax.");
+                    return Command.NOTRECOG;
+                }
+
 
 
             //todo : string index change

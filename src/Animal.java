@@ -5,5 +5,6 @@ public abstract class Animal {
     Map currentlyIn;
     public int x;
     public int y;
+    boolean wannaMove;
 
 }

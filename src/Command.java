@@ -11,7 +11,10 @@ public enum Command {
     PICKUP,
     WELL_CHARGE,
     PLANT,
-        COROAS,
+    TRUCKLOAD,
+    TRUCKUNLOAD,
+    TRUCKGO,
+    OPENWORK,
     ;
 
     Object obj;
