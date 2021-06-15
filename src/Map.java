@@ -18,8 +18,8 @@ public class Map {
 //        this.animalsInside.remove(animal);
 //    }
 
-    public LinkedList<Product> pickup(ٌٌWorld world) {
-        world.pickUp(this);
+    public void pickup(World world) {
+         world.pickUp(this);
 
     }
 

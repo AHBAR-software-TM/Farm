@@ -181,23 +181,16 @@ public class World {
 
 
     }
-    boolean checkToPickup(int i, int j){
+
+    void pickUp(int i, int j) {
         if (i > 6 || i < 1 || j > 6 || j < 1) {
             System.out.println("Invalid location!");
-            return false;
+            return;
         }
         if (worldMap[i - 1][j - 1].productsInside.isEmpty()) {
             System.out.println("Location is empty.");
-            return false;
-        }
-        return true;
-    }
-
-    void pickUp(int i, int j) {
-
-        if (!checkToPickup(i,j))
             return;
-
+        }
         for (Product p : worldMap[i - 1][j - 1].productsInside) {
             if (inventory.add(p)) {
 
@@ -217,7 +210,7 @@ public class World {
 
     }
     void pickUp(Map map){
-        for (Product p :map.productsInside) {
+        for (Product p : map.productsInside) {
             if (inventory.add(p)) {
 
                 map.productsInside.remove(p);
@@ -229,11 +222,11 @@ public class World {
                 }
 
                 System.out.printf("%s moved to inventory.\n", p.getClass().getSimpleName());
+            } else {
+                System.out.printf("Not enough space for %s", p.getClass().getSimpleName());
             }
         }
     }
-
-
 
     boolean wellCharge() {
         boolean ans = well.charge();
