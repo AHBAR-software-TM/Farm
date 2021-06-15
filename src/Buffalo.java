@@ -2,16 +2,19 @@ public class Buffalo extends Domestic_animal{
 
 
     Buffalo(){
-        this.milk=0;
         this.life=100;
         this.price=400;
     }
 
 
-    public int milk;
 
     @Override
-    public void produce(int level) {
-        this.milk+=level;
+    public Product produce() { return new Milk(); }
+
+    public Product update(){
+        //todo
+        //if some given time passes it returns the product
+        return new Milk();
+        //else return null
     }
 }

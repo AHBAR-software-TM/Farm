@@ -2,15 +2,19 @@ public class Hen extends Domestic_animal{
 
 
     Hen(){
-        this.egg=0;
         this.life=100;
         this.price=100;
     }
 
-    public int egg;
 
     @Override
-    public void produce(int level) {
-        this.egg+=level;
+    public Product produce(){ return new Egg(); }
+
+    public Product update(){
+        //todo
+        //if some given time passes it returns the product
+        return new Egg();
+        //else return null
+
     }
 }
