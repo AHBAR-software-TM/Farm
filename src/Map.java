@@ -56,7 +56,7 @@ public class Map {
     void update(){
         //Wild_animal w=null;
 
-        productsInside.removeIf(p -> !p.update());
+        productsInside.removeIf(Product::update);
 
         giveFood();
 

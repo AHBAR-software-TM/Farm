@@ -12,9 +12,6 @@ public abstract class Product implements Cloneable{
 
     boolean update(){
         currentTime++;
-        if(currentTime==disappear_time){
-            return false;
-        }
-        return true;
+        return currentTime >= disappear_time;
     }
 }
