@@ -71,6 +71,10 @@ public class World {
         for (Entry<String, Integer> entry : mission.animalTask.entrySet()) {
             boughtTillNow.put(entry.getKey(), 0);
         }
+        for (int i=0;i<6;i++){
+            for (int j=0;j<6;j++)
+                worldMap[i][j]=new Map(this);
+        }
 
     }
 

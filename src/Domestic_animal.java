@@ -1,4 +1,4 @@
-public abstract class Domestic_animal extends Animal {
+public abstract class Domestic_animal extends Animal implements Comparable<Domestic_animal>{
 
     public abstract Product produce();
 
@@ -70,11 +70,9 @@ public abstract class Domestic_animal extends Animal {
 
     }
 
-    Product update(int grass) {
-        eat(grass);
+    public Product update() {
         life -= 10;
         if (life <= 0)
-            //todo: put hunted here
             return new Dead();
         tillProduce++;
         if (tillProduce == PRODUCE_TIME) {
@@ -86,12 +84,23 @@ public abstract class Domestic_animal extends Animal {
         }
         return null;
     }
-    void eat(int grass){
-        //todo
+    void eat(){
+        life=110;
     }
-     void hunted(World world){
-        //todo:delete from world and other arrays
-         // will be executed by map
-         // shouldnt be in update
-     }
+    void hunted(World world){
+        //todo
+        // will be executed by map
+        // shouldnt be in update
+        world.allDomestics.remove(this);
+        Integer count = world.boughtTillNow.get(getClass().getSimpleName());
+        if(count != null){
+            world.boughtTillNow.replace(getClass().getSimpleName(),--count);
+        }
+        this.currentlyIn.animalsInside.remove(this);
+    }
+
+    @Override
+    public int compareTo(Domestic_animal a) {
+        return Integer.compare((this.life), a.life);
+    }
 }
