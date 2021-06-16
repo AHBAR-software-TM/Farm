@@ -6,7 +6,7 @@ public class World {
     Mission mission;
     int time = Integer.MIN_VALUE;
 
-    Map[][] worldMap = new Map[6][6];
+    public static Map[][] worldMap = new Map[6][6];
     LinkedList<Animal> allDomestics = new LinkedList<>();
 
     //LinkedList<Product> inventory = new LinkedList<>();

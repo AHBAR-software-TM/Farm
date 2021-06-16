@@ -1,4 +1,3 @@
-
 import java.util.LinkedList;
 
 public class Map {
@@ -13,10 +12,9 @@ public class Map {
     LinkedList<Product> productsInside = new LinkedList<>();
 
 
-//    public void where_go(Animal animal, int[] location) {
-//        Game_Processor.map[location[1]][location[2]].animalsInside.add(animal);
-//        this.animalsInside.remove(animal);
-//    }
+    public void move(Map[][] map) {
+        //todo
+   }
 
     public void pickup(World world) {
          world.pickUp(this);
@@ -56,7 +54,8 @@ public class Map {
     }
     boolean hunt(){
 
-    //todo
+        //todo
+        return true;
     }
 
 
