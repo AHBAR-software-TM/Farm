@@ -18,6 +18,7 @@ public abstract class Domestic_animal extends Animal {
         eat(grass);
         life -= 10;
         if (life <= 0)
+            //todo: put hunted here
             return new Dead();
         tillProduce++;
         if (tillProduce == PRODUCE_TIME) {
@@ -32,8 +33,8 @@ public abstract class Domestic_animal extends Animal {
     void eat(int grass){
         //todo
     }
-     void huted(){
-        //todo
+     void hunted(World world){
+        //todo:delete from world and other arrays
          // will be executed by map
          // shouldnt be in update
      }
