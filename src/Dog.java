@@ -10,4 +10,12 @@ public class Dog extends Animal{
     public void walk() {
         //walk random
     }
+    void hunted(World world){
+
+        Integer count = world.boughtTillNow.get("Dog");
+        if(count != null){
+            world.boughtTillNow.replace("Dog",--count);
+        }
+        this.currentlyIn.animalsInside.remove(this);
+    }
 }
