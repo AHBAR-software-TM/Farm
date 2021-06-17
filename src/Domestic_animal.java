@@ -9,33 +9,33 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
     //Product productToBeConed; // :))))))
 
     @Override
-    public Dir move(Map[][] map,int x,int y){
+    public Dir move(Map[][] map,int x,int y) {
 
         //finding nearest grass
-        int X=0;
-        int Y=0;
-        int min=0;
+        int X = 0;
+        int Y = 0;
+        int min = 0;
         Dir direction;
-        boolean is_grass_on_map=false;
+        boolean is_grass_on_map = false;
         //initializing min
-        for(int i=0 ; i<6 && !is_grass_on_map ; i++){
-            for(int j=0 ; j<6 && !is_grass_on_map ; j++){
-                if(map[i][j].grass>0) {
-                    min=Math.abs(i-x)+Math.abs(j-y);
-                    is_grass_on_map=true;
-                    X=i;
-                    Y=j;
+        for (int i = 0; i < 6 && !is_grass_on_map; i++) {
+            for (int j = 0; j < 6 && !is_grass_on_map; j++) {
+                if (map[i][j].grass > 0) {
+                    min = Math.abs(i - x) + Math.abs(j - y);
+                    is_grass_on_map = true;
+                    X = i;
+                    Y = j;
                 }
             }
         }
-        if(is_grass_on_map) {
+        if (is_grass_on_map) {
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 6; j++) {
-                    int m = Math.abs(i-x) + Math.abs(j-y);
-                    if (m<min && map[i][j].grass > 0){
-                        min=m;
-                        X=i;
-                        Y=j;
+                    int m = Math.abs(i - x) + Math.abs(j - y);
+                    if (m < min && map[i][j].grass > 0) {
+                        min = m;
+                        X = i;
+                        Y = j;
                     }
                 }
             }
@@ -43,49 +43,49 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
             //finding direction
             //returns null if current location has grass
             //(0,0) location is on top left of screen
-            if(X>x && Y>y){
-                double d=Math.random();
-                if(d<0.5) direction=Dir.RIGHT;
-                else direction=Dir.DOWN;
-            }
-            else if(X>x && Y<y){
-                double d=Math.random();
-                if(d<0.5) direction=Dir.RIGHT;
-                else direction=Dir.UP;
-            }
-            else if(X<x && Y>y){
-                double d=Math.random();
-                if(d<0.5) direction=Dir.LEFT;
-                else direction=Dir.DOWN;
-            }
-            else if(X<x && Y<y){
-                double d=Math.random();
-                if(d<0.5) direction=Dir.LEFT;
-                else direction=Dir.UP;
-            }
-            else if(X==x && Y>y)
-                direction=Dir.DOWN;
+            if (X > x && Y > y) {
+                double d = Math.random();
+                if (d < 0.5) direction = Dir.RIGHT;
+                else direction = Dir.DOWN;
+            } else if (X > x && Y < y) {
+                double d = Math.random();
+                if (d < 0.5) direction = Dir.RIGHT;
+                else direction = Dir.UP;
+            } else if (X < x && Y > y) {
+                double d = Math.random();
+                if (d < 0.5) direction = Dir.LEFT;
+                else direction = Dir.DOWN;
+            } else if (X < x && Y < y) {
+                double d = Math.random();
+                if (d < 0.5) direction = Dir.LEFT;
+                else direction = Dir.UP;
+            } else if (X == x && Y > y)
+                direction = Dir.DOWN;
 
-            else if(X==x && Y<y)
-                direction=Dir.UP;
+            else if (X == x && Y < y)
+                direction = Dir.UP;
 
-            else if(X>x && Y==y)
-                direction=Dir.RIGHT;
+            else if (X > x && Y == y)
+                direction = Dir.RIGHT;
 
-            else if(X<x && Y==y)
-                direction=Dir.LEFT;
-
-            else //if(X==x && Y==y)
-                direction=null;
+            else if (X < x && Y == y)
+                direction = Dir.LEFT;
+            //if(X==x && Y==y)
+            else if (this.life>50)
+                direction = random_move(map,x,y);
+            else
+                direction = null;
 
 
             return direction;
         }
 
-        //returns null if the maps have no grass
-        else return null;
-
+        //move random if the maps have no grass
+        // (0,0) location is on top left of screen
+        else return random_move(map, x, y);
     }
+
+
 
     public Product update() {
         life -= 10;

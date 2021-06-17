@@ -81,8 +81,9 @@ public class Cat extends Animal{
             return direction;
         }
 
-        //returns null if the maps have no product
-        else return null;
+        //move random if the maps have no grass
+        // (0,0) location is on top left of screen
+        else return random_move(map,x,y);
 
     }
 
