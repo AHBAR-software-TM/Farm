@@ -41,10 +41,10 @@ public class Map {
             }
             else {
                 switch (direction) {
-                    case RIGHT -> map[x + 1][y].putAnimalIn(a);
-                    case LEFT -> map[x - 1][y].putAnimalIn(a);
-                    case UP -> map[x][y - 1].putAnimalIn(a);
-                    case DOWN -> map[x][y + 1].putAnimalIn(a);
+                    case RIGHT : map[x + 1][y].putAnimalIn(a); break;
+                    case LEFT : map[x - 1][y].putAnimalIn(a); break;
+                    case UP : map[x][y - 1].putAnimalIn(a); break;
+                    case DOWN : map[x][y + 1].putAnimalIn(a); break;
                 }
             }
 
@@ -97,12 +97,14 @@ public class Map {
 
 
             if(a instanceof Wild_animal){
-                //w = ((Wild_animal) a);
-                if (!this.hunt()){
-                    this.animalsInside.remove(a);
-                    //w = null;
-                    continue;
-                }
+                Wild_animal w = ((Wild_animal) a);
+                w.update();
+                if(!w.caged)
+                    if (!this.hunt()){
+                        this.animalsInside.remove(a);
+                        //w = null;
+                        continue;
+                    }
             }
 
 

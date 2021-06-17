@@ -4,5 +4,11 @@ public class IcecreamFactory extends Workshop{
         this.level=1;
         this.build_price=550;
         this.produce_time=7;
+        resourceType = "PackedMilk";
+    }
+
+    @Override
+    Product produce() {
+        return new Icecream();
     }
 }

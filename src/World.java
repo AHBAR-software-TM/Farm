@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
@@ -6,7 +7,7 @@ public class World {
     Mission mission;
     int time = Integer.MIN_VALUE;
 
-    public static Map[][] worldMap = new Map[6][6];
+    public Map[][] worldMap = new Map[6][6];
     LinkedList<Animal> allDomestics = new LinkedList<>();
 
     //LinkedList<Product> inventory = new LinkedList<>();
@@ -30,7 +31,19 @@ public class World {
     //todo: !!!IMPORTANT!!! check if animal is dead or alive
     void update() {
 
-        System.out.printf("%d time units passed.\n", getTime());
+        System.out.printf("%d time units passed since start.\n", getTime());
+
+        workshops.forEach( W ->  {
+            Product p = W.update();
+            if(p!=null){
+                int i = (int)(Math.random()*6 %6);
+                int j = (int)(Math.random()*6 %6);
+                worldMap[i][j].productsInside.add(p);
+                if (W.level == 2){
+                    worldMap[i][j].productsInside.add(W.produce());
+                }
+            }
+        });
 
         for (Map[] mapArray : worldMap) {
             for (Map m : mapArray) {
@@ -39,26 +52,46 @@ public class World {
             }
         }
 
-        workshops.forEach(Workshop::update);
+
 
         Wild_animal attacker = WildAttack.get(getTime());
         if (attacker != null) {
             worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6) % 6].animalsInside.add(attacker);
         }
 
-        printMapGrass();
 
-        taskAccompPrint();
 
-        //todo: !!!IMPORTANT!!! print the other mentioned thing (page:9)
 
 
         time++;
 
+        move();
+
     }
 
-    boolean didUserWin(Mission mission) {
-        return true; //todo: !!!important!!!! add winning according to mission task
+    int didUserWin() {
+        //return 0 if not, return 1 if won, return 2 if won fast
+
+        //boolean doneIt = true;
+        for (Entry<String,Integer> ent: mission.animalTask.entrySet()){
+            if(boughtTillNow.get(ent.getKey())<ent.getValue()){
+                return 0;
+            }
+        }
+        for (Entry<String,Integer> ent: mission.productionTask.entrySet()){
+            if(producedTillNow.get(ent.getKey())<ent.getValue())
+               return 0;
+        }
+
+        if (coin < mission.coinTask)
+            return 0;
+
+        if (mission.MaximumTime < time)
+            return 1;
+        return 2;
+
+
+        //return true; //todo: !!!important!!!! add winning according to mission task
     }
 
     World(Mission mission) {
@@ -406,4 +439,46 @@ public class World {
 
         return w;
     }
+
+    Workshop getWorkshop(String workName){
+        //Workshop w = null;
+        for (Workshop W : workshops){
+            if (workName.equalsIgnoreCase(W.getClass().getSimpleName()))
+                return W;
+        }
+        return null;
+    }
+
+    void printProducts(){
+        for (int i = 0;i<6;i++)
+            for (int j = 0;j<6;j++)
+                for (Product p : worldMap[i][j].productsInside)
+                    System.out.printf("%s [%d %d]\n", p.getClass().getSimpleName(), i,j);
+
+
+    }
+
+    void printAnimals(){
+        for (int i = 0;i<6;i++)
+            for (int j = 0;j<6;j++)
+                for (Animal a : worldMap[i][j].animalsInside)
+                    if (a instanceof Wild_animal)
+                        System.out.printf("%s %d [%d %d]\n",
+                                a.getClass().getSimpleName(),
+                                ((Wild_animal) a).cageRequired-((Wild_animal) a).cage,
+                                i,j);
+                    else if(a instanceof Domestic_animal)
+                        System.out.printf("%s %d%% [%d %d]\n",
+                                a.getClass().getSimpleName(),((Domestic_animal) a).life,i,j);
+                    else System.out.printf("%s [%d %d]\n",
+                                a.getClass().getSimpleName(),i,j);
+    }
+
+    void move(){
+        for (int i = 0;i<6;i++)
+            for (int j = 0;j<6;j++)
+                worldMap[i][j].move(worldMap,i,j);
+    }
+
+
 }

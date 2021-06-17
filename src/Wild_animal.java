@@ -5,15 +5,57 @@ public abstract class Wild_animal extends Animal {
     int volume;
     int speed;
     int disappear_time;
+    int cagedTime=0;
     int cage;
     boolean caged;
-    public abstract boolean cage();
+    boolean isCagePutThisTurn=false;
+    int cageRequired;
+
+    public void uncage() {
+        if (!caged){
+            this.cage -= 1;
+        }
+    }
+
+    public boolean cage() {
+        isCagePutThisTurn=true;
+        this.cage += 1;
+        if (this.cage == cageRequired){
+            caged = true;
+            cagedTime=0;
+            return true;
+
+        }
+        return false;
+
+    }
 
     @Override
     public Dir move(Map[][] map,int x,int y){
         //walk random
         // (0,0) location is on top left of screen
         return random_move(map,x,y);
+    }
+    public Product update(){
+        if (!caged){
+            if (isCagePutThisTurn){
+                isCagePutThisTurn=false;
+            }
+            else {
+                uncage();
+            }
+            return null;
+        }
+        else {
+            cagedTime++;
+            if (cagedTime==disappear_time){
+                caged=false;
+                cagedTime=0;
+                cage=0;
+                isCagePutThisTurn = false;
+            }
+        }
+        return null;
     }
 
 }

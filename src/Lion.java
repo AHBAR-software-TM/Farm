@@ -7,6 +7,7 @@ public class Lion extends Wild_animal{
         this.disappear_time=5;
         this.cage=0;
         this.caged=false;
+        cageRequired=3;
     }
     public boolean cage(){
         this.cage+=1;
