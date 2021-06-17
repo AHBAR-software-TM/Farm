@@ -14,8 +14,43 @@ public class Map {
     LinkedList<Product> productsInside = new LinkedList<>();
 
 
-    public void move(Map[][] map) {
-        //todo
+    public void move(Map[][] map,int x,int y) {
+
+        for(Animal a:animalsInside) {
+            Dir direction=a.move(map,x,y);
+            if(a instanceof Tiger) {
+                switch (direction) {
+                    case RIGHT:
+                        if(map[x+1][y].hunt()) map[x + 2][y].putAnimalIn(a);
+                        else animalsInside.remove(a);
+                        break;
+                    case LEFT:
+                        if(map[x-1][y].hunt()) map[x - 2][y].putAnimalIn(a);
+                        else animalsInside.remove(a);
+                        break;
+                    case UP:
+                        if(map[x][y-1].hunt()) map[x][y - 2].putAnimalIn(a);
+                        else animalsInside.remove(a);
+                        break;
+                    case DOWN:
+                        if(map[x+1][y].hunt()) map[x][y + 2].putAnimalIn(a);
+                        else animalsInside.remove(a);
+                        break;
+
+                }
+            }
+            else {
+                switch (direction) {
+                    case RIGHT -> map[x + 1][y].putAnimalIn(a);
+                    case LEFT -> map[x - 1][y].putAnimalIn(a);
+                    case UP -> map[x][y - 1].putAnimalIn(a);
+                    case DOWN -> map[x][y + 1].putAnimalIn(a);
+                }
+            }
+
+
+        }
+
    }
 
     public void pickup() {
@@ -142,11 +177,6 @@ public class Map {
                 return true;
         }
         return false;
-    }
-    boolean hunt(){
-
-        //todo
-        return true;
     }
 
 

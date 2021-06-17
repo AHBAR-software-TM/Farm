@@ -40,7 +40,8 @@ public class Cat extends Animal{
             }
 
             //finding direction
-            // (0,0) location is on top left of screen
+            //returns null if current location has product
+            //(0,0) location is on top left of screen
             if(X>x && Y>y){
                 double d=Math.random();
                 if(d<0.5) direction=Dir.RIGHT;
@@ -56,15 +57,31 @@ public class Cat extends Animal{
                 if(d<0.5) direction=Dir.LEFT;
                 else direction=Dir.DOWN;
             }
-            else {
+            else if(X<x && Y<y){
                 double d=Math.random();
                 if(d<0.5) direction=Dir.LEFT;
                 else direction=Dir.UP;
             }
+            else if(X==x && Y>y)
+                direction=Dir.DOWN;
+
+            else if(X==x && Y<y)
+                direction=Dir.UP;
+
+            else if(X>x && Y==y)
+                direction=Dir.RIGHT;
+
+            else if(X<x && Y==y)
+                direction=Dir.LEFT;
+
+            else //if(X==x && Y==y)
+                direction=null;
+
 
             return direction;
         }
 
+        //returns null if the maps have no product
         else return null;
 
     }
