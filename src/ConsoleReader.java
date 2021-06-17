@@ -624,8 +624,6 @@ public class ConsoleReader {
 
     // World related commands
 
-    //todo: handle removeing from map or lists
-    //todo: add map for every animal while comming in
 
 
 }

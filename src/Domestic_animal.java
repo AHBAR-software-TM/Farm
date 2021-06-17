@@ -105,9 +105,6 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
         life=110;
     }
     void hunted(World world){
-        //todo
-        // will be executed by map
-        // shouldnt be in update
         world.allDomestics.remove(this);
         Integer count = world.boughtTillNow.get(getClass().getSimpleName());
         if(count != null){

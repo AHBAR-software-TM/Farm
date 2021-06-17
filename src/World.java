@@ -27,8 +27,7 @@ public class World {
     Truck truck = new Truck();
 
 
-    //todo: !!!IMPORTANT!!! handle production from animal and workshop to map
-    //todo: !!!IMPORTANT!!! check if animal is dead or alive
+
     void update() {
 
         System.out.printf("%d time units passed since start.\n", getTime());
@@ -90,8 +89,6 @@ public class World {
             return 1;
         return 2;
 
-
-        //return true; //todo: !!!important!!!! add winning according to mission task
     }
 
     World(Mission mission) {
@@ -129,7 +126,7 @@ public class World {
         System.out.println("+-----+-----+-----+-----+-----+-----+");
     }
 
-    ///todo: !!!IMPORTANT!!! handle task accomplishment change
+
     void taskAccompPrint() {
         System.out.println("     ====== Tasks ======");
         for (Entry<String, Integer> entry : mission.productionTask.entrySet()) {
