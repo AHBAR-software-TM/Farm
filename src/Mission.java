@@ -11,5 +11,5 @@ public class Mission {
     // -1 shows there is no task for that product
     HashMap<String,Integer> productionTask = new HashMap<>();
     HashMap<String,Integer> animalTask = new HashMap<>();
-    int coinTask=2000;
+    int coinTask=1100;
 }

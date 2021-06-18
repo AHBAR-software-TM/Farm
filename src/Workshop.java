@@ -5,7 +5,7 @@ public abstract class Workshop {
     int produce_time;
     int current_time = 0;
     boolean isWorking = false;
-    static String resourceType;
+    String resourceType;
 
     Product update() {
         if (isWorking) {
@@ -29,7 +29,9 @@ public abstract class Workshop {
             System.out.println(this.getClass().getSimpleName()+" is already assigned to work.");
             return false;
         }
+        //System.out.println(resourceType);
         Product p = inv.getProduct(resourceType);
+        //System.out.println(resourceType);
         if (p!=null) {
             isWorking = true;
             current_time = 0;

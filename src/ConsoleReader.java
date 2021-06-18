@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class ConsoleReader {
@@ -7,7 +8,7 @@ public class ConsoleReader {
     Menu firstMenu = new Menu(null, "first", new Execute() {
         @Override
         public void execute(User user) {
-
+            System.out.println("============Enter===========");
             Command command;// = getCommandFromConsole();
             do{
                 command =getCommandFromConsole();
@@ -25,12 +26,13 @@ public class ConsoleReader {
     Menu loginMenu = new Menu(firstMenu, "login", new Execute() {
         @Override
         public void execute(User user) {
+
             // Command command = getCommandFromConsole();
             User user1 = logIn();
             if (user1 == null)
                 firstMenu.execute.execute(null);
             else {
-
+                System.out.println("=========Choose level==========");
                 Command command;
                 do {
                     command = getCommandFromConsole();
@@ -38,7 +40,7 @@ public class ConsoleReader {
                         startMenu.execute.execute(user1);
                     } else if (command == Command.NOTRECOG) {
                         System.out.println("Command not recognized. Try again");
-                        command = getCommandFromConsole();
+
                     } else if (command == Command.LOGOUT) {
                         firstMenu.execute.execute(null);
                     } else if (command == Command.EXIT) {
@@ -54,10 +56,11 @@ public class ConsoleReader {
     });
 
 
-    Menu interMenu = new Menu(firstMenu, "login", new Execute() {
+    Menu interMenu = new Menu(firstMenu, "inter", new Execute() {
         @Override
         public void execute(User user) {
             // Command command = getCommandFromConsole();
+            System.out.println("=========Choose level==========");
 
             Command command;
 
@@ -87,6 +90,7 @@ public class ConsoleReader {
             if (user1 == null)
                 firstMenu.execute.execute(null);
             else {
+                System.out.println("=========Choose level==========");
 
                 Command command;
                 do {
@@ -130,6 +134,7 @@ public class ConsoleReader {
             System.out.println("Game started\nlevel: "+ user.userWantsToPlayLvl );
             Mission mission = Main.getMissionInfoByLvl(user.userWantsToPlayLvl);
             World world = new World(mission);
+            world.coin += user.coin;
             Command command = getCommandFromConsole();
             while (command != Command.EXIT) {
 
@@ -209,23 +214,49 @@ public class ConsoleReader {
                     case CAGE:
                         int[] arr = ((int[]) Command.CAGE.obj);
                         Map m = world.worldMap[arr[0]][arr[1]];
-                        for (Animal a : m.animalsInside) {
+//                        for (Animal a : m.animalsInside) {
+//                            if (a instanceof Wild_animal) {
+//                                if (((Wild_animal) a).cage(world.inventory))
+//                                    System.out.println("Animal Caged.");
+//                            }
+//                        }
+                        Iterator<Animal> itr = m.animalsInside.iterator();
+                        while (itr.hasNext()){
+                            Animal a = itr.next();
                             if (a instanceof Wild_animal) {
-                                if (((Wild_animal) a).cage())
+                                int b = ((Wild_animal) a).cage(world.inventory);
+                                if (b==1)
                                     System.out.println("Animal Caged.");
+                                else if(b ==2)
+                                    itr.remove();
                             }
                         }
                         break;
+
+                    case PLANTALL:
+                        for (int i = world.well.water; i>0; i--)
+                            world.plant((int) (Math.random()*6%6)+1,(int) (Math.random()*6%6)+1);
+                        break;
+
+                    case INFO:
+                        world.printMapGrass();
+                        world.taskAccompPrint();
+                        world.printProducts();
+                        world.printAnimals();
+                        world.inventory.printInventory();
+                        world.truck.print();
+                        break;
+
 
                 }
                 int win = world.didUserWin();
                 if (win != 0) {
                     switch (win) {
                         case 2:
-                            user.coin += world.coin + mission.speedGift;
+                            user.coin = mission.speedGift;
                             break;
                         case 1:
-                            user.coin += world.coin;
+                            user.coin = 0;
                             break;
 
                     }
@@ -465,6 +496,17 @@ public class ConsoleReader {
                     System.out.println("Wrong syntax.");
                     return Command.NOTRECOG;
                 }
+
+            case "plantall":
+            case "Plantall":
+            case "PLANTALL":
+                return Command.PLANTALL;
+
+            case "info":
+            case "Info":
+            case "INFO":
+                return Command.INFO;
+
 
 
                 //todo : string index change

@@ -18,6 +18,8 @@ public enum Command {
     TURN,
     DOWORK,
     CAGE,
+    PLANTALL,
+    INFO,
     ;
 
     Object obj;

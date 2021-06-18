@@ -88,16 +88,19 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
 
 
     public Product update() {
-        life -= 10;
-        if (life <= 0)
-            return new Dead();
-        tillProduce++;
-        if (tillProduce == PRODUCE_TIME) {
+        if (currentlyIn != null){
+            life -= 10;
+            if (life <= 0)
+                return new Dead();
+            tillProduce++;
+            if (tillProduce == PRODUCE_TIME) {
 
-            Product p = produce();
-            tillProduce = 0;
-            return p;
+                Product p = produce();
+                tillProduce = 0;
+                return p;
 
+            }
+            return null;
         }
         return null;
     }

@@ -28,7 +28,8 @@ public class Main {
         try {
             fw = new FileWriter("users.txt");
             for (User u: allUsers ){
-                fw.append(gson.toJson(u)).append("\n");
+                fw.write(gson.toJson(u));
+                fw.write("\n");
             }
         }catch (IOException e){
             System.out.println("File users.txt error.");

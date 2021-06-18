@@ -15,6 +15,7 @@ public abstract class Animal {
     public int x;
     public int y;
     boolean wannaMove;
+    int volume;
 
     public Dir random_move(Map[][] map, int x, int y) {
 
@@ -73,6 +74,9 @@ public abstract class Animal {
             else direction = Dir.DOWN;
         }
         return direction;
+    }
+    int getVolume(){
+        return volume;
     }
 }
 

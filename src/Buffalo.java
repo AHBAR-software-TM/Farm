@@ -7,6 +7,7 @@ public class Buffalo extends Domestic_animal{
         this.price=400;
         //this.productToBeConed = new Milk();
         PRODUCE_TIME = 5;
+        volume =15;
     }
     @Override
     public int getPrice() {
@@ -17,5 +18,8 @@ public class Buffalo extends Domestic_animal{
     @Override
     public Product produce() { return new Milk(); }
 
-
+    @Override
+    int getVolume() {
+        return volume;
+    }
 }

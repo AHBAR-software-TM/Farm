@@ -4,7 +4,7 @@ public class Truck {
     LinkedList<Product> products = new LinkedList<>();
     LinkedList<Animal> animals = new LinkedList<>();
     boolean go = false;
-    final int RETURN_TIME = 15;
+    final int RETURN_TIME = 10;
     int inTripTime=0;
 
     int size = 15;
@@ -16,7 +16,9 @@ public class Truck {
         for (Product p : products){
             sum += p.volume;
         }
-        sum += 15 * animals.size();
+        for (Animal p : animals){
+            sum += p.getVolume();
+        }
 
         return size - sum;
     }
@@ -48,6 +50,7 @@ public class Truck {
         int value = estimateValue();
         animals.clear();
         products.clear();
+        go = false;
         return value;
     }
 
@@ -57,7 +60,7 @@ public class Truck {
             value+=p.price;
         }
         for (Animal a: animals){
-            value+=a.price;
+            value+=a.getPrice();
         }
 
         return value;
@@ -68,6 +71,15 @@ public class Truck {
         go = true;
         inTripTime= 0;}
         System.out.printf("The truck is on the way.\nValue: %d   Time left: %d\n",estimateValue(),RETURN_TIME-inTripTime);
+    }
+    void print(){
+        System.out.println("TRUCK:");
+        products.forEach(p-> System.out.println(p.getClass().getSimpleName()));
+        animals.forEach(p-> System.out.println(p.getClass().getSimpleName()));
+        System.out.println("Empty space: " + getEmpty());
+        if (go) {
+            System.out.printf("The truck is on the way.\nValue: %d   Time left: %d\n",estimateValue(),RETURN_TIME-inTripTime);
+        }
     }
 
 }

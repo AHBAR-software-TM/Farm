@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
@@ -31,7 +30,7 @@ public class World {
     void update() {
 
         System.out.printf("%d time units passed since start.\n", getTime());
-
+        coin+=truck.update();
         well.update();
 
         workshops.forEach( W ->  {
@@ -193,9 +192,9 @@ public class World {
                 dm = new Cat();
                 break;
 
-            case "Turkey":
-            case "TURKEY":
-            case "turkey":
+            case "Ostrich":
+            case "OSTRICH":
+            case "ostrich":
                 dm = new Ostrich();
                 break;
 
@@ -294,7 +293,11 @@ public class World {
 
     boolean plant(int x, int y) {
         if (well.plant()) {
-            worldMap[x-1][y-1].grass++;
+            //assert worldMap[x-1][y-1] != null;
+            if(x<7&& y<7)
+                worldMap[x-1][y-1].grass++;
+            else
+                System.out.println("index out of bound");
             return true;
         } else {
             return false;
@@ -332,6 +335,7 @@ public class World {
             if (truck.add(a2)) {
                 System.out.printf("%s added to truck.\n", itemName);
                 a2.currentlyIn.animalsInside.remove(a2);
+                a2.currentlyIn=null;
                 allDomestics.remove(a2);
                 return true;
             }
@@ -360,11 +364,23 @@ public class World {
     }
 
     Animal getAnimalFromMapByName(String animalName) {
-        for (Animal a : allDomestics) {
+        LinkedList<Domestic_animal> dAnimals = getAllDomestic();
+        for (Animal a : dAnimals) {
             if (animalName.equalsIgnoreCase(a.getClass().getSimpleName()))
                 return a;
         }
         return null;
+    }
+    LinkedList<Domestic_animal> getAllDomestic(){
+        LinkedList<Domestic_animal> a = new LinkedList<>();
+        for (int i =0; i<6;i++){
+            for (int j = 0;j<6;j++)
+                for (Animal aa : worldMap[i][j].animalsInside)
+                    if (aa instanceof  Domestic_animal)
+                        a.add(((Domestic_animal) aa));
+
+        }
+        return a;
     }
 
     boolean removeFromTruck(String itemName) {
@@ -430,7 +446,8 @@ public class World {
         Workshop w=null;
         if(workshopName.equalsIgnoreCase("bakery"))
             w = new Bakery();
-        else if(workshopName.equalsIgnoreCase("eggpowderplant"))
+        else if(workshopName.equalsIgnoreCase("eggpowderplant")||
+                workshopName.equalsIgnoreCase("eggpdr"))
             w = new EggPowderPlant();
         else if(workshopName.equalsIgnoreCase("icecreamfactory"))
             w = new IcecreamFactory();
@@ -458,6 +475,9 @@ public class World {
 
     Workshop getWorkshop(String workName){
         //Workshop w = null;
+        if (workName.equalsIgnoreCase("eggpdr")){
+            workName = "eggpowderplant";
+        }
         for (Workshop W : workshops){
             if (workName.equalsIgnoreCase(W.getClass().getSimpleName()))
                 return W;

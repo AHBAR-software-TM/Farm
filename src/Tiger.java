@@ -13,10 +13,14 @@ public class Tiger extends Wild_animal{
     public int getPrice() {
         return price;
     }
-    public boolean cage(){
-        this.cage+=1;
-        return this.cage==3;
+//    public boolean cage(){
+//        this.cage+=1;
+//        return this.cage==3;
+//    }
+
+
+    @Override
+    int getVolume() {
+        return volume;
     }
-
-
 }

@@ -15,5 +15,8 @@ public class Bear extends Wild_animal {
         return price;
     }
 
-
+    @Override
+    int getVolume() {
+        return volume;
+    }
 }

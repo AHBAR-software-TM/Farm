@@ -7,6 +7,7 @@ public class Hen extends Domestic_animal{
         price=100;
         //System.out.println(this.price);
         PRODUCE_TIME = 2;
+        volume = 5;
     }
 
     @Override
@@ -24,4 +25,10 @@ public class Hen extends Domestic_animal{
 //        //else return null
 //
 //    }
+
+
+    @Override
+    int getVolume() {
+        return volume;
+    }
 }

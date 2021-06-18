@@ -17,16 +17,23 @@ public abstract class Wild_animal extends Animal {
         }
     }
 
-    public boolean cage() {
-        isCagePutThisTurn=true;
-        this.cage += 1;
-        if (this.cage == cageRequired){
-            caged = true;
-            cagedTime=0;
-            return true;
+    public int cage(Inventory inv) {
+        //0 for not caged, 1 for stocked in cage, 2 for moving to inv
+        if (!caged){
+            isCagePutThisTurn = true;
+            this.cage += 1;
+            if (this.cage == cageRequired) {
+                caged = true;
+                cagedTime = 0;
+                return 1;
 
+            }
+        }else {
+            inv.add(this);
+            System.out.println("Animal moved to inventory.");
+            return 2;
         }
-        return false;
+        return 0;
 
     }
 
