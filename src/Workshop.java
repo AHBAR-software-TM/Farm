@@ -39,6 +39,8 @@ public abstract class Workshop {
         System.out.println("Not enough resource.");
         return false;
     }
-
+    int getPrice(){
+        return build_price;
+    }
 
 }

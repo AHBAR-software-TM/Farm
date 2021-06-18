@@ -9,7 +9,10 @@ public class Tiger extends Wild_animal{
         this.caged=false;
         cageRequired=4;
     }
-
+    @Override
+    public int getPrice() {
+        return price;
+    }
     public boolean cage(){
         this.cage+=1;
         return this.cage==3;

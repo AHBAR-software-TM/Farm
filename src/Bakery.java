@@ -11,4 +11,9 @@ public class Bakery extends Workshop{
     Product produce() {
         return new Bread();
     }
+
+    @Override
+    int getPrice() {
+        return build_price;
+    }
 }

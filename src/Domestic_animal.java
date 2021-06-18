@@ -2,14 +2,16 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
 
     public abstract Product produce();
 
-    public int price;
-    public int life;
+    int price=-1;
+    public int life=0;
     public int PRODUCE_TIME;
     public int tillProduce = 0;
     //Product productToBeConed; // :))))))
 
     @Override
     public Dir move(Map[][] map,int x,int y) {
+        if (this.life>50)
+            return random_move(map,x,y);
 
         //finding nearest grass
         int X = 0;
@@ -71,8 +73,6 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
             else if (X < x && Y == y)
                 direction = Dir.LEFT;
             //if(X==x && Y==y)
-            else if (this.life>50)
-                direction = random_move(map,x,y);
             else
                 direction = null;
 

@@ -5,6 +5,10 @@ public class Dog extends Animal{
     Dog(){
         this.price=100;
     }
+    @Override
+    public int getPrice() {
+        return price;
+    }
 
     @Override
     public Dir move(Map[][] map,int x,int y){

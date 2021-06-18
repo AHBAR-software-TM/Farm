@@ -122,7 +122,7 @@ public class World {
                 System.out.printf("| %-4d", m.grass);
 
             }
-            System.out.println("|\n");
+            System.out.println("|");
 
         }
         System.out.println("+-----+-----+-----+-----+-----+-----+");
@@ -147,9 +147,9 @@ public class World {
     Animal checkMoneyToBuy(Animal animal) {
         if (animal == null)
             return null;
-        if (animal.price <= coin) {
-            coin = coin - animal.price;
-            System.out.println("coin -:"+coin+ " kk "+ animal.price);
+        if (animal.getPrice() <= coin) {
+            coin -= animal.getPrice();
+            //System.out.println("coin -:"+coin+ " kk "+ animal.price);
             return animal;
         }
         return null;
@@ -159,8 +159,8 @@ public class World {
     Workshop checkMoneyToBuy(Workshop workshop) {
         if (workshop == null)
             return null;
-        if (workshop.build_price <= coin) {
-            coin -= workshop.build_price;
+        if (workshop.getPrice() <= coin) {
+            coin -= workshop.getPrice();
             return workshop;
         }
         return null;
@@ -200,11 +200,15 @@ public class World {
                 break;
 
         }
-        dm = checkMoneyToBuy(dm);
+
 
         if (dm == null) {
             return null;
         }
+
+        //System.out.println("anim p1:"+ dm.price);
+        dm = checkMoneyToBuy(dm);
+        //System.out.println("anim p1:"+ dm.price);
 
         Integer bought = boughtTillNow.get(dm.getClass().getSimpleName());
         if (bought != null) {
@@ -228,10 +232,12 @@ public class World {
             System.out.println("Location is empty.");
             return;
         }
+        LinkedList<Product> toBeRemoved = new LinkedList<>();
         for (Product p : worldMap[i - 1][j - 1].productsInside) {
             if (inventory.add(p)) {
 
-                worldMap[i - 1][j - 1].productsInside.remove(p);
+                //worldMap[i - 1][j - 1].productsInside.remove(p);
+                toBeRemoved.add(p);
 
                 Integer produced = producedTillNow.get(p.getClass().getSimpleName());
                 if (produced != null) {
@@ -241,16 +247,21 @@ public class World {
 
                 System.out.printf("%s moved to inventory.\n", p.getClass().getSimpleName());
             } else {
-                System.out.printf("Not enough space for %s", p.getClass().getSimpleName());
+                System.out.printf("Not enough space for %s\n", p.getClass().getSimpleName());
             }
+        }
+        for (Product p : toBeRemoved){
+            worldMap[i - 1][j - 1].productsInside.remove(p);
         }
 
     }
     void pickUp(Map map){
+        LinkedList<Product> toBeRemoved = new LinkedList<>();
         for (Product p : map.productsInside) {
             if (inventory.add(p)) {
 
-                map.productsInside.remove(p);
+                //map.productsInside.remove(p);
+                toBeRemoved.add(p);
 
                 Integer produced = producedTillNow.get(p.getClass().getSimpleName());
                 if (produced != null) {
@@ -262,6 +273,11 @@ public class World {
             } else {
                 System.out.printf("Not enough space for %s", p.getClass().getSimpleName());
             }
+
+
+        }
+        for (Product p : toBeRemoved){
+            map.productsInside.remove(p);
         }
     }
 
@@ -278,7 +294,7 @@ public class World {
 
     boolean plant(int x, int y) {
         if (well.plant()) {
-            worldMap[x][y].grass++;
+            worldMap[x-1][y-1].grass++;
             return true;
         } else {
             return false;
@@ -376,7 +392,7 @@ public class World {
                 }
             }
             else if(a instanceof Domestic_animal){
-                worldMap[(int) (Math.random()*6)][(int) (Math.random()*6)].animalsInside.add(a);
+                worldMap[(int) (Math.random()*6)%6][(int) (Math.random()*6)%6].animalsInside.add(a);
                 System.out.printf("%s removed from truck.\n", itemName);
                 truck.animals.remove(a);
                 return true;

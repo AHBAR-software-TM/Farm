@@ -11,4 +11,8 @@ public class IcecreamFactory extends Workshop{
     Product produce() {
         return new Icecream();
     }
+    @Override
+    int getPrice() {
+        return build_price;
+    }
 }

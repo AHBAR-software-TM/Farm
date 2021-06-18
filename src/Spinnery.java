@@ -11,4 +11,9 @@ public class Spinnery extends Workshop{
     Product produce() {
         return new Cloth();
     }
+    @Override
+    int getPrice() {
+        return build_price;
+    }
+
 }

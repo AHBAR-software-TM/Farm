@@ -10,7 +10,10 @@ public class Bear extends Wild_animal {
         cageRequired =4;
     }
 
-
+    @Override
+    public int getPrice() {
+        return price;
+    }
 
 
 }

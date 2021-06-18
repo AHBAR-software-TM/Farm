@@ -13,4 +13,8 @@ public class Lion extends Wild_animal{
         this.cage+=1;
         return this.cage == 3;
     }
+    @Override
+    public int getPrice() {
+        return price;
+    }
 }

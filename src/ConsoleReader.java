@@ -7,15 +7,19 @@ public class ConsoleReader {
     Menu firstMenu = new Menu(null, "first", new Execute() {
         @Override
         public void execute(User user) {
-            Command command = getCommandFromConsole();
-            if (command == Command.LOGIN)
-                loginMenu.execute.execute(null);
-            else if (command == Command.SIGNUP) {
-                signupMenu.execute.execute(null);
-            } else if (command == Command.NOTRECOG) {
-                System.out.println("Command not recognized. Try again");
-                firstMenu.execute.execute(null);
-            }
+
+            Command command;// = getCommandFromConsole();
+            do{
+                command =getCommandFromConsole();
+                if (command == Command.LOGIN)
+                    loginMenu.execute.execute(null);
+                else if (command == Command.SIGNUP) {
+                    signupMenu.execute.execute(null);
+                } else if (command == Command.NOTRECOG) {
+                    System.out.println("Command not recognized. Try again");
+                    firstMenu.execute.execute(null);
+                }
+            }while (command==Command.NOTRECOG);
         }
     });
     Menu loginMenu = new Menu(firstMenu, "login", new Execute() {
@@ -27,8 +31,9 @@ public class ConsoleReader {
                 firstMenu.execute.execute(null);
             else {
 
-                Command command = getCommandFromConsole();
+                Command command;
                 do {
+                    command = getCommandFromConsole();
                     if (command == Command.START) {
                         startMenu.execute.execute(user1);
                     } else if (command == Command.NOTRECOG) {
@@ -54,9 +59,10 @@ public class ConsoleReader {
         public void execute(User user) {
             // Command command = getCommandFromConsole();
 
+            Command command;
 
-            Command command = getCommandFromConsole();
             do {
+                command = getCommandFromConsole();
                 if (command == Command.START) {
                     startMenu.execute.execute(user);
                 } else if (command == Command.NOTRECOG) {
@@ -82,8 +88,9 @@ public class ConsoleReader {
                 firstMenu.execute.execute(null);
             else {
 
-                Command command = getCommandFromConsole();
+                Command command;
                 do {
+                    command = getCommandFromConsole();
                     if (command == Command.START) {
                         startMenu.execute.execute(user1);
                     } else if (command == Command.NOTRECOG) {
@@ -223,6 +230,7 @@ public class ConsoleReader {
 
                     }
                     user.level++;
+                    Main.updateUser();
                     interMenu.execute.execute(user);
                     return;
                 }
@@ -395,7 +403,7 @@ public class ConsoleReader {
                         case "GO":
                         case "Go":
                         case "go":
-                            Command.TRUCKGO.obj = fullLine[2];
+                            //Command.TRUCKGO.obj = fullLine[2];
                             return Command.TRUCKGO;
                     }
 

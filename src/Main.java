@@ -2,6 +2,8 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -20,6 +22,18 @@ public class Main {
         }catch (FileNotFoundException e){
 
         }
+    }
+    static void updateUser(){
+        FileWriter fw;
+        try {
+            fw = new FileWriter("users.txt");
+            for (User u: allUsers ){
+                fw.append(gson.toJson(u)).append("\n");
+            }
+        }catch (IOException e){
+            System.out.println("File users.txt error.");
+        }
+
     }
     static LinkedList<Mission> loadMissions(){
         LinkedList<Mission> ans = new LinkedList<>();

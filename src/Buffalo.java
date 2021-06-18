@@ -8,7 +8,10 @@ public class Buffalo extends Domestic_animal{
         //this.productToBeConed = new Milk();
         PRODUCE_TIME = 5;
     }
-
+    @Override
+    public int getPrice() {
+        return price;
+    }
 
 
     @Override

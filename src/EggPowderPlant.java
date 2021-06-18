@@ -11,4 +11,8 @@ public class EggPowderPlant extends Workshop{
     Product produce() {
         return new Flour();
     }
+    @Override
+    int getPrice() {
+        return build_price;
+    }
 }

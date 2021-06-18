@@ -11,4 +11,9 @@ public class SewingFactory extends Workshop{
     Product produce() {
         return new Shirt();
     }
+    @Override
+    int getPrice() {
+        return build_price;
+    }
+
 }

@@ -6,7 +6,10 @@ public class Ostrich extends Domestic_animal{
         PRODUCE_TIME = 3;
     }
 
-    
+    @Override
+    public int getPrice() {
+        return price;
+    }
     @Override
     public Product produce() { return new Feather(); }
 

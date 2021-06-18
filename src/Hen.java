@@ -2,11 +2,17 @@ public class Hen extends Domestic_animal{
 
 
     Hen(){
-        this.life=100;
-        this.price=100;
+        super();
+        life=100;
+        price=100;
+        //System.out.println(this.price);
         PRODUCE_TIME = 2;
     }
 
+    @Override
+    public int getPrice() {
+        return price;
+    }
 
     @Override
     public Product produce(){ return new Egg(); }

@@ -6,7 +6,11 @@ public abstract class Animal {
         return null;
     }
 
-    public int price;
+    public int getPrice() {
+        return price;
+    }
+
+    int price=-1;
     Map currentlyIn;
     public int x;
     public int y;

@@ -12,4 +12,8 @@ public class MilkPacking extends Workshop{
     Product produce() {
         return new PackedMilk();
     }
+    @Override
+    int getPrice() {
+        return build_price;
+    }
 }
