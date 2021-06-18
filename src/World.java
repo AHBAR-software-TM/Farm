@@ -32,6 +32,8 @@ public class World {
 
         System.out.printf("%d time units passed since start.\n", getTime());
 
+        well.update();
+
         workshops.forEach( W ->  {
             Product p = W.update();
             if(p!=null){
@@ -146,7 +148,8 @@ public class World {
         if (animal == null)
             return null;
         if (animal.price <= coin) {
-            coin -= animal.price;
+            coin = coin - animal.price;
+            System.out.println("coin -:"+coin+ " kk "+ animal.price);
             return animal;
         }
         return null;
@@ -208,9 +211,9 @@ public class World {
             bought++;
             boughtTillNow.replace(dm.getClass().getSimpleName(), bought);
         }
+        dm.currentlyIn = worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6)];
 
-        worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6)].animalsInside.add(dm);
-
+        dm.currentlyIn.animalsInside.add(dm);
         return dm;
 
 
@@ -450,7 +453,7 @@ public class World {
         for (int i = 0;i<6;i++)
             for (int j = 0;j<6;j++)
                 for (Product p : worldMap[i][j].productsInside)
-                    System.out.printf("%s [%d %d]\n", p.getClass().getSimpleName(), i,j);
+                    System.out.printf("%s [%d %d]\n", p.getClass().getSimpleName(), i+1,j+1);
 
 
     }
@@ -463,12 +466,12 @@ public class World {
                         System.out.printf("%s %d [%d %d]\n",
                                 a.getClass().getSimpleName(),
                                 ((Wild_animal) a).cageRequired-((Wild_animal) a).cage,
-                                i,j);
+                                i+1,j+1);
                     else if(a instanceof Domestic_animal)
                         System.out.printf("%s %d%% [%d %d]\n",
-                                a.getClass().getSimpleName(),((Domestic_animal) a).life,i,j);
+                                a.getClass().getSimpleName(),((Domestic_animal) a).life,i+1,j+1);
                     else System.out.printf("%s [%d %d]\n",
-                                a.getClass().getSimpleName(),i,j);
+                                a.getClass().getSimpleName(),i+1,j+1);
     }
 
     void move(){

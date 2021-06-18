@@ -23,14 +23,14 @@ public class ConsoleReader {
         public void execute(User user) {
             // Command command = getCommandFromConsole();
             User user1 = logIn();
-            if (user == null)
-                firstMenu.execute.execute(user1);
+            if (user1 == null)
+                firstMenu.execute.execute(null);
             else {
 
                 Command command = getCommandFromConsole();
                 do {
                     if (command == Command.START) {
-                        startMenu.execute.execute(user);
+                        startMenu.execute.execute(user1);
                     } else if (command == Command.NOTRECOG) {
                         System.out.println("Command not recognized. Try again");
                         command = getCommandFromConsole();
@@ -78,14 +78,14 @@ public class ConsoleReader {
         @Override
         public void execute(User user) {
             User user1 = signUp();
-            if (user == null)
-                firstMenu.execute.execute(user1);
+            if (user1 == null)
+                firstMenu.execute.execute(null);
             else {
 
                 Command command = getCommandFromConsole();
                 do {
                     if (command == Command.START) {
-                        startMenu.execute.execute(user);
+                        startMenu.execute.execute(user1);
                     } else if (command == Command.NOTRECOG) {
                         System.out.println("Command not recognized. Try again");
                         command = getCommandFromConsole();
@@ -105,9 +105,12 @@ public class ConsoleReader {
     Menu startMenu = new Menu(null, "start", new Execute() {
         @Override
         public void execute(User user) {
+            //System.out.println("user2"+user.userWantsToPlayLvl);
             int lvl = ((int) Command.START.obj);
+            //System.out.println("user1 :"+user.userWantsToPlayLvl);
             if (user.level>=lvl){
                 user.userWantsToPlayLvl = lvl;
+                //System.out.println("user :"+user.userWantsToPlayLvl);
                 gameMenu.execute.execute(user);
             }
 
@@ -117,6 +120,7 @@ public class ConsoleReader {
     Menu gameMenu = new Menu(null, "game", new Execute() {
         @Override
         public void execute(User user) {
+            System.out.println("Game started\nlevel: "+ user.userWantsToPlayLvl );
             Mission mission = Main.getMissionInfoByLvl(user.userWantsToPlayLvl);
             World world = new World(mission);
             Command command = getCommandFromConsole();
@@ -142,8 +146,8 @@ public class ConsoleReader {
 
                     case PLANT:
                         if (world.plant(((int[]) Command.PLANT.obj)[0], ((int[]) Command.PLANT.obj)[1])) {
-                            System.err.println(("Planted on: " + ((int[]) Command.PLANT.obj)[0])
-                                    + ((int[]) Command.PLANT.obj)[1]);
+                            System.out.println(("Planted on: " + ((int[]) Command.PLANT.obj)[0])
+                                    +" "+ ((int[]) Command.PLANT.obj)[1]);
                         } else {
                             System.out.println("Well was empty.");
                         }
@@ -192,6 +196,7 @@ public class ConsoleReader {
                         world.taskAccompPrint();
                         world.printProducts();
                         world.printAnimals();
+                        break;
 
 
                     case CAGE:
@@ -233,8 +238,8 @@ public class ConsoleReader {
 
         try {
             FileWriter f = new FileWriter("users.txt", true);
-            f.write(Main.gson.toString() + "\n");
-            f.flush();
+            f.write(Main.gson.toJson(user) + "\n");
+            //f.flush();
             f.close();
         } catch (IOException e) {
             return false;
@@ -296,7 +301,9 @@ public class ConsoleReader {
             case "start":
             case "Start":
                 try {
-                    Command.START.obj = Integer.getInteger(fullLine[1]);
+                    //System.out.println(Integer.parseInt(fullLine[1]));
+                    Command.START.obj = Integer.parseInt(fullLine[1]);
+                    //System.out.println(Integer.parseInt(fullLine[1]));
                     return Command.START;
                 } catch (Exception r) {
                     Command.START.obj = null;

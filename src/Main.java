@@ -36,11 +36,21 @@ public class Main {
         return ans;
     }
     static Mission getMissionInfoByLvl(int lvl){
-        LinkedList<Mission> m = loadMissions();
-        for (Mission M: m){
-            if (M.lvl == lvl)
-                return M;
-        }
-        return null;
+
+        // main code, canged for debug
+//        LinkedList<Mission> m = loadMissions();
+//        for (Mission M: m){
+//            if (M.lvl == lvl)
+//                return M;
+//        }
+//        return null;
+        Mission m = new Mission();
+
+        return m;
+    }
+    public static void main(String[] a){
+        loadUsers();
+        ConsoleReader cr = new ConsoleReader();
+        cr.firstMenu.execute.execute(null);
     }
 }

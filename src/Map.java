@@ -18,6 +18,8 @@ public class Map {
 
         for(Animal a:animalsInside) {
             Dir direction=a.move(map,x,y);
+            if (direction == null)
+                return;
             if(a instanceof Tiger) {
                 switch (direction) {
                     case RIGHT:
