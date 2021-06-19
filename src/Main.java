@@ -86,6 +86,7 @@ public class Main {
         loadUsers();
         ConsoleReader cr = new ConsoleReader();
         cr.firstMenu.execute.execute(null);
+//        System.out.println(new Hen());
        // System.out.println(objectMapper.writeValueAsString(new User("rr","4")));
     }
 }

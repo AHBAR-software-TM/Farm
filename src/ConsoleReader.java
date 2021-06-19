@@ -286,14 +286,18 @@ public class ConsoleReader {
         }
     });
 
-
+    /**
+     * puts newly signed in user to users.txt
+     * @param user
+     * @return
+     */
     boolean submitNewUser(User user) {
 
         try {
             //System.out.println(Main.objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user));
             FileWriter f = new FileWriter("users.txt", true);
             //f.write(Main.gson.toJson(user) + "\n");
-            //todo
+
             //f.write(Main.objectMapper.writeValueAsString(user) + "n");
             f.append(Main.objectMapper.writeValueAsString(user)).append("\n");
 

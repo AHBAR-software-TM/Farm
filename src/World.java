@@ -450,11 +450,14 @@ public class World {
         else if (workshopName.equalsIgnoreCase("eggpowderplant") ||
                 workshopName.equalsIgnoreCase("eggpdr"))
             w = new EggPowderPlant();
-        else if (workshopName.equalsIgnoreCase("icecreamfactory"))
+        else if (workshopName.equalsIgnoreCase("icecreamfactory")
+        || workshopName.equalsIgnoreCase("icefq"))
             w = new IcecreamFactory();
-        else if (workshopName.equalsIgnoreCase("milkpacking"))
+        else if (workshopName.equalsIgnoreCase("milkpacking")||
+                workshopName.equalsIgnoreCase("milkpq"))
             w = new MilkPacking();
-        else if (workshopName.equalsIgnoreCase("sewingfactory"))
+        else if (workshopName.equalsIgnoreCase("sewingfactory")||
+        workshopName.equalsIgnoreCase("sewfq"))
             w = new SewingFactory();
         else if (workshopName.equalsIgnoreCase("spinnery"))
             w = new Spinnery();
