@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -16,7 +17,9 @@ public class Main {
     static Scanner sc = new Scanner(System.in);
     //static Gson gson = new Gson();
     static ObjectMapper objectMapper = new ObjectMapper();
+
     static void loadUsers(){
+
         File f = new File("users.txt");
         try {
             Scanner sc = new Scanner(f);
@@ -25,12 +28,8 @@ public class Main {
                 allUsers.add(objectMapper.readValue(sc.nextLine(),User.class));
             }
             sc.close();
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException ignored){
 
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -83,9 +82,10 @@ public class Main {
 
         return m;
     }
-    public static void main(String[] a){
+    public static void main(String[] a) throws JsonProcessingException {
         loadUsers();
         ConsoleReader cr = new ConsoleReader();
         cr.firstMenu.execute.execute(null);
+       // System.out.println(objectMapper.writeValueAsString(new User("rr","4")));
     }
 }

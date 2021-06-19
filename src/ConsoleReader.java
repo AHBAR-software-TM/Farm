@@ -290,11 +290,12 @@ public class ConsoleReader {
     boolean submitNewUser(User user) {
 
         try {
+            //System.out.println(Main.objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user));
             FileWriter f = new FileWriter("users.txt", true);
             //f.write(Main.gson.toJson(user) + "\n");
             //todo
             //f.write(Main.objectMapper.writeValueAsString(user) + "n");
-            Main.objectMapper.writeValue(f,user);
+            f.append(Main.objectMapper.writeValueAsString(user)).append("\n");
 
             //f.flush();
             f.close();
@@ -582,6 +583,7 @@ public class ConsoleReader {
         User user = new User(userName, password);
         Main.allUsers.add(user);
         if (submitNewUser(user)) {
+            //System.out.println("wtf");
             return user;
         }
         System.out.println("User not added to the database due to an error. Please fill form again.");
