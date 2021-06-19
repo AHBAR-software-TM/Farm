@@ -31,7 +31,7 @@ public class Truck {
         return false;
     }
     boolean add(Animal p){
-        if (15 <= getEmpty()){
+        if (p.getVolume() <= getEmpty()){
             animals.add(p);
             return true;
         }

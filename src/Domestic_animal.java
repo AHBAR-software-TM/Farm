@@ -113,7 +113,7 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
         if(count != null){
             world.boughtTillNow.replace(getClass().getSimpleName(),--count);
         }
-        this.currentlyIn.animalsInside.remove(this);
+        //this.currentlyIn.animalsInside.remove(this);
     }
 
     @Override

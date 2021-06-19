@@ -213,7 +213,7 @@ public class ConsoleReader {
 
                     case CAGE:
                         int[] arr = ((int[]) Command.CAGE.obj);
-                        Map m = world.worldMap[arr[0]][arr[1]];
+                        Map m = world.worldMap[arr[0]-1][arr[1]-1];
 //                        for (Animal a : m.animalsInside) {
 //                            if (a instanceof Wild_animal) {
 //                                if (((Wild_animal) a).cage(world.inventory))
@@ -221,9 +221,11 @@ public class ConsoleReader {
 //                            }
 //                        }
                         Iterator<Animal> itr = m.animalsInside.iterator();
+                        //System.out.println(itr);
                         while (itr.hasNext()){
                             Animal a = itr.next();
                             if (a instanceof Wild_animal) {
+                                System.out.printf("Caging done to %s\n",a.getClass().getSimpleName());
                                 int b = ((Wild_animal) a).cage(world.inventory);
                                 if (b==1)
                                     System.out.println("Animal Caged.");
@@ -234,8 +236,11 @@ public class ConsoleReader {
                         break;
 
                     case PLANTALL:
-                        for (int i = world.well.water; i>0; i--)
-                            world.plant((int) (Math.random()*6%6)+1,(int) (Math.random()*6%6)+1);
+                        if (world.well.water==0)
+                            System.out.println("Empty well.");
+                        else
+                            for (int i = world.well.water; i>0; i--)
+                                world.plant((int) (Math.random()*6%6)+1,(int) (Math.random()*6%6)+1);
                         break;
 
                     case INFO:
@@ -247,6 +252,15 @@ public class ConsoleReader {
                         world.truck.print();
                         break;
 
+                    case NOTRECOG:
+                        System.out.println("I couldn't figure out what you mean.");
+                    break;
+                    case MAPANIMALPRINT:
+                        world.printMapAnimal();
+                        break;
+                    case FILL:
+                        world.fillHen();
+                        break;
 
                 }
                 int win = world.didUserWin();
@@ -507,6 +521,11 @@ public class ConsoleReader {
             case "INFO":
                 return Command.INFO;
 
+            case "mp":
+                return Command.MAPANIMALPRINT;
+
+            case "fill":
+                return Command.FILL;
 
 
                 //todo : string index change

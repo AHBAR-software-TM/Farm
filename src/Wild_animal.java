@@ -12,7 +12,7 @@ public abstract class Wild_animal extends Animal {
     int cageRequired;
 
     public void uncage() {
-        if (!caged){
+        if (!caged && cage>0){
             this.cage -= 1;
         }
     }
@@ -41,7 +41,10 @@ public abstract class Wild_animal extends Animal {
     public Dir move(Map[][] map,int x,int y){
         //walk random
         // (0,0) location is on top left of screen
-        return random_move(map,x,y);
+        if(!caged)
+            return random_move(map,x,y);
+        else
+            return null;
     }
     public Product update(){
         if (!caged){
@@ -65,4 +68,8 @@ public abstract class Wild_animal extends Animal {
         return null;
     }
 
+    @Override
+    String printToMap() {
+        return AnimalColor.RED.s+"."+AnimalColor.RESET.s;
+    }
 }

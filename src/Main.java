@@ -28,12 +28,14 @@ public class Main {
         try {
             fw = new FileWriter("users.txt");
             for (User u: allUsers ){
-                fw.write(gson.toJson(u));
-                fw.write("\n");
+                fw.append(gson.toJson(u)).append("\n");
+                //fw.write("\n");
+                fw.close();
             }
         }catch (IOException e){
             System.out.println("File users.txt error.");
         }
+
 
     }
     static LinkedList<Mission> loadMissions(){

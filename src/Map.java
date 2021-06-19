@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
@@ -15,31 +16,37 @@ public class Map {
 
 
     public void move(Map[][] map,int x,int y) {
-
+        LinkedList<Animal> toBeRemoved = new LinkedList<>();
         for(Animal a:animalsInside) {
             Dir direction=a.move(map,x,y);
-            if (direction == null)
-                return;
+
+            if (direction == null || !a.wannaMove)
+                continue;
             if(a instanceof Tiger) {
                 switch (direction) {
                     case RIGHT:
-                        if(map[x+1][y].hunt()) map[x + 2][y].putAnimalIn(a);
-                        else animalsInside.remove(a);
+                        if(map[x+1][y].hunt())
+                            map[Math.min((x+2),5)][y].putAnimalIn(a);
+                        //else animalsInside.remove(a);
                         break;
                     case LEFT:
-                        if(map[x-1][y].hunt()) map[x - 2][y].putAnimalIn(a);
-                        else animalsInside.remove(a);
+                        if(map[x-1][y].hunt())
+                            map[Math.max(0,x-2)][y].putAnimalIn(a);
+                        //else animalsInside.remove(a);
                         break;
                     case UP:
-                        if(map[x][y-1].hunt()) map[x][y - 2].putAnimalIn(a);
-                        else animalsInside.remove(a);
+                        if(map[x][y-1].hunt())
+                            map[x][Math.max(0,y-2)].putAnimalIn(a);
+                        //else animalsInside.remove(a);
                         break;
                     case DOWN:
-                        if(map[x+1][y].hunt()) map[x][y + 2].putAnimalIn(a);
-                        else animalsInside.remove(a);
+                        if(map[x][y+1].hunt())
+                            map[x][Math.min((y+2),5)].putAnimalIn(a);
+                        //else animalsInside.remove(a);
                         break;
 
                 }
+
             }
             else {
                 switch (direction) {
@@ -48,9 +55,12 @@ public class Map {
                     case UP : map[x][y - 1].putAnimalIn(a); break;
                     case DOWN : map[x][y + 1].putAnimalIn(a); break;
                 }
+
             }
-
-
+            toBeRemoved.add(a);
+        }
+        for (Animal a:toBeRemoved){
+            this.animalsInside.remove(a);
         }
 
    }
@@ -95,19 +105,41 @@ public class Map {
 
         giveFood();
 
-        for (Animal a: animalsInside){
-
-
-            if(a instanceof Wild_animal){
-                Wild_animal w = ((Wild_animal) a);
-                w.update();
-                if(!w.caged)
-                    if (!this.hunt()){
-                        this.animalsInside.remove(a);
-                        //w = null;
-                        continue;
-                    }
+        Wild_animal wild_animal=wildExist();
+        if(wild_animal!=null){
+            Dog d = dogExist();
+            if(d!=null){
+                animalsInside.remove(d);
+                animalsInside.remove(wild_animal);
             }
+            else{
+                Iterator<Animal> itr = animalsInside.descendingIterator();
+                while (itr.hasNext()) {
+                    Animal a = itr.next();
+                    if (a instanceof Domestic_animal) {
+                        itr.remove();
+                    }
+                }
+            }
+        }
+        Iterator<Animal> itr = animalsInside.descendingIterator();
+        //for (Animal a: animalsInside){
+        while (itr.hasNext()){
+            Animal a = itr.next();
+            if(a instanceof Wild_animal)
+                continue;
+//            if(a instanceof Wild_animal){
+//                Wild_animal w = ((Wild_animal) a);
+//                w.update();
+//                if(!w.caged)
+//                    if (!this.hunt()){
+//                        //this.animalsInside.remove(a);
+//                        //w = null;
+//                        itr.remove();
+//
+//                    }
+//                continue;
+//            }
 
 
             Product p = a.update();
@@ -115,6 +147,8 @@ public class Map {
                 productsInside.add(p);
             }else if (p != null){
                 ((Domestic_animal) a).hunted(world);
+                //a.currentlyIn.animalsInside.remove(a);
+                itr.remove();
             }
 
 
@@ -130,20 +164,30 @@ public class Map {
     boolean hunt(){
         Dog d = dogExist();
         if(d == null){
-            for (Animal a: animalsInside){
-                if(a instanceof Domestic_animal)
-                    ((Domestic_animal) a).hunted(this.world);
+            Iterator<Animal> itr = animalsInside.descendingIterator();
+            while (itr.hasNext()){
+                Animal a = itr.next();
+                if(a instanceof Domestic_animal){
+                  ((Domestic_animal) a).hunted(this.world);
+                  itr.remove();
+                }
+
             }
+//            for (Animal a: animalsInside){
+//                if(a instanceof Domestic_animal)
+//                    ((Domestic_animal) a).hunted(this.world);
+//            }
             return true;
         }
         else {
             d.hunted(world);
+            //this.animalsInside.remove(d);
             return false;
         }
 
     }
     void putAnimalIn(Animal animal){
-        animal.currentlyIn.animalsInside.remove(animal);
+        //animal.currentlyIn.animalsInside.remove(animal);
         animal.currentlyIn = this;
         this.animalsInside.add(animal);
         animal.wannaMove = false;
@@ -181,6 +225,14 @@ public class Map {
                 return true;
         }
         return false;
+    }
+
+    Wild_animal wildExist(){
+        for (Animal a:animalsInside){
+            if (a instanceof Wild_animal)
+                return ((Wild_animal) a);
+        }
+        return null;
     }
 
 

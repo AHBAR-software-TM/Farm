@@ -12,4 +12,7 @@ public class Mission {
     HashMap<String,Integer> productionTask = new HashMap<>();
     HashMap<String,Integer> animalTask = new HashMap<>();
     int coinTask=1100;
+    Mission(){
+        WildAttack.put(2,new Tiger());
+    }
 }

@@ -20,6 +20,8 @@ public enum Command {
     CAGE,
     PLANTALL,
     INFO,
+    MAPANIMALPRINT,
+    FILL,
     ;
 
     Object obj;
