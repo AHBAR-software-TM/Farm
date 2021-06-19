@@ -277,7 +277,11 @@ public class ConsoleReader {
 
         try {
             FileWriter f = new FileWriter("users.txt", true);
-            f.write(Main.gson.toJson(user) + "\n");
+            //f.write(Main.gson.toJson(user) + "\n");
+            //todo
+            //f.write(Main.objectMapper.writeValueAsString(user) + "n");
+            Main.objectMapper.writeValue(f,user);
+
             //f.flush();
             f.close();
         } catch (IOException e) {
