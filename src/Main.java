@@ -7,20 +7,32 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Main {
     static LinkedList<User> allUsers = new LinkedList<>();
     static Scanner sc = new Scanner(System.in);
-    static Gson gson = new Gson();
+    //static Gson gson = new Gson();
+    static ObjectMapper objectMapper = new ObjectMapper();
     static void loadUsers(){
         File f = new File("users.txt");
         try {
             Scanner sc = new Scanner(f);
             while (sc.hasNext()){
-                allUsers.add(gson.fromJson(sc.nextLine(),User.class));
+                //allUsers.add(gson.fromJson(sc.nextLine(),User.class));
+                allUsers.add(objectMapper.readValue(sc.nextLine(),User.class));
             }
             sc.close();
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e){
 
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     static void updateUser(){
@@ -28,14 +40,13 @@ public class Main {
         try {
             fw = new FileWriter("users.txt");
             for (User u: allUsers ){
-                fw.append(gson.toJson(u)).append("\n");
-                //fw.write("\n");
-                fw.close();
+                //fw.write(gson.toJson(u));
+                objectMapper.writeValue(fw,u);
+                fw.write("\n");
             }
         }catch (IOException e){
             System.out.println("File users.txt error.");
         }
-
 
     }
     static LinkedList<Mission> loadMissions(){
@@ -44,11 +55,18 @@ public class Main {
         try {
             Scanner sc = new Scanner(f);
             while (sc.hasNext()){
-                ans.add(gson.fromJson(sc.nextLine(),Mission.class));
+                //ans.add(gson.fromJson(sc.nextLine(),Mission.class));
+                ans.add(objectMapper.readValue(sc.nextLine(),Mission.class));
             }
             sc.close();
         }catch (FileNotFoundException e){
 
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return ans;
     }
