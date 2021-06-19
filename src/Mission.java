@@ -13,6 +13,6 @@ public class Mission {
     public HashMap<String,Integer> animalTask = new HashMap<>();
     public int coinTask=1100;
     public Mission(){
-        WildAttack.put(2,new Tiger());
     }
+
 }

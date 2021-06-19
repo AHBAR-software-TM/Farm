@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+@JsonDeserialize(using = WildAnimalDeserial.class)
 public abstract class Wild_animal extends Animal {
 
 
@@ -10,6 +12,7 @@ public abstract class Wild_animal extends Animal {
     boolean caged;
     boolean isCagePutThisTurn=false;
     int cageRequired;
+    Wild_animal(){}
 
     public void uncage() {
         if (!caged && cage>0){
@@ -29,9 +32,11 @@ public abstract class Wild_animal extends Animal {
 
             }
         }else {
-            inv.add(this);
+            if(inv.add(this)){
             System.out.println("Animal moved to inventory.");
-            return 2;
+                return 2;
+            }
+            return 1;
         }
         return 0;
 

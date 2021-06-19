@@ -1,5 +1,4 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,8 +40,10 @@ public class Main {
             for (User u: allUsers ){
                 //fw.write(gson.toJson(u));
                 objectMapper.writeValue(fw,u);
-                fw.write("\n");
+                fw.append("\n");
+                //fw.close();
             }
+            fw.close();
         }catch (IOException e){
             System.out.println("File users.txt error.");
         }
@@ -72,17 +73,19 @@ public class Main {
     static Mission getMissionInfoByLvl(int lvl){
 
         // main code, canged for debug
-//        LinkedList<Mission> m = loadMissions();
-//        for (Mission M: m){
-//            if (M.lvl == lvl)
-//                return M;
-//        }
-//        return null;
-        Mission m = new Mission();
+        LinkedList<Mission> m = loadMissions();
+        for (Mission M: m){
+            if (M.lvl == lvl)
+                return M;
+        }
+        return null;
+        //Mission m = new Mission();
 
-        return m;
+        //return m;
     }
     public static void main(String[] a) throws JsonProcessingException {
+        //User user=objectMapper.readValue("{\"userName\":\"a\",\"password\":\"2\",\"level\":1,\"coin\":0,\"userWantsToPlayLvl\":0}",User.class);
+        //System.out.println(user.password);
         loadUsers();
         ConsoleReader cr = new ConsoleReader();
         cr.firstMenu.execute.execute(null);

@@ -322,6 +322,8 @@ public class World {
                 inventory.products.remove(p);
                 return true;
             }
+            System.out.println("Not enough space in truck");
+            return false;
         }
 
         if (a != null) {
@@ -330,6 +332,8 @@ public class World {
                 inventory.wild_animals.remove(a);
                 return true;
             }
+            System.out.println("Not enough space in truck");
+            return false;
         }
 
         if (a2 != null) {
@@ -340,6 +344,8 @@ public class World {
                 allDomestics.remove(a2);
                 return true;
             }
+            System.out.println("Not enough space in truck");
+            return false;
         }
 
 

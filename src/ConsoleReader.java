@@ -70,7 +70,7 @@ public class ConsoleReader {
                     startMenu.execute.execute(user);
                 } else if (command == Command.NOTRECOG) {
                     System.out.println("Command not recognized. Try again");
-                    command = getCommandFromConsole();
+                    //command = getCommandFromConsole();
                 } else if (command == Command.LOGOUT) {
                     firstMenu.execute.execute(null);
                 } else if (command == Command.EXIT) {
@@ -99,7 +99,7 @@ public class ConsoleReader {
                         startMenu.execute.execute(user1);
                     } else if (command == Command.NOTRECOG) {
                         System.out.println("Command not recognized. Try again");
-                        command = getCommandFromConsole();
+                        //command = getCommandFromConsole();
                     } else if (command == Command.LOGOUT) {
                         firstMenu.execute.execute(null);
                     } else if (command == Command.EXIT) {
@@ -123,6 +123,9 @@ public class ConsoleReader {
                 user.userWantsToPlayLvl = lvl;
                 //System.out.println("user :"+user.userWantsToPlayLvl);
                 gameMenu.execute.execute(user);
+            }else {
+                System.out.println("It's locked.");
+                this.execute(user);
             }
 
 
@@ -168,7 +171,6 @@ public class ConsoleReader {
                     case TRUCKLOAD:
                         String itemName = ((String) Command.TRUCKLOAD.obj);
                         if (!world.addToTruck(itemName)) {
-                            System.out.printf("Not enough space in truck, Current space: %s\n", world.truck.getEmpty());
                         }
                         break;
 
@@ -598,7 +600,7 @@ public class ConsoleReader {
 
         String username = Main.sc.nextLine();
         username = username.trim();
-        if (username.equals("BACK")) {
+        if (username.equalsIgnoreCase("BACK")) {
             return null;
         }
         if (username.equals("")) {
@@ -614,7 +616,7 @@ public class ConsoleReader {
 
     String getNewPassword() {
         String password = Main.sc.nextLine().trim();
-        if (password.equals("BACK")) {
+        if (password.equalsIgnoreCase("BACK")) {
             return null;
         }
         if (password.equals("")) {
@@ -644,7 +646,7 @@ public class ConsoleReader {
     String getUserName() {
         String username = Main.sc.nextLine();
         username = username.trim();
-        if (username.equals("BACK"))
+        if (username.equalsIgnoreCase("BACK"))
             return null;
         if (username.equals("")) {
             System.out.println("Please enter a valid username.\nUSERNAME: ");
@@ -662,7 +664,7 @@ public class ConsoleReader {
 
         String password = Main.sc.nextLine();
         password = password.trim();
-        if (password.equals("BACK"))
+        if (password.equalsIgnoreCase("BACK"))
             return null;
         if (password.equals("")) {
             System.out.println("Please enter a valid string.\nPASSWORD: ");
