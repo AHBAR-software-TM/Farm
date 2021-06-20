@@ -1,2 +1,2 @@
-{"lvl":1,"initialCoin":1000,"WildAttack":{"2":{"price":500,"x":0,"y":0}},"MaximumTime":0,"speedGift":0,"productionTask":{"Egg":15},"animalTask":{},"coinTask":1100}
+{"lvl":1,"initialCoin":1000,"WildAttack":{"2":{"price":500,"x":0,"y":0}},"MaximumTime":0,"speedGift":0,"productionTask":{"Egg":2},"animalTask":{},"coinTask":1100}
 {"lvl":2,"initialCoin":1000,"WildAttack":{"5":{"price":300,"x":0,"y":0}},"MaximumTime":2147483647,"speedGift":1000,"productionTask":{"Cloth":3,"Feather":7},"animalTask":{"Ostrich":2},"coinTask":1100}saeid

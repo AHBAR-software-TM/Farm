@@ -415,7 +415,10 @@ public class World {
 
                 }
             } else if (a instanceof Domestic_animal) {
-                worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6) % 6].animalsInside.add(a);
+                int i = (int) (Math.random() * 6) % 6;
+                int j = (int) (Math.random() * 6) % 6;
+                worldMap[i][j].animalsInside.add(a);
+                a.currentlyIn = worldMap[i][j];
                 System.out.printf("%s removed from truck.\n", itemName);
                 truck.animals.remove(a);
                 return true;

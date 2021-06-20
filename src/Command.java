@@ -22,6 +22,8 @@ public enum Command {
     INFO,
     MAPANIMALPRINT,
     FILL,
+    SETTING,
+    UPGRADE
     ;
 
     Object obj;

@@ -22,6 +22,16 @@ public abstract class Workshop {
         return null;
     }
 
+    boolean upgrade(World w){
+        if (level!=2){
+            level = 2;
+            w.coin-=300;
+            return true;
+        }
+        System.out.println("level is 2 already.");
+        return false;
+    }
+
     abstract Product produce();
 
     boolean startWorking(Inventory inv){

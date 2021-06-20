@@ -39,13 +39,15 @@ public class Main {
             fw = new FileWriter("users.txt");
             for (User u: allUsers ){
                 //fw.write(gson.toJson(u));
-                objectMapper.writeValue(fw,u);
-                fw.append("\n");
+                fw.append(objectMapper.writeValueAsString(u)).append("\n");
+
                 //fw.close();
             }
             fw.close();
         }catch (IOException e){
             System.out.println("File users.txt error.");
+            e.printStackTrace();
+
         }
 
     }

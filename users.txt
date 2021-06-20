@@ -1,0 +1,3 @@
+{"userName":"a","password":"2","level":3,"coin":1000,"userWantsToPlayLvl":2}
+{"userName":"sa","password":"ww","level":2,"coin":0,"userWantsToPlayLvl":1}
+{"userName":"sss","password":"sss","level":2,"coin":0,"userWantsToPlayLvl":1}

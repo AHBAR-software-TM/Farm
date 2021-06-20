@@ -23,6 +23,22 @@ public class ConsoleReader {
             }while (command==Command.NOTRECOG);
         }
     });
+    Menu settingMenu = new Menu(null, "setting", new Execute() {
+        @Override
+        public void execute(User user) {
+            System.out.println("============Setting Molayii===========");
+            Command command;// = getCommandFromConsole();
+            do{
+                command =getCommandFromConsole();
+                 if (command == Command.NOTRECOG) {
+                    System.out.println("Command not recognized. Try again");
+                    settingMenu.execute.execute(null);
+                }else if (command==Command.EXIT){
+                     interMenu.execute.execute(user);
+                 }
+            }while (command==Command.NOTRECOG);
+        }
+    });
     Menu loginMenu = new Menu(firstMenu, "login", new Execute() {
         @Override
         public void execute(User user) {
@@ -45,6 +61,8 @@ public class ConsoleReader {
                         firstMenu.execute.execute(null);
                     } else if (command == Command.EXIT) {
                         System.exit(0);
+                    }else if (command == Command.SETTING){
+                        settingMenu.execute.execute(user);
                     }
 
                 } while (command == Command.NOTRECOG);
@@ -75,6 +93,8 @@ public class ConsoleReader {
                     firstMenu.execute.execute(null);
                 } else if (command == Command.EXIT) {
                     System.exit(0);
+                }else if (command == Command.SETTING){
+                    settingMenu.execute.execute(user);
                 }
 
             } while (command == Command.NOTRECOG);
@@ -104,6 +124,8 @@ public class ConsoleReader {
                         firstMenu.execute.execute(null);
                     } else if (command == Command.EXIT) {
                         System.exit(0);
+                    }else if (command == Command.SETTING){
+                        settingMenu.execute.execute(user);
                     }
 
                 } while (command == Command.NOTRECOG);
@@ -125,7 +147,7 @@ public class ConsoleReader {
                 gameMenu.execute.execute(user);
             }else {
                 System.out.println("It's locked.");
-                this.execute(user);
+                interMenu.execute.execute(user);
             }
 
 
@@ -202,6 +224,22 @@ public class ConsoleReader {
                         w2.startWorking(world.inventory);
                         break;
 
+                    case UPGRADE:
+                        Workshop w3 = world.getWorkshop(((String) Command.UPGRADE.obj));
+                        if (w3 == null) {
+                            System.out.println("Workshop is not built.");
+                            break;
+                        }
+                        if (w3.isWorking){
+                            System.out.println(w3.getClass().getSimpleName()+" is Working. Upgrade not possible.");
+                        break;}
+                        if (world.coin < 300){
+                            System.out.println("Not enough money. 300 coins needed.");
+                            break;}
+                        if (w3.upgrade(world))
+                            System.out.println(w3.getClass().getSimpleName()+" upgraded.");
+                        break;
+
                     case TURN:
                         for (int i = 0; i < (int) (Command.TURN.obj); i++) {
                             world.update();
@@ -263,6 +301,9 @@ public class ConsoleReader {
                     case FILL:
                         world.fillHen();
                         break;
+
+
+
 
                 }
                 int win = world.didUserWin();
@@ -510,6 +551,18 @@ public class ConsoleReader {
                     return Command.NOTRECOG;
                 }
 
+            case "UPGRADE":
+            case "Upgrade":
+            case "upgrade":
+                try {
+                    Command.UPGRADE.obj = fullLine[1];
+                    return Command.UPGRADE;
+                } catch (Exception e) {
+                    Command.UPGRADE.obj = null;
+                    System.out.println("Wrong syntax.");
+                    return Command.NOTRECOG;
+                }
+
             case "CAGE":
             case "Cage":
             case "cage":
@@ -537,6 +590,11 @@ public class ConsoleReader {
 
             case "fill":
                 return Command.FILL;
+
+            case "SETTING":
+            case "Setting":
+            case "setting":
+                return Command.SETTING;
 
 
                 //todo : string index change
