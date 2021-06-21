@@ -12,12 +12,16 @@ public class ConsoleReader {
             Command command;// = getCommandFromConsole();
             do{
                 command =getCommandFromConsole();
-                if (command == Command.LOGIN)
+                if (command == Command.LOGIN) {
+                    Logg.LOGGER.info("exe login menu.");
                     loginMenu.execute.execute(null);
+                }
                 else if (command == Command.SIGNUP) {
+                    Logg.LOGGER.info("exe signup menu.");
                     signupMenu.execute.execute(null);
                 } else if (command == Command.NOTRECOG) {
                     System.out.println("Command not recognized. Try again");
+                    Logg.LOGGER.info("exe first menu.");
                     firstMenu.execute.execute(null);
                 }
             }while (command==Command.NOTRECOG);
@@ -32,9 +36,13 @@ public class ConsoleReader {
                 command =getCommandFromConsole();
                  if (command == Command.NOTRECOG) {
                     System.out.println("Command not recognized. Try again");
+                     Logg.LOGGER.info("exe sett menu.");
                     settingMenu.execute.execute(null);
+
                 }else if (command==Command.EXIT){
+                     Logg.LOGGER.info("exe inter menu.");
                      interMenu.execute.execute(user);
+
                  }
             }while (command==Command.NOTRECOG);
         }
@@ -53,15 +61,19 @@ public class ConsoleReader {
                 do {
                     command = getCommandFromConsole();
                     if (command == Command.START) {
+                        Logg.LOGGER.info("exe start menu.");
                         startMenu.execute.execute(user1);
                     } else if (command == Command.NOTRECOG) {
                         System.out.println("Command not recognized. Try again");
 
                     } else if (command == Command.LOGOUT) {
+                        Logg.LOGGER.info("exe first menu.");
                         firstMenu.execute.execute(null);
                     } else if (command == Command.EXIT) {
+                        Logg.LOGGER.info("closing game");
                         System.exit(0);
                     }else if (command == Command.SETTING){
+                        Logg.LOGGER.info("exe sett menu.");
                         settingMenu.execute.execute(user);
                     }
 
@@ -85,15 +97,22 @@ public class ConsoleReader {
             do {
                 command = getCommandFromConsole();
                 if (command == Command.START) {
+                    Logg.LOGGER.info("exe start menu.");
                     startMenu.execute.execute(user);
                 } else if (command == Command.NOTRECOG) {
                     System.out.println("Command not recognized. Try again");
                     //command = getCommandFromConsole();
                 } else if (command == Command.LOGOUT) {
+                    Logg.LOGGER.info("exe first menu.");
+
                     firstMenu.execute.execute(null);
                 } else if (command == Command.EXIT) {
+                    Logg.LOGGER.info("closing game");
+
                     System.exit(0);
                 }else if (command == Command.SETTING){
+                    Logg.LOGGER.info("exe sett menu.");
+
                     settingMenu.execute.execute(user);
                 }
 
@@ -116,15 +135,23 @@ public class ConsoleReader {
                 do {
                     command = getCommandFromConsole();
                     if (command == Command.START) {
+                        Logg.LOGGER.info("exe start menu.");
+
                         startMenu.execute.execute(user1);
                     } else if (command == Command.NOTRECOG) {
                         System.out.println("Command not recognized. Try again");
                         //command = getCommandFromConsole();
                     } else if (command == Command.LOGOUT) {
+                        Logg.LOGGER.info("exe first menu.");
+
                         firstMenu.execute.execute(null);
                     } else if (command == Command.EXIT) {
+                        Logg.LOGGER.info("exe closing menu.");
+
                         System.exit(0);
                     }else if (command == Command.SETTING){
+                        Logg.LOGGER.info("exe sett menu.");
+
                         settingMenu.execute.execute(user);
                     }
 
@@ -141,12 +168,18 @@ public class ConsoleReader {
             //System.out.println("user2"+user.userWantsToPlayLvl);
             int lvl = ((int) Command.START.obj);
             //System.out.println("user1 :"+user.userWantsToPlayLvl);
+            Logg.LOGGER.info(("user wants to play"+lvl));
             if (user.level>=lvl){
+
+                Logg.LOGGER.info(("user can play"+lvl));
                 user.userWantsToPlayLvl = lvl;
                 //System.out.println("user :"+user.userWantsToPlayLvl);
+                Logg.LOGGER.info(("exe game menu"+lvl));
                 gameMenu.execute.execute(user);
             }else {
                 System.out.println("It's locked.");
+                Logg.LOGGER.warning(("user cant play"+lvl));
+                Logg.LOGGER.info(("exe inter menu"));
                 interMenu.execute.execute(user);
             }
 
@@ -324,7 +357,7 @@ public class ConsoleReader {
                 }
                 command = getCommandFromConsole();
             }
-            startMenu.execute.execute(user);
+            interMenu.execute.execute(user);
 
         }
     });
@@ -412,7 +445,9 @@ public class ConsoleReader {
                     return Command.START;
                 } catch (Exception r) {
                     Command.START.obj = null;
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
+
                 }
 
             case "LOG":
@@ -422,7 +457,10 @@ public class ConsoleReader {
                     return Command.LOGOUT;
                 else if (fullLine[1].equalsIgnoreCase("IN"))
                     return Command.LOGIN;
-                else return Command.NOTRECOG;
+                else {
+                    Logg.LOGGER.warning("unrecognizable command.");
+                    return Command.NOTRECOG;
+                }
 
             case "EXIT":
             case "exit":
@@ -438,6 +476,7 @@ public class ConsoleReader {
                 } catch (Exception e) {
                     Command.BUY.obj = null;
                     System.out.println("Wrong syntax.");
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
                 }
 
@@ -454,6 +493,7 @@ public class ConsoleReader {
                 } catch (Exception e) {
                     Command.PICKUP.obj = null;
                     System.out.println("Wrong syntax.");
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
                 }
 
@@ -476,6 +516,7 @@ public class ConsoleReader {
                 } catch (Exception e) {
                     Command.PLANT.obj = null;
                     System.out.println("Wrong syntax.");
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
                 }
 
@@ -509,6 +550,7 @@ public class ConsoleReader {
                     Command.TRUCKUNLOAD.obj = null;
                     Command.TRUCKGO.obj = null;
                     System.out.println("Wrong syntax");
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
                 }
                 break;
@@ -522,6 +564,7 @@ public class ConsoleReader {
                 } catch (Exception e) {
                     Command.OPENWORK.obj = null;
                     System.out.println("Wrong syntax.");
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
                 }
                 //break;
@@ -536,6 +579,7 @@ public class ConsoleReader {
                 } catch (Exception e) {
                     Command.TURN.obj = null;
                     System.out.println("Wrong syntax.");
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
                 }
 
@@ -548,6 +592,7 @@ public class ConsoleReader {
                 } catch (Exception e) {
                     Command.DOWORK.obj = null;
                     System.out.println("Wrong syntax.");
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
                 }
 
@@ -560,6 +605,7 @@ public class ConsoleReader {
                 } catch (Exception e) {
                     Command.UPGRADE.obj = null;
                     System.out.println("Wrong syntax.");
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
                 }
 
@@ -572,7 +618,9 @@ public class ConsoleReader {
                 } catch (Exception e) {
                     Command.CAGE.obj = null;
                     System.out.println("Wrong syntax.");
+                    Logg.LOGGER.warning("unrecognizable command.");
                     return Command.NOTRECOG;
+
                 }
 
             case "plantall":
@@ -600,6 +648,7 @@ public class ConsoleReader {
                 //todo : string index change
 
         }
+        Logg.LOGGER.warning("unrecognizable command.");
 
         return Command.NOTRECOG;
 
@@ -651,6 +700,7 @@ public class ConsoleReader {
             return user;
         }
         System.out.println("User not added to the database due to an error. Please fill form again.");
+        Logg.LOGGER.warning("users file un accessible.");
         return signUp();
     }
 
@@ -659,14 +709,17 @@ public class ConsoleReader {
         String username = Main.sc.nextLine();
         username = username.trim();
         if (username.equalsIgnoreCase("BACK")) {
+            Logg.LOGGER.info("used back.");
             return null;
         }
         if (username.equals("")) {
             System.out.println("Please enter a valid username.\nUSERNAME: ");
+            Logg.LOGGER.warning("invalid username.");
             return getNewUserName();
         }
         if (isUserSignedBefore(username)) {
             System.out.println("This username is currently under use, Please choose another one.\nUSERNAME: ");
+            Logg.LOGGER.warning("username is used before.");
             return getNewUserName();
         }
         return username;
@@ -679,6 +732,7 @@ public class ConsoleReader {
         }
         if (password.equals("")) {
             System.out.println("Please enter a valid password.\nPASSWORD: ");
+            Logg.LOGGER.warning("invalid password.");
             return getNewUserName();
         }
         return password;
@@ -694,9 +748,9 @@ public class ConsoleReader {
         System.out.println("Now please enter password.\nPASSWORD: ");
 
         boolean correctPasswordOrBack = checkPassword(user);
-        if (correctPasswordOrBack)
-            return user;
-
+        if (correctPasswordOrBack){
+            return user;}
+        //Logg.LOGGER.warning("wrong password.");
         return null;
 
     }
@@ -745,6 +799,7 @@ public class ConsoleReader {
             return false;
         if (!user.password.equals(password)) {
             System.out.println("Wrong password! Please enter your password again.\nPASSWORD: ");
+            Logg.LOGGER.warning("wrong password.");
             return checkPassword(user);
         }
         return true;

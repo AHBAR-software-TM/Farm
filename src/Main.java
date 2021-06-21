@@ -1,6 +1,4 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
