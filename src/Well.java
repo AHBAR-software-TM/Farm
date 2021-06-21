@@ -13,6 +13,7 @@ public class Well {
     boolean charge(){
         if (water != 0 || timeToCharge != 0){
             //second condition ensures that the well is not currently being charged
+            Logg.LOGGER.warning("Well has no water!");
             return false;
         }
         timeToCharge = TIME_OF_CHARGE;

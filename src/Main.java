@@ -1,16 +1,14 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 public class Main {
     static LinkedList<User> allUsers = new LinkedList<>();
@@ -83,10 +81,16 @@ public class Main {
         return m;
     }
     public static void main(String[] a) throws JsonProcessingException {
+        //todo
+        try {
+            Logg.log();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
         loadUsers();
         ConsoleReader cr = new ConsoleReader();
         cr.firstMenu.execute.execute(null);
-//        System.out.println(new Hen());
-       // System.out.println(objectMapper.writeValueAsString(new User("rr","4")));
+        //System.out.println(new Hen());
+        //System.out.println(objectMapper.writeValueAsString(new User("rr","4")));
     }
 }

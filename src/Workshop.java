@@ -27,6 +27,7 @@ public abstract class Workshop {
     boolean startWorking(Inventory inv){
         if(isWorking){
             System.out.println(this.getClass().getSimpleName()+" is already assigned to work.");
+            Logg.LOGGER.info(this+" is already assigned to work.");
             return false;
         }
         //System.out.println(resourceType);
@@ -36,9 +37,11 @@ public abstract class Workshop {
             isWorking = true;
             current_time = 0;
             System.out.println(this.getClass().getSimpleName() + " started working.");
+            Logg.LOGGER.info(this+" started working.");
             return true;
         }
         System.out.println("Not enough resource.");
+        Logg.LOGGER.info(" Not enough resource for "+this);
         return false;
     }
     int getPrice(){

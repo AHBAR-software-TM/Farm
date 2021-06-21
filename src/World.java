@@ -270,14 +270,17 @@ public class World {
                 }
 
                 System.out.printf("%s moved to inventory.\n", p.getClass().getSimpleName());
+                Logg.LOGGER.config("product "+p+" moved to inventory");
             } else {
                 System.out.printf("Not enough space for %s", p.getClass().getSimpleName());
+                Logg.LOGGER.config("Not enough space for product "+p);
             }
 
 
         }
         for (Product p : toBeRemoved) {
             map.productsInside.remove(p);
+            Logg.LOGGER.config("product "+p+" removed from "+map);
         }
     }
 
@@ -350,16 +353,20 @@ public class World {
     Product getProductFromInventoryByName(String productName) {
         //Product p = null;
         for (Product P : inventory.products) {
-            if (productName.equalsIgnoreCase(P.getClass().getSimpleName()))
+            if (productName.equalsIgnoreCase(P.getClass().getSimpleName())) {
+                Logg.LOGGER.info(P+" has gotten FromInventory");
                 return P;
+            }
         }
         return null;
     }
 
     Animal getAnimalFromInventoryByName(String animalName) {
         for (Animal a : inventory.wild_animals) {
-            if (animalName.equalsIgnoreCase(a.getClass().getSimpleName()))
+            if (animalName.equalsIgnoreCase(a.getClass().getSimpleName())) {
+                Logg.LOGGER.info(a+" has gotten FromInventory");
                 return a;
+            }
         }
         return null;
     }
@@ -395,6 +402,7 @@ public class World {
         if (p != null) {
             if (inventory.add(p)) {
                 System.out.printf("%s removed from truck.\n", itemName);
+                Logg.LOGGER.info(p + "removed from truck.");
                 truck.products.remove(p);
                 return true;
 
@@ -405,6 +413,7 @@ public class World {
                 if (inventory.add((Wild_animal) a)) {
                     System.out.printf("%s removed from truck.\n", itemName);
                     truck.animals.remove(a);
+                    Logg.LOGGER.info(p + "removed from truck.");
                     return true;
 
                 }
@@ -412,6 +421,7 @@ public class World {
                 worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6) % 6].animalsInside.add(a);
                 System.out.printf("%s removed from truck.\n", itemName);
                 truck.animals.remove(a);
+                Logg.LOGGER.info(p + "removed from truck.");
                 return true;
             }
         }
@@ -475,6 +485,7 @@ public class World {
         }
 
         workshops.add(w);
+        Logg.LOGGER.info("Workshop" + w + " created.");
 
         return w;
     }

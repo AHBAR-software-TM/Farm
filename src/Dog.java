@@ -24,6 +24,7 @@ public class Dog extends Animal{
         if(count != null){
             world.boughtTillNow.replace("Dog",--count);
         }
+        Logg.LOGGER.config("Animal "+this.hashCode()+" hunted!");
         this.currentlyIn.animalsInside.remove(this);
     }
 

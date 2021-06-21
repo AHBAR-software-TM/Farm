@@ -20,8 +20,10 @@ public class Map {
         for(Animal a:animalsInside) {
             Dir direction=a.move(map,x,y);
 
-            if (direction == null || !a.wannaMove)
+            if (direction == null || !a.wannaMove) {
+                Logg.LOGGER.info("Animal "+a+" did not not move!");
                 continue;
+            }
             if(a instanceof Tiger) {
                 switch (direction) {
                     case RIGHT:
@@ -61,6 +63,7 @@ public class Map {
         }
         for (Animal a:toBeRemoved){
             this.animalsInside.remove(a);
+            Logg.LOGGER.info("Animal "+a+" dead!");
         }
 
    }
@@ -111,12 +114,15 @@ public class Map {
             if(d!=null){
                 animalsInside.remove(d);
                 animalsInside.remove(wild_animal);
+                Logg.LOGGER.info("Animal "+d + " removed from " + this);
+                Logg.LOGGER.info("Animal "+wild_animal + " removed from " + this);
             }
             else{
                 Iterator<Animal> itr = animalsInside.descendingIterator();
                 while (itr.hasNext()) {
                     Animal a = itr.next();
                     if (a instanceof Domestic_animal) {
+                        Logg.LOGGER.info("Animal "+a + " removed from " + this);
                         itr.remove();
                     }
                 }
@@ -145,7 +151,9 @@ public class Map {
             Product p = a.update();
             if (p != null && !(p instanceof Dead)){
                 productsInside.add(p);
-            }else if (p != null){
+                Logg.LOGGER.config("Product "+p+" produced by "+a+" in "+a.currentlyIn);
+            }
+            else if (p != null){
                 ((Domestic_animal) a).hunted(world);
                 //a.currentlyIn.animalsInside.remove(a);
                 itr.remove();
@@ -169,6 +177,7 @@ public class Map {
                 Animal a = itr.next();
                 if(a instanceof Domestic_animal){
                   ((Domestic_animal) a).hunted(this.world);
+                  Logg.LOGGER.info("Animal "+a+" hunted!");
                   itr.remove();
                 }
 
@@ -191,12 +200,16 @@ public class Map {
         animal.currentlyIn = this;
         this.animalsInside.add(animal);
         animal.wannaMove = false;
+        Logg.LOGGER.info("Animal "+animal+" added to "+this);
 
     }
     Dog dogExist(){
         for (Animal animal:animalsInside){
-            if(animal.getClass().getSimpleName().equals("Dog"))
+            if(animal.getClass().getSimpleName().equals("Dog")) {
+                Logg.LOGGER.info(animal + " exists in " + this);
                 return (Dog) animal;
+            }
+
         }
         return null;
     }
@@ -204,8 +217,10 @@ public class Map {
     void giveFood(){
         PriorityQueue<Domestic_animal> allDoms = giveAllDomesticsIn();
         while (grass > 0 && !allDoms.isEmpty()){
-            grass --;
+             grass --;
              allDoms.poll().eat();
+             Logg.LOGGER.info("food has been given to animals");
+
         }
 
     }
@@ -221,16 +236,20 @@ public class Map {
 
     boolean gurbaExist(){
         for (Animal animal:animalsInside){
-            if(animal.getClass().getSimpleName().equals("Cat"))
+            if(animal.getClass().getSimpleName().equals("Cat")) {
+                Logg.LOGGER.info(animal + " exists in " + this);
                 return true;
+            }
         }
         return false;
     }
 
     Wild_animal wildExist(){
         for (Animal a:animalsInside){
-            if (a instanceof Wild_animal)
+            if (a instanceof Wild_animal) {
+                Logg.LOGGER.info(a + " exists in " + this);
                 return ((Wild_animal) a);
+            }
         }
         return null;
     }
