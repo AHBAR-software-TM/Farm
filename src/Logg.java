@@ -7,6 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import static java.util.logging.Level.*;
+
 public abstract class Logg {
 
 
@@ -24,23 +26,15 @@ public abstract class Logg {
         }
     }
 
-
-
     public static void log() throws IOException , InterruptedException {
 
-        LOGGER.setLevel(Level.ALL);
+        LOGGER.setLevel(ALL);
         manager.addLogger(LOGGER);
         filehandler.setFormatter(simpleformatter);
         LOGGER.addHandler(filehandler);
-
-        //file
-        //LOGGER.fine("This message is logged in the file");
-        //LOGGER.config("hello");
-        //LOGGER.finer("buy");
-
-        //both console and file
-        //LOGGER.info("buy");
-        //LOGGER.log(Level.WARNING, "Warning message");
+        LOGGER.setUseParentHandlers(false);
 
     }
+
+
 }
