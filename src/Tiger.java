@@ -7,12 +7,20 @@ public class Tiger extends Wild_animal{
         this.disappear_time=5;
         this.cage=0;
         this.caged=false;
+        cageRequired=4;
     }
-
-    public boolean cage(){
-        this.cage+=1;
-        return this.cage==3;
+    @Override
+    public int getPrice() {
+        return price;
     }
+//    public boolean cage(){
+//        this.cage+=1;
+//        return this.cage==3;
+//    }
 
 
+    @Override
+    int getVolume() {
+        return volume;
+    }
 }

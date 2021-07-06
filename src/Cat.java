@@ -5,6 +5,7 @@ public class Cat extends Animal{
 
     Cat(){
         this.price=150;
+        volume = 5;
     }
 
     @Override
@@ -90,10 +91,13 @@ public class Cat extends Animal{
 
 
 
+    @Override
+    public int getPrice() {
+        return price;
+    }
 
-
-
-
-
-
+    @Override
+    int getVolume() {
+        return volume;
+    }
 }

@@ -6,7 +6,7 @@ public class World {
     Mission mission;
     int time = Integer.MIN_VALUE;
 
-    public static Map[][] worldMap = new Map[6][6];
+    public Map[][] worldMap = new Map[6][6];
     LinkedList<Animal> allDomestics = new LinkedList<>();
 
     //LinkedList<Product> inventory = new LinkedList<>();
@@ -26,11 +26,23 @@ public class World {
     Truck truck = new Truck();
 
 
-    //todo: !!!IMPORTANT!!! handle production from animal and workshop to map
-    //todo: !!!IMPORTANT!!! check if animal is dead or alive
     void update() {
 
-        System.out.printf("%d time units passed.\n", getTime());
+        System.out.printf("%d time units passed since start.\n", getTime());
+        coin += truck.update();
+        well.update();
+
+        workshops.forEach(W -> {
+            Product p = W.update();
+            if (p != null) {
+                int i = (int) (Math.random() * 6 % 6);
+                int j = (int) (Math.random() * 6 % 6);
+                worldMap[i][j].productsInside.add(p);
+                if (W.level == 2) {
+                    worldMap[i][j].productsInside.add(W.produce());
+                }
+            }
+        });
 
         for (Map[] mapArray : worldMap) {
             for (Map m : mapArray) {
@@ -39,26 +51,44 @@ public class World {
             }
         }
 
-        workshops.forEach(Workshop::update);
 
         Wild_animal attacker = WildAttack.get(getTime());
         if (attacker != null) {
-            worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6) % 6].animalsInside.add(attacker);
+            int x = (int) (Math.random() * 6) % 6;
+            int y = (int) (Math.random() * 6) % 6;
+            worldMap[x][y].animalsInside.add(attacker);
+            attacker.currentlyIn = worldMap[x][y];
+
         }
-
-        printMapGrass();
-
-        taskAccompPrint();
-
-        //todo: !!!IMPORTANT!!! print the other mentioned thing (page:9)
 
 
         time++;
 
+        move();
+
     }
 
-    boolean didUserWin(Mission mission) {
-        return true; //todo: !!!important!!!! add winning according to mission task
+    int didUserWin() {
+        //return 0 if not, return 1 if won, return 2 if won fast
+
+        //boolean doneIt = true;
+        for (Entry<String, Integer> ent : mission.animalTask.entrySet()) {
+            if (boughtTillNow.get(ent.getKey()) < ent.getValue()) {
+                return 0;
+            }
+        }
+        for (Entry<String, Integer> ent : mission.productionTask.entrySet()) {
+            if (producedTillNow.get(ent.getKey()) < ent.getValue())
+                return 0;
+        }
+
+        if (coin < mission.coinTask)
+            return 0;
+
+        if (mission.MaximumTime < time)
+            return 1;
+        return 2;
+
     }
 
     World(Mission mission) {
@@ -71,15 +101,15 @@ public class World {
         for (Entry<String, Integer> entry : mission.animalTask.entrySet()) {
             boughtTillNow.put(entry.getKey(), 0);
         }
-        for (int i=0;i<6;i++){
-            for (int j=0;j<6;j++)
-                worldMap[i][j]=new Map(this);
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++)
+                worldMap[i][j] = new Map(this);
         }
 
     }
 
     int getTime() {
-        return time - Integer.MIN_VALUE;
+        return time - Integer.MIN_VALUE + 1;
     }
 
     void printMapGrass() {
@@ -90,13 +120,13 @@ public class World {
                 System.out.printf("| %-4d", m.grass);
 
             }
-            System.out.println("|\n");
+            System.out.println("|");
 
         }
         System.out.println("+-----+-----+-----+-----+-----+-----+");
     }
 
-    ///todo: !!!IMPORTANT!!! handle task accomplishment change
+
     void taskAccompPrint() {
         System.out.println("     ====== Tasks ======");
         for (Entry<String, Integer> entry : mission.productionTask.entrySet()) {
@@ -115,8 +145,9 @@ public class World {
     Animal checkMoneyToBuy(Animal animal) {
         if (animal == null)
             return null;
-        if (animal.price <= coin) {
-            coin -= animal.price;
+        if (animal.getPrice() <= coin) {
+            coin -= animal.getPrice();
+            //System.out.println("coin -:"+coin+ " kk "+ animal.price);
             return animal;
         }
         return null;
@@ -126,13 +157,14 @@ public class World {
     Workshop checkMoneyToBuy(Workshop workshop) {
         if (workshop == null)
             return null;
-        if (workshop.build_price <= coin) {
-            coin -= workshop.build_price;
+        if (workshop.getPrice() <= coin) {
+            coin -= workshop.getPrice();
             return workshop;
         }
         return null;
 
     }
+
     Animal buy(String animalName) {
         Animal dm = null;
         switch (animalName) {
@@ -160,27 +192,31 @@ public class World {
                 dm = new Cat();
                 break;
 
-            case "Turkey":
-            case "TURKEY":
-            case "turkey":
+            case "Ostrich":
+            case "OSTRICH":
+            case "ostrich":
                 dm = new Ostrich();
                 break;
 
         }
-        dm = checkMoneyToBuy(dm);
+
 
         if (dm == null) {
             return null;
         }
+
+        //System.out.println("anim p1:"+ dm.price);
+        dm = checkMoneyToBuy(dm);
+        //System.out.println("anim p1:"+ dm.price);
 
         Integer bought = boughtTillNow.get(dm.getClass().getSimpleName());
         if (bought != null) {
             bought++;
             boughtTillNow.replace(dm.getClass().getSimpleName(), bought);
         }
+        dm.currentlyIn = worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6)];
 
-        worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6)].animalsInside.add(dm);
-
+        dm.currentlyIn.animalsInside.add(dm);
         return dm;
 
 
@@ -195,10 +231,12 @@ public class World {
             System.out.println("Location is empty.");
             return;
         }
+        LinkedList<Product> toBeRemoved = new LinkedList<>();
         for (Product p : worldMap[i - 1][j - 1].productsInside) {
             if (inventory.add(p)) {
 
-                worldMap[i - 1][j - 1].productsInside.remove(p);
+                //worldMap[i - 1][j - 1].productsInside.remove(p);
+                toBeRemoved.add(p);
 
                 Integer produced = producedTillNow.get(p.getClass().getSimpleName());
                 if (produced != null) {
@@ -208,16 +246,22 @@ public class World {
 
                 System.out.printf("%s moved to inventory.\n", p.getClass().getSimpleName());
             } else {
-                System.out.printf("Not enough space for %s", p.getClass().getSimpleName());
+                System.out.printf("Not enough space for %s\n", p.getClass().getSimpleName());
             }
+        }
+        for (Product p : toBeRemoved) {
+            worldMap[i - 1][j - 1].productsInside.remove(p);
         }
 
     }
-    void pickUp(Map map){
+
+    void pickUp(Map map) {
+        LinkedList<Product> toBeRemoved = new LinkedList<>();
         for (Product p : map.productsInside) {
             if (inventory.add(p)) {
 
-                map.productsInside.remove(p);
+                //map.productsInside.remove(p);
+                toBeRemoved.add(p);
 
                 Integer produced = producedTillNow.get(p.getClass().getSimpleName());
                 if (produced != null) {
@@ -226,9 +270,17 @@ public class World {
                 }
 
                 System.out.printf("%s moved to inventory.\n", p.getClass().getSimpleName());
+                Logg.LOGGER.config("product "+p+" moved to inventory");
             } else {
                 System.out.printf("Not enough space for %s", p.getClass().getSimpleName());
+                Logg.LOGGER.config("Not enough space for product "+p);
             }
+
+
+        }
+        for (Product p : toBeRemoved) {
+            map.productsInside.remove(p);
+            Logg.LOGGER.config("product "+p+" removed from "+map);
         }
     }
 
@@ -245,7 +297,11 @@ public class World {
 
     boolean plant(int x, int y) {
         if (well.plant()) {
-            worldMap[x][y].grass++;
+            //assert worldMap[x-1][y-1] != null;
+            if (x < 7 && y < 7)
+                worldMap[x - 1][y - 1].grass++;
+            else
+                System.out.println("index out of bound");
             return true;
         } else {
             return false;
@@ -269,6 +325,8 @@ public class World {
                 inventory.products.remove(p);
                 return true;
             }
+            System.out.println("Not enough space in truck");
+            return false;
         }
 
         if (a != null) {
@@ -277,15 +335,20 @@ public class World {
                 inventory.wild_animals.remove(a);
                 return true;
             }
+            System.out.println("Not enough space in truck");
+            return false;
         }
 
         if (a2 != null) {
             if (truck.add(a2)) {
                 System.out.printf("%s added to truck.\n", itemName);
                 a2.currentlyIn.animalsInside.remove(a2);
+                a2.currentlyIn = null;
                 allDomestics.remove(a2);
                 return true;
             }
+            System.out.println("Not enough space in truck");
+            return false;
         }
 
 
@@ -296,26 +359,43 @@ public class World {
     Product getProductFromInventoryByName(String productName) {
         //Product p = null;
         for (Product P : inventory.products) {
-            if (productName.equalsIgnoreCase(P.getClass().getSimpleName()))
+            if (productName.equalsIgnoreCase(P.getClass().getSimpleName())) {
+                Logg.LOGGER.info(P+" has gotten FromInventory");
                 return P;
+            }
         }
         return null;
     }
 
     Animal getAnimalFromInventoryByName(String animalName) {
         for (Animal a : inventory.wild_animals) {
+            if (animalName.equalsIgnoreCase(a.getClass().getSimpleName())) {
+                Logg.LOGGER.info(a+" has gotten FromInventory");
+                return a;
+            }
+        }
+        return null;
+    }
+
+    Animal getAnimalFromMapByName(String animalName) {
+        LinkedList<Domestic_animal> dAnimals = getAllDomestic();
+        for (Animal a : dAnimals) {
             if (animalName.equalsIgnoreCase(a.getClass().getSimpleName()))
                 return a;
         }
         return null;
     }
 
-    Animal getAnimalFromMapByName(String animalName) {
-        for (Animal a : allDomestics) {
-            if (animalName.equalsIgnoreCase(a.getClass().getSimpleName()))
-                return a;
+    LinkedList<Domestic_animal> getAllDomestic() {
+        LinkedList<Domestic_animal> a = new LinkedList<>();
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++)
+                for (Animal aa : worldMap[i][j].animalsInside)
+                    if (aa instanceof Domestic_animal)
+                        a.add(((Domestic_animal) aa));
+
         }
-        return null;
+        return a;
     }
 
     boolean removeFromTruck(String itemName) {
@@ -328,24 +408,29 @@ public class World {
         if (p != null) {
             if (inventory.add(p)) {
                 System.out.printf("%s removed from truck.\n", itemName);
+                Logg.LOGGER.info(p + "removed from truck.");
                 truck.products.remove(p);
                 return true;
 
             }
         }
-        if (a != null){
-            if(a instanceof Wild_animal){
+        if (a != null) {
+            if (a instanceof Wild_animal) {
                 if (inventory.add((Wild_animal) a)) {
                     System.out.printf("%s removed from truck.\n", itemName);
                     truck.animals.remove(a);
+                    Logg.LOGGER.info(p + "removed from truck.");
                     return true;
 
                 }
-            }
-            else if(a instanceof Domestic_animal){
-                worldMap[(int) (Math.random()*6)][(int) (Math.random()*6)].animalsInside.add(a);
+            } else if (a instanceof Domestic_animal) {
+                int i = (int) (Math.random() * 6) % 6;
+                int j = (int) (Math.random() * 6) % 6;
+                worldMap[i][j].animalsInside.add(a);
+                a.currentlyIn = worldMap[i][j];
                 System.out.printf("%s removed from truck.\n", itemName);
                 truck.animals.remove(a);
+                Logg.LOGGER.info(p + "removed from truck.");
                 return true;
             }
         }
@@ -369,41 +454,144 @@ public class World {
         return null;
     }
 
-    boolean isWorkshopOpened(String workshopName){
-        for (Workshop w:workshops){
-            if(w.getClass().getSimpleName().equalsIgnoreCase(workshopName))
+    boolean isWorkshopOpened(String workshopName) {
+        for (Workshop w : workshops) {
+            if (w.getClass().getSimpleName().equalsIgnoreCase(workshopName))
                 return true;
         }
         return false;
     }
 
-    Workshop openWorkShop(String workshopName){
-        Workshop w=null;
-        if(workshopName.equalsIgnoreCase("bakery"))
+    Workshop openWorkShop(String workshopName) {
+        Workshop w = null;
+        if (workshopName.equalsIgnoreCase("bakery"))
             w = new Bakery();
-        else if(workshopName.equalsIgnoreCase("eggpowderplant"))
+        else if (workshopName.equalsIgnoreCase("eggpowderplant") ||
+                workshopName.equalsIgnoreCase("eggpdr"))
             w = new EggPowderPlant();
-        else if(workshopName.equalsIgnoreCase("icecreamfactory"))
+        else if (workshopName.equalsIgnoreCase("icecreamfactory")
+        || workshopName.equalsIgnoreCase("icefq"))
             w = new IcecreamFactory();
-        else if(workshopName.equalsIgnoreCase("milkpacking"))
+        else if (workshopName.equalsIgnoreCase("milkpacking")||
+                workshopName.equalsIgnoreCase("milkpq"))
             w = new MilkPacking();
-        else if(workshopName.equalsIgnoreCase("sewingfactory"))
+        else if (workshopName.equalsIgnoreCase("sewingfactory")||
+        workshopName.equalsIgnoreCase("sewfq"))
             w = new SewingFactory();
-        else if(workshopName.equalsIgnoreCase("spinnery"))
+        else if (workshopName.equalsIgnoreCase("spinnery"))
             w = new Spinnery();
 
-        if(isWorkshopOpened(workshopName)){
+        if (isWorkshopOpened(workshopName)) {
             System.out.println("This workshop is created before.");
-            return null;}
+            return null;
+        }
 
         w = checkMoneyToBuy(w);
 
-        if (w == null){
-            System.out.printf("Not enough money.\nMoney: %d\n",coin);
-            return null;}
+        if (w == null) {
+            System.out.printf("Not enough money.\nMoney: %d\n", coin);
+            return null;
+        }
 
         workshops.add(w);
+        Logg.LOGGER.info("Workshop" + w + " created.");
 
         return w;
     }
+
+    Workshop getWorkshop(String workName) {
+        //Workshop w = null;
+        if (workName.equalsIgnoreCase("eggpdr")) {
+            workName = "eggpowderplant";
+        }
+        for (Workshop W : workshops) {
+            if (workName.equalsIgnoreCase(W.getClass().getSimpleName()))
+                return W;
+        }
+        return null;
+    }
+
+    void printProducts() {
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 6; j++)
+                for (Product p : worldMap[i][j].productsInside)
+                    System.out.printf("%s [%d %d]\n", p.getClass().getSimpleName(), i + 1, j + 1);
+
+
+    }
+
+    void printAnimals() {
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 6; j++)
+                for (Animal a : worldMap[i][j].animalsInside)
+                    if (a instanceof Wild_animal)
+                        System.out.printf("%s %d [%d %d]\n",
+                                a.getClass().getSimpleName(),
+                                ((Wild_animal) a).cageRequired - ((Wild_animal) a).cage,
+                                i + 1, j + 1);
+                    else if (a instanceof Domestic_animal)
+                        System.out.printf("%s %d%% [%d %d]\n",
+                                a.getClass().getSimpleName(), ((Domestic_animal) a).life, i + 1, j + 1);
+                    else System.out.printf("%s [%d %d]\n",
+                                a.getClass().getSimpleName(), i + 1, j + 1);
+    }
+
+    LinkedList<Animal> getAllAnimal() {
+        LinkedList<Animal> a = new LinkedList<>();
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++)
+                a.addAll(worldMap[i][j].animalsInside);
+
+        }
+        return a;
+    }
+
+    void move() {
+        LinkedList<Animal> anm = getAllAnimal();
+        anm.forEach(a -> a.wannaMove = true);
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 6; j++)
+                worldMap[i][j].move(worldMap, i, j);
+    }
+
+    void printMapAnimal() {
+        System.out.println("    ===== Map-Animals =====\n");
+        System.out.println("+-----+-----+-----+-----+-----+-----+");
+        for (Map[] mapArray : worldMap) {
+            for (Map m : mapArray) {
+                //System.out.printf("| %-4d", m.grass);
+                int size = m.animalsInside.size();
+                System.out.print("|");
+                StringBuilder s = new StringBuilder();
+                for (Animal a1 : m.animalsInside) {
+                    s.append(a1.printToMap());
+                }
+                s.append(" ".repeat(Math.max(0, 5 - size)));
+                System.out.print(s.toString());
+
+            }
+            System.out.println("|");
+
+        }
+        System.out.println("+-----+-----+-----+-----+-----+-----+");
+
+
+    }
+    void fillHen(){
+
+        for(int i=0;i<6;i++)
+            for (int j = 0; j<6 ; j++){
+                Hen dm = new Hen();
+                dm.currentlyIn = worldMap[i][j];
+                dm.currentlyIn.animalsInside.add(dm);
+                dm = new Hen();
+                dm.currentlyIn = worldMap[i][j];
+                dm.currentlyIn.animalsInside.add(dm);
+                dm = new Hen();
+                dm.currentlyIn = worldMap[i][j];
+                dm.currentlyIn.animalsInside.add(dm);
+            }
+    }
+
+
 }

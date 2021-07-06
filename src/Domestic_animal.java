@@ -2,14 +2,16 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
 
     public abstract Product produce();
 
-    public int price;
-    public int life;
+    int price=-1;
+    public int life=0;
     public int PRODUCE_TIME;
     public int tillProduce = 0;
     //Product productToBeConed; // :))))))
 
     @Override
     public Dir move(Map[][] map,int x,int y) {
+        if (this.life>50)
+            return random_move(map,x,y);
 
         //finding nearest grass
         int X = 0;
@@ -71,8 +73,6 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
             else if (X < x && Y == y)
                 direction = Dir.LEFT;
             //if(X==x && Y==y)
-            else if (this.life>50)
-                direction = random_move(map,x,y);
             else
                 direction = null;
 
@@ -88,16 +88,19 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
 
 
     public Product update() {
-        life -= 10;
-        if (life <= 0)
-            return new Dead();
-        tillProduce++;
-        if (tillProduce == PRODUCE_TIME) {
+        if (currentlyIn != null){
+            life -= 10;
+            if (life <= 0)
+                return new Dead();
+            tillProduce++;
+            if (tillProduce == PRODUCE_TIME) {
 
-            Product p = produce();
-            tillProduce = 0;
-            return p;
+                Product p = produce();
+                tillProduce = 0;
+                return p;
 
+            }
+            return null;
         }
         return null;
     }
@@ -105,15 +108,12 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
         life=110;
     }
     void hunted(World world){
-        //todo
-        // will be executed by map
-        // shouldnt be in update
         world.allDomestics.remove(this);
         Integer count = world.boughtTillNow.get(getClass().getSimpleName());
         if(count != null){
             world.boughtTillNow.replace(getClass().getSimpleName(),--count);
         }
-        this.currentlyIn.animalsInside.remove(this);
+        //this.currentlyIn.animalsInside.remove(this);
     }
 
     @Override

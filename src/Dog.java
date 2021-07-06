@@ -4,6 +4,11 @@ public class Dog extends Animal{
 
     Dog(){
         this.price=100;
+        volume = 10;
+    }
+    @Override
+    public int getPrice() {
+        return price;
     }
 
     @Override
@@ -19,6 +24,12 @@ public class Dog extends Animal{
         if(count != null){
             world.boughtTillNow.replace("Dog",--count);
         }
+        Logg.LOGGER.config("Animal "+this.hashCode()+" hunted!");
         this.currentlyIn.animalsInside.remove(this);
+    }
+
+    @Override
+    int getVolume() {
+        return volume;
     }
 }

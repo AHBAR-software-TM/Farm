@@ -15,6 +15,15 @@ public enum Command {
     TRUCKUNLOAD,
     TRUCKGO,
     OPENWORK,
+    TURN,
+    DOWORK,
+    CAGE,
+    PLANTALL,
+    INFO,
+    MAPANIMALPRINT,
+    FILL,
+    SETTING,
+    UPGRADE
     ;
 
     Object obj;

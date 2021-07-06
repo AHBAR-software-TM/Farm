@@ -1,8 +1,9 @@
 public class User {
-    String userName;
-    String password;
-    int level = 1;
-    int coin = 0;
+    public String userName;
+    public String password;
+    public int level = 1;
+    public int coin = 0;
+    public int userWantsToPlayLvl = 0;
     public boolean equals(User u){
         return this.password.equals(u.password);
     }
@@ -11,4 +12,5 @@ public class User {
         this.password = password;
 
     }
+    User(){}
 }

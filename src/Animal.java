@@ -6,11 +6,17 @@ public abstract class Animal {
         return null;
     }
 
-    public int price;
+    public int getPrice() {
+        return price;
+    }
+
+    int price=-1;
     Map currentlyIn;
     public int x;
     public int y;
     boolean wannaMove;
+    int volume;
+    AnimalColor col = AnimalColor.values()[(int)(Math.random()*5)];
 
     public Dir random_move(Map[][] map, int x, int y) {
 
@@ -70,6 +76,29 @@ public abstract class Animal {
         }
         return direction;
     }
+    int getVolume(){
+        return volume;
+    }
+    String printToMap(){
+        return col.s+"."+AnimalColor.RESET.s;
+    }
+}
+enum AnimalColor{
+    //WHITE("\033[0;37m"),
+    //BLACK  ("\033[0;30m"),
+    GREEN  ("\033[0;32m"),
+    YELLOW ("\033[0;33m"),
+    BLUE ("\033[0;34m"),
+    PURPLE ("\033[0;35m"),
+    CYAN("\033[0;36m"),
+    RED ( "\033[0;31m"),
+    RESET ("\033[0m")
+    ;
+    String s;
+    AnimalColor(String s){
+        this.s = s;
+    }
+
 }
 
 enum Dir { RIGHT,LEFT,UP,DOWN };

@@ -53,4 +53,11 @@ public class Inventory {
         }
         return goingOut;
     }
+    void printInventory(){
+        System.out.println("INVENTORY:");
+        products.forEach(product -> System.out.println(product.getClass().getSimpleName()));
+        wild_animals.forEach(animal -> System.out.println(animal.getClass().getSimpleName()));
+        System.out.println("Empty inv space: " + (size - getFilledVolume()));
+    }
+
 }

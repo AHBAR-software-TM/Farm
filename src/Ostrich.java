@@ -4,9 +4,13 @@ public class Ostrich extends Domestic_animal{
         this.life=100;
         this.price=200;
         PRODUCE_TIME = 3;
+        volume = 5;
     }
 
-    
+    @Override
+    public int getPrice() {
+        return price;
+    }
     @Override
     public Product produce() { return new Feather(); }
 
@@ -18,4 +22,9 @@ public class Ostrich extends Domestic_animal{
 //
 //
 //    }
+
+    @Override
+    int getVolume() {
+        return volume;
+    }
 }
