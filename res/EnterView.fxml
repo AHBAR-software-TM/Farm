@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane id="first" alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.EnterMenuGui">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@firstBack.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="loginLabel" onMouseClicked="#loginAction" prefHeight="10.0" prefWidth="94.0" styleClass="firstButt" stylesheets="@styles.css" text="Log in" textFill="#15611cbb">
+         <font>
+            <Font name="Agency FB Bold" size="40.0" />
+         </font>
+         <StackPane.margin>
+            <Insets bottom="160.0" right="200.0" />
+         </StackPane.margin>
+      </Label>
+      <Label id="firstButt" fx:id="signupLabel" onMouseClicked="#signupAction" prefHeight="14.0" prefWidth="94.0" styleClass="firstButt" stylesheets="@styles.css" text="Signup" textFill="#15611cbb">
+         <font>
+            <Font name="Agency FB Bold" size="40.0" />
+         </font>
+         <StackPane.margin>
+            <Insets bottom="110.0" right="200.0" />
+         </StackPane.margin>
+      </Label>
+   </children>
+</StackPane>

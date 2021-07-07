@@ -2,3 +2,4 @@
 {"userName":"sa","password":"ww","level":2,"coin":0,"userWantsToPlayLvl":1}
 {"userName":"sss","password":"sss","level":2,"coin":0,"userWantsToPlayLvl":1}
 {"userName":"ll","password":"r","level":1,"coin":0,"userWantsToPlayLvl":0}
+{"userName":"ata","password":"1","level":1,"coin":0,"userWantsToPlayLvl":0}

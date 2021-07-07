@@ -1,0 +1,21 @@
+package backend;
+
+public class Bakery extends Workshop{
+
+    Bakery(){
+        this.level=1;
+        this.build_price=250;
+        this.produce_time=5;
+        resourceType = "backend.Flour";
+    }
+
+    @Override
+    Product produce() {
+        return new Bread();
+    }
+
+    @Override
+    int getPrice() {
+        return build_price;
+    }
+}
