@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox fx:id="main" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="700.0" style="-fx-background-radius: 10;" styleClass="lightGlass" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.MissionElement">
    <children>
       <Pane prefHeight="80.0" prefWidth="34.0" />
@@ -16,7 +15,7 @@
             <Font name="Agency FB" size="25.0" />
          </font>
       </Label>
-      <ImageView fx:id="i" fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i" fitHeight="34.0" fitWidth="34.0" onMouseClicked="#PlayMission" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@play.png" />
          </image>

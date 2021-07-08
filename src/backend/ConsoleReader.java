@@ -202,9 +202,9 @@ public class ConsoleReader {
             Mission mission = Main.getMissionInfoByLvl(user.userWantsToPlayLvl);
             //backend.World world = new backend.World(mission);
             World world=null;
-            try{world= ((World) bringUp(stage));}catch (Exception e){
-                e.printStackTrace();
-            }
+//            try{world= ((World) bringUp(stage));}catch (Exception e){
+//                e.printStackTrace();
+//            }
             world.setMission(mission);
             world.coin += user.coin;
             Command command = getCommandFromConsole();
@@ -307,7 +307,7 @@ public class ConsoleReader {
 //                                    System.out.println("backend.Animal Caged.");
 //                            }
 //                        }
-                        Iterator<Animal> itr = m.animalsInside.iterator();
+                        Iterator<Animal> itr = m.getAnimalsInside().iterator();
                         //System.out.println(itr);
                         while (itr.hasNext()){
                             Animal a = itr.next();
@@ -322,13 +322,13 @@ public class ConsoleReader {
                         }
                         break;
 
-                    case PLANTALL:
-                        if (world.well.water==0)
-                            System.out.println("Empty well.");
-                        else
-                            for (int i = world.well.water; i>0; i--)
-                                world.plant((int) (Math.random()*6%6)+1,(int) (Math.random()*6%6)+1);
-                        break;
+//                    case PLANTALL:
+//                        if (world.well.water==0)
+//                            System.out.println("Empty well.");
+//                        else
+//                            for (int i = world.well.water; i>0; i--)
+//                                world.plant((int) (Math.random()*6%6)+1,(int) (Math.random()*6%6)+1);
+//                        break;
 
                     case INFO:
                         world.printMapGrass();
@@ -375,15 +375,15 @@ public class ConsoleReader {
 
         }
 
-        public Object bringUp(Stage stage) throws IOException {
-            FXMLLoader l = new FXMLLoader(World.class.getResource("res/GameMap.fxml"));
-            l.setController(new World());
-            stage.setScene(new Scene(l.load()));
-            stage.show();
-
-            return l.getController();
-
-        }
+//        public Object bringUp(Stage stage) throws IOException {
+//            FXMLLoader l = new FXMLLoader(World.class.getResource("res/GameMap.fxml"));
+//            l.setController(new World());
+//            stage.setScene(new Scene(l.load()));
+//            stage.show();
+//
+//            return l.getController();
+//
+//        }
     });
 
     /**
@@ -522,7 +522,7 @@ public class ConsoleReader {
                 }
 
             case "WELL":
-            case "backend.Well":
+            case "Well":
             case "well":
                 return Command.WELL_CHARGE;
 
@@ -546,7 +546,7 @@ public class ConsoleReader {
 
 
             case "TRUCK":
-            case "backend.Truck":
+            case "Truck":
             case "truck":
                 try {
                     switch (fullLine[1]) {

@@ -22,7 +22,7 @@ public class Cat extends Animal{
         //initializing min
         for(int i=0 ; i<6 && !is_product_on_map ; i++){
             for(int j=0 ; j<6 && !is_product_on_map ; j++){
-                if(!map[i][j].productsInside.isEmpty()) {
+                if(!map[i][j].getProductsInside().isEmpty()) {
                     min=Math.abs(i-x)+Math.abs(j-y);
                     is_product_on_map=true;
                     X=i;
@@ -34,7 +34,7 @@ public class Cat extends Animal{
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 6; j++) {
                     int m = Math.abs(i-x) + Math.abs(j-y);
-                    if (m<min && !map[i][j].productsInside.isEmpty()){
+                    if (m<min && !map[i][j].getProductsInside().isEmpty()){
                         min=m;
                         X=i;
                         Y=j;

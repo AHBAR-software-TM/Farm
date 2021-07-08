@@ -2,48 +2,103 @@ package frontend;
 
 import backend.*;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
-public class WorldGui extends Application {
+public class WorldGui {
     World world;
     User user;
+    int level;
+    UpdateThread ut;
+    @FXML
+    GridPane grid;
+    @FXML
+    ProgressBar wellBar;
 
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        bringUp(stage);
-        run(stage);
+
+
+    class UpdateThread extends Thread{
+        boolean exit = false;
+        @Override
+        public void run() {
+            while(!exit){
+                world.update();
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public void close(){
+            exit = true;
+
+        }
+    }
+    void wellInit(){
+        wellBar.progressProperty().bind(world.well.chargeForBar);
+    }
+    void threadInit(){
+        ut = new UpdateThread();
+        ut.start();
+    }
+    void fillGridPane(){
+        for (int i = 0; i < grid.getRowCount(); i++) {
+            for (int j = 0; j < grid.getColumnCount(); j++) {
+                FXMLLoader ij = new FXMLLoader(getClass().getResource("/res/MapCell.fxml"));
+
+                try {
+                    grid.add(ij.load(),j,i);
+                    world.worldMap[i][j]=ij.getController();
+                    world.worldMap[i][j].setCoordinate(i,j);
+                    world.worldMap[i][j].world=this.world;
+                    //world.worldMap[i][j].
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+    @FXML
+    public void wellClicked(MouseEvent e) throws InterruptedException {
+        world.well.charge();
+    }
+    @FXML
+    public void closeGame(ActionEvent e){
+        ut.close();
+        System.exit(0);
     }
 
-    public Object bringUp(Stage stage) throws IOException {
-        FXMLLoader l = new FXMLLoader(World.class.getResource("res/GameMap.fxml"));
-        l.setController(new World());
-        stage.setScene(new Scene(l.load()));
-        stage.show();
 
-        return l.getController();
+    public void run(){
 
-    }
+        //System.out.println("Game started\nlevel: "+ user.userWantsToPlayLvl );
+        Mission mission = Main.getMissionInfoByLvl(level);
+        world = new World(mission);
+        fillGridPane();
 
-
-    public void run(Stage stage){
-
-        System.out.println("Game started\nlevel: "+ user.userWantsToPlayLvl );
-        Mission mission = Main.getMissionInfoByLvl(user.userWantsToPlayLvl);
-        backend.World world = new backend.World(mission);
-        //World world=null;
-//        try{
-//            world= ((World) bringUp(stage));
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-        world.setMission(mission);
         world.coin += user.coin;
+        for (int i = 0; i < 20; i++) {
+            world.worldMap[(int) (Math.random()*6%6)][(int) (Math.random()*6%6)].addGrass();
+        }
+        wellInit();
+        threadInit();
+        //world.printMapGrass();
         //Command command = getCommandFromConsole();
 //        while (command != Command.EXIT) {
 //

@@ -24,7 +24,7 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
         //initializing min
         for (int i = 0; i < 6 && !is_grass_on_map; i++) {
             for (int j = 0; j < 6 && !is_grass_on_map; j++) {
-                if (map[i][j].grass > 0) {
+                if (map[i][j].getGrass() > 0) {
                     min = Math.abs(i - x) + Math.abs(j - y);
                     is_grass_on_map = true;
                     X = i;
@@ -36,7 +36,7 @@ public abstract class Domestic_animal extends Animal implements Comparable<Domes
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 6; j++) {
                     int m = Math.abs(i - x) + Math.abs(j - y);
-                    if (m < min && map[i][j].grass > 0) {
+                    if (m < min && map[i][j].getGrass() > 0) {
                         min = m;
                         X = i;
                         Y = j;

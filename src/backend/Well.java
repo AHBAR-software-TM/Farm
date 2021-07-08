@@ -1,18 +1,23 @@
 package backend;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+
 public class Well {
-    byte water = 5;
+    private byte water = 5;
+    public DoubleProperty chargeForBar = new SimpleDoubleProperty(water/5.0);
     final byte TIME_OF_CHARGE = 3;
     byte timeToCharge = 0;
     boolean plant(){
         if (water > 0){
             water--;
+            chargeForBar.set(water/5.0);
             return true;
         }
         return false;
     }
 
-    boolean charge(){
+    public boolean charge(){
         if (water != 0 || timeToCharge != 0){
             //second condition ensures that the well is not currently being charged
             Logg.LOGGER.warning("backend.Well has no water!");
@@ -28,8 +33,10 @@ public class Well {
             timeToCharge --;
         else return;
 
-        if (timeToCharge == 0)
+        if (timeToCharge == 0){
             water = 5;
+            chargeForBar.set(1.0);
+        }
 
 
     }

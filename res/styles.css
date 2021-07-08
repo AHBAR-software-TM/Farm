@@ -1,5 +1,11 @@
-#mapBack {
-    -fx-background-image: url("sky.png");
+.skyBack {
+    -fx-background-image: url("sky.jpg");
+}
+.woodBack {
+    -fx-background-image: url("wood5.jpg");
+}
+.woodBack2 {
+    -fx-background-image: url("wood4.jpg");
 }
 #cell1 {
     -fx-background-color: #00000000;

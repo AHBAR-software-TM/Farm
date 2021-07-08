@@ -27,7 +27,7 @@ public class Dog extends Animal{
             world.boughtTillNow.replace("backend.Dog",--count);
         }
         Logg.LOGGER.config("backend.Animal "+this.hashCode()+" hunted!");
-        this.currentlyIn.animalsInside.remove(this);
+        this.currentlyIn.getAnimalsInside().remove(this);
     }
 
     @Override

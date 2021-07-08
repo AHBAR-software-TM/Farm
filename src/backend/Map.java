@@ -1,28 +1,47 @@
 package backend;
 
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 public class Map {
 
+    @FXML
+    ImageView microGrass,macroGrass;
 
+    int x,y;
 
-
-
-    Map(World world) {
-        this.grass = 0;
+    public Map(World world) {
+        this.setGrass(0);
         this.world = world;
     }
-    World world;
-    public int grass;
-    LinkedList<Animal> animalsInside = new LinkedList<>();
-    LinkedList<Product> productsInside = new LinkedList<>();
+    public Map(){
 
 
-    public void move(Map[][] map,int x,int y) {
+    }
+    public World world;
+    private int grass=0;
+    private LinkedList<Animal> animalsInside = new LinkedList<>();
+    private LinkedList<Product> productsInside = new LinkedList<>();
+
+    synchronized public LinkedList<Animal> getAnimalsInside() {
+        return animalsInside;
+    }
+
+
+
+    synchronized public LinkedList<Product> getProductsInside() {
+        return productsInside;
+    }
+
+
+    public void move(Map[][] map, int x, int y) {
         LinkedList<Animal> toBeRemoved = new LinkedList<>();
-        for(Animal a:animalsInside) {
+        for(Animal a: getAnimalsInside()) {
             Dir direction=a.move(map,x,y);
 
             if (direction == null || !a.wannaMove) {
@@ -67,7 +86,7 @@ public class Map {
             toBeRemoved.add(a);
         }
         for (Animal a:toBeRemoved){
-            this.animalsInside.remove(a);
+            this.getAnimalsInside().remove(a);
             Logg.LOGGER.info("backend.Animal "+a+" dead!");
         }
 
@@ -109,7 +128,7 @@ public class Map {
     void update(){
         //backend.Wild_animal w=null;
 
-        productsInside.removeIf(Product::update);
+        getProductsInside().removeIf(Product::update);
 
         giveFood();
 
@@ -117,13 +136,13 @@ public class Map {
         if(wild_animal!=null){
             Dog d = dogExist();
             if(d!=null){
-                animalsInside.remove(d);
-                animalsInside.remove(wild_animal);
+                getAnimalsInside().remove(d);
+                getAnimalsInside().remove(wild_animal);
                 Logg.LOGGER.info("backend.Animal "+d + " removed from " + this);
                 Logg.LOGGER.info("backend.Animal "+wild_animal + " removed from " + this);
             }
             else{
-                Iterator<Animal> itr = animalsInside.descendingIterator();
+                Iterator<Animal> itr = getAnimalsInside().descendingIterator();
                 while (itr.hasNext()) {
                     Animal a = itr.next();
                     if (a instanceof Domestic_animal) {
@@ -133,7 +152,7 @@ public class Map {
                 }
             }
         }
-        Iterator<Animal> itr = animalsInside.descendingIterator();
+        Iterator<Animal> itr = getAnimalsInside().descendingIterator();
         //for (backend.Animal a: animalsInside){
         while (itr.hasNext()){
             Animal a = itr.next();
@@ -155,7 +174,7 @@ public class Map {
 
             Product p = a.update();
             if (p != null && !(p instanceof Dead)){
-                productsInside.add(p);
+                getProductsInside().add(p);
                 Logg.LOGGER.config("backend.Product "+p+" produced by "+a+" in "+a.currentlyIn);
             }
             else if (p != null){
@@ -177,7 +196,7 @@ public class Map {
     boolean hunt(){
         Dog d = dogExist();
         if(d == null){
-            Iterator<Animal> itr = animalsInside.descendingIterator();
+            Iterator<Animal> itr = getAnimalsInside().descendingIterator();
             while (itr.hasNext()){
                 Animal a = itr.next();
                 if(a instanceof Domestic_animal){
@@ -203,13 +222,13 @@ public class Map {
     void putAnimalIn(Animal animal){
         //animal.currentlyIn.animalsInside.remove(animal);
         animal.currentlyIn = this;
-        this.animalsInside.add(animal);
+        this.getAnimalsInside().add(animal);
         animal.wannaMove = false;
         Logg.LOGGER.info("backend.Animal "+animal+" added to "+this);
 
     }
     Dog dogExist(){
-        for (Animal animal:animalsInside){
+        for (Animal animal: getAnimalsInside()){
             if(animal.getClass().getSimpleName().equals("backend.Dog")) {
                 Logg.LOGGER.info(animal + " exists in " + this);
                 return (Dog) animal;
@@ -221,8 +240,8 @@ public class Map {
 
     void giveFood(){
         PriorityQueue<Domestic_animal> allDoms = giveAllDomesticsIn();
-        while (grass > 0 && !allDoms.isEmpty()){
-             grass --;
+        while (getGrass() > 0 && !allDoms.isEmpty()){
+             setGrass(getGrass() - 1);
              allDoms.poll().eat();
              Logg.LOGGER.info("food has been given to animals");
 
@@ -231,7 +250,7 @@ public class Map {
     }
     PriorityQueue<Domestic_animal> giveAllDomesticsIn(){
         PriorityQueue<Domestic_animal> allDomesticIn = new PriorityQueue<>();
-        for (Animal a: animalsInside){
+        for (Animal a: getAnimalsInside()){
             if (a instanceof Domestic_animal && ((Domestic_animal) a).life<=50){
                 allDomesticIn.add(((Domestic_animal) a));
             }
@@ -240,7 +259,7 @@ public class Map {
     }
 
     boolean gurbaExist(){
-        for (Animal animal:animalsInside){
+        for (Animal animal: getAnimalsInside()){
             if(animal.getClass().getSimpleName().equals("backend.Cat")) {
                 Logg.LOGGER.info(animal + " exists in " + this);
                 return true;
@@ -251,7 +270,7 @@ public class Map {
 
     Wild_animal wildExist(){
 
-        for (Animal a:animalsInside){
+        for (Animal a: getAnimalsInside()){
             if (a instanceof Wild_animal) {
                 Logg.LOGGER.info(a + " exists in " + this);
                 return ((Wild_animal) a);
@@ -260,5 +279,42 @@ public class Map {
         return null;
     }
 
+    public void updatePic(){
+        if (grass <= 0){
+            microGrass.setVisible(false);
+            macroGrass.setVisible(false);
+        }else
+        if (grass == 1){
+            microGrass.setVisible(true);
+            microGrass.setOpacity(1);
+            macroGrass.setVisible(false);
+        }
+        else {
+            microGrass.setVisible(false);
+            macroGrass.setVisible(true);
+            macroGrass.setOpacity(1);
+        }
+    }
 
+
+    public int getGrass() {
+        return grass;
+    }
+
+    public void setGrass(int grass) {
+        this.grass = grass;
+        updatePic();
+    }
+    public void addGrass(){
+        grass++;
+        updatePic();
+    }
+    @FXML
+    public void clicked(MouseEvent e){
+        world.plant(x+1,y+1);
+    }
+    public void setCoordinate(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
 }
