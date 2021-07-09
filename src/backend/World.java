@@ -135,7 +135,7 @@ public class World   {
     }
 
     public void printMapGrass() {
-        System.out.println("           ===== backend.Map =====\n");
+        System.out.println("           ===== Map =====\n");
         System.out.println("+-----+-----+-----+-----+-----+-----+");
         for (Map[] mapArray : worldMap) {
             for (Map m : mapArray) {
@@ -187,35 +187,35 @@ public class World   {
 
     }
 
-    Animal buy(String animalName) {
+    public Animal buy(String animalName) {
 
         Animal dm = null;
         switch (animalName) {
-            case "backend.Hen":
+            case "Hen":
             case "HEN":
             case "hen":
                 dm = new Hen();
                 break;
 
-            case "backend.Dog":
+            case "Dog":
             case "DOG":
             case "dog":
                 dm = new Dog();
                 break;
 
-            case "backend.Buffalo":
+            case "Buffalo":
             case "BUFFALO":
             case "buffalo":
                 dm = new Buffalo();
                 break;
 
-            case "backend.Cat":
+            case "Cat":
             case "CAT":
             case "cat":
                 dm = new Cat();
                 break;
 
-            case "backend.Ostrich":
+            case "Ostrich":
             case "OSTRICH":
             case "ostrich":
                 dm = new Ostrich();
@@ -237,7 +237,7 @@ public class World   {
             bought++;
             boughtTillNow.replace(dm.getClass().getSimpleName(), bought);
         }
-        dm.currentlyIn = worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6)];
+        dm.currentlyIn = worldMap[(int) (Math.random() * 6) % 6][(int) (Math.random() * 6)%6];
 
         dm.currentlyIn.getAnimalsInside().add(dm);
         return dm;
@@ -381,7 +381,7 @@ public class World   {
     }
 
     Product getProductFromInventoryByName(String productName) {
-        //backend.Product p = null;
+        //Product p = null;
         for (Product P : inventory.products) {
             if (productName.equalsIgnoreCase(P.getClass().getSimpleName())) {
                 Logg.LOGGER.info(P+" has gotten FromInventory");
@@ -518,13 +518,13 @@ public class World   {
         }
 
         workshops.add(w);
-        Logg.LOGGER.info("backend.Workshop" + w + " created.");
+        Logg.LOGGER.info("Workshop" + w + " created.");
 
         return w;
     }
 
     Workshop getWorkshop(String workName) {
-        //backend.Workshop w = null;
+        //Workshop w = null;
         if (workName.equalsIgnoreCase("eggpdr")) {
             workName = "eggpowderplant";
         }
@@ -579,7 +579,7 @@ public class World   {
     }
 
     void printMapAnimal() {
-        System.out.println("    ===== backend.Map-Animals =====\n");
+        System.out.println("    ===== Map-Animals =====\n");
         System.out.println("+-----+-----+-----+-----+-----+-----+");
         for (Map[] mapArray : worldMap) {
             for (Map m : mapArray) {

@@ -62,7 +62,26 @@
                         </Label>
                      </children>
                   </StackPane>
-                  <Button mnemonicParsing="false" onAction="#closeGame" text="Button" />
+                  <Button mnemonicParsing="false" onAction="#buyHen" text="Button" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="67.0" fitWidth="64.0" onMouseClicked="#buyHen" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@hen.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="69.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@turkey.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="72.0" fitWidth="79.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@buffalo.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>

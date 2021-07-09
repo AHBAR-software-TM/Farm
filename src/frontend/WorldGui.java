@@ -13,59 +13,148 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 public class WorldGui {
     World world;
     User user;
     int level;
-    UpdateThread ut;
+    final UpdateThread ut = new UpdateThread();
+    boolean waitThread = false;
     @FXML
     GridPane grid;
     @FXML
     ProgressBar wellBar;
 
 
-
-
-    class UpdateThread extends Thread{
+    class UpdateThread extends Thread {
         boolean exit = false;
+       volatile boolean waiting=false;
+        boolean shallIWait = false;
+
         @Override
         public void run() {
-            while(!exit){
-                world.update();
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            while (!exit) {
+                if (!shallIWait) {
+                    world.update();
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    waiting = true;
+                    synchronized (this){
+                        while (shallIWait){
+                            try {
+                                System.out.println("lets wait...");
+                                wait();
+                                System.out.println("waiting done");
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        public void close(){
+        public void close() {
             exit = true;
 
         }
+
+
     }
-    void wellInit(){
+
+    void wellInit() {
         wellBar.progressProperty().bind(world.well.chargeForBar);
     }
-    void threadInit(){
-        ut = new UpdateThread();
+
+    void threadInit() {
+        //ut = new UpdateThread();
         ut.start();
     }
-    void fillGridPane(){
+
+    void makeWait() {
+
+            waitThread = true;
+            //System.out.println(1);
+            ut.shallIWait = true;
+            while (!ut.waiting){
+                try {
+                    TimeUnit.MILLISECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            //System.out.println(2);
+//        while (!ut.waiting) {
+//            //Logg.LOGGER.warning("");
+//        }
+
+
+
+//            if (ut.waiting) {
+//                try {
+//                    while (waitThread) {
+//                        ut.wait();
+//                    }
+//                } catch (InterruptedException interruptedException) {
+//                    interruptedException.printStackTrace();
+//                }
+//            } else {
+//                try {
+//                    TimeUnit.MILLISECONDS.sleep(100);
+//                    makeWait();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+
+    }
+
+    @FXML
+    void buyHen(ActionEvent e) {
+        makeWait();
+        System.out.println("Hen bought");
+        world.buy("Hen");
+
+        synchronized (ut){
+            waitThread = false;
+            ut.shallIWait = false;
+            ut.waiting = false;
+            ut.notify();}
+
+    }
+
+    @FXML
+    void buyTurkey(MouseEvent e) {
+
+    }
+
+    @FXML
+    void buyBuffalo(MouseEvent e) {
+
+
+    }
+
+    void fillGridPane() {
         for (int i = 0; i < grid.getRowCount(); i++) {
             for (int j = 0; j < grid.getColumnCount(); j++) {
                 FXMLLoader ij = new FXMLLoader(getClass().getResource("/res/MapCell.fxml"));
 
                 try {
-                    grid.add(ij.load(),j,i);
-                    world.worldMap[i][j]=ij.getController();
-                    world.worldMap[i][j].setCoordinate(i,j);
-                    world.worldMap[i][j].world=this.world;
+                    grid.add(ij.load(), j, i);
+                    world.worldMap[i][j] = ij.getController();
+                    world.worldMap[i][j].setCoordinate(i, j);
+                    world.worldMap[i][j].world = this.world;
                     //world.worldMap[i][j].
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -74,18 +163,20 @@ public class WorldGui {
 
         }
     }
+
     @FXML
     public void wellClicked(MouseEvent e) throws InterruptedException {
         world.well.charge();
     }
+
     @FXML
-    public void closeGame(ActionEvent e){
+    public void closeGame(ActionEvent e) {
         ut.close();
         System.exit(0);
     }
 
 
-    public void run(){
+    public void run() {
 
         //System.out.println("Game started\nlevel: "+ user.userWantsToPlayLvl );
         Mission mission = Main.getMissionInfoByLvl(level);
@@ -94,7 +185,7 @@ public class WorldGui {
 
         world.coin += user.coin;
         for (int i = 0; i < 20; i++) {
-            world.worldMap[(int) (Math.random()*6%6)][(int) (Math.random()*6%6)].addGrass();
+            world.worldMap[(int) (Math.random() * 6 % 6)][(int) (Math.random() * 6 % 6)].addGrass();
         }
         wellInit();
         threadInit();
@@ -265,5 +356,5 @@ public class WorldGui {
 //        }
         //interMenu.execute.execute(user,stage);
     }
-   // public void lnc()
+    // public void lnc()
 }

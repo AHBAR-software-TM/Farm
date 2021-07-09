@@ -44,8 +44,8 @@ public class Map {
         for(Animal a: getAnimalsInside()) {
             Dir direction=a.move(map,x,y);
 
-            if (direction == null || !a.wannaMove) {
-                Logg.LOGGER.info("backend.Animal "+a+" did not not move!");
+            if (direction == null && a.wannaMove) {
+                Logg.LOGGER.info("Animal "+a+" did not not move!");
                 continue;
             }
             if(a instanceof Tiger) {
@@ -87,7 +87,7 @@ public class Map {
         }
         for (Animal a:toBeRemoved){
             this.getAnimalsInside().remove(a);
-            Logg.LOGGER.info("backend.Animal "+a+" dead!");
+            //Logg.LOGGER.info("backend.Animal "+a+" dead!");
         }
 
    }
@@ -97,34 +97,7 @@ public class Map {
 
     }
 
-//    public void update(boolean eat, LinkedList<backend.Product> produced) {
-//
-//        //removing eated animals
-//        if (eat) {
-//            LinkedList<backend.Domestic_animal> eated = new LinkedList<>();
-//            for (backend.Animal a : this.animalsInside) {
-//                if (a instanceof backend.Domestic_animal) eated.add((backend.Domestic_animal) a);
-//            }
-//            for (backend.Domestic_animal d : eated) {
-//                this.animalsInside.remove(d);
-//            }
-//        }
-//
-//        //adding products to map
-//        this.productsInside.addAll(produced);
-//
-//        //caging wild animals
-//        for (backend.Animal a : animalsInside) {
-//            if (a instanceof backend.Wild_animal) {
-//                if (((backend.Wild_animal) a).cage()) {
-//                    ((backend.Wild_animal) a).caged = true;
-//                    ((backend.Wild_animal) a).cage = 0;
-//                }
-//            }
-//        }
-//
-//
-//    }
+
     void update(){
         //backend.Wild_animal w=null;
 
@@ -138,15 +111,15 @@ public class Map {
             if(d!=null){
                 getAnimalsInside().remove(d);
                 getAnimalsInside().remove(wild_animal);
-                Logg.LOGGER.info("backend.Animal "+d + " removed from " + this);
-                Logg.LOGGER.info("backend.Animal "+wild_animal + " removed from " + this);
+                Logg.LOGGER.info("Animal "+d + " removed from " + this);
+                Logg.LOGGER.info("Animal "+wild_animal + " removed from " + this);
             }
             else{
                 Iterator<Animal> itr = getAnimalsInside().descendingIterator();
                 while (itr.hasNext()) {
                     Animal a = itr.next();
                     if (a instanceof Domestic_animal) {
-                        Logg.LOGGER.info("backend.Animal "+a + " removed from " + this);
+                        Logg.LOGGER.info("Animal "+a + " removed from " + this);
                         itr.remove();
                     }
                 }
@@ -175,7 +148,7 @@ public class Map {
             Product p = a.update();
             if (p != null && !(p instanceof Dead)){
                 getProductsInside().add(p);
-                Logg.LOGGER.config("backend.Product "+p+" produced by "+a+" in "+a.currentlyIn);
+                Logg.LOGGER.config("Product "+p+" produced by "+a+" in "+a.currentlyIn);
             }
             else if (p != null){
                 ((Domestic_animal) a).hunted(world);
@@ -201,7 +174,7 @@ public class Map {
                 Animal a = itr.next();
                 if(a instanceof Domestic_animal){
                   ((Domestic_animal) a).hunted(this.world);
-                  Logg.LOGGER.info("backend.Animal "+a+" hunted!");
+                  Logg.LOGGER.info("Animal "+a+" hunted!");
                   itr.remove();
                 }
 
@@ -224,12 +197,12 @@ public class Map {
         animal.currentlyIn = this;
         this.getAnimalsInside().add(animal);
         animal.wannaMove = false;
-        Logg.LOGGER.info("backend.Animal "+animal+" added to "+this);
+        Logg.LOGGER.info("Animal "+animal+" added to "+this);
 
     }
     Dog dogExist(){
         for (Animal animal: getAnimalsInside()){
-            if(animal.getClass().getSimpleName().equals("backend.Dog")) {
+            if(animal.getClass().getSimpleName().equals("Dog")) {
                 Logg.LOGGER.info(animal + " exists in " + this);
                 return (Dog) animal;
             }
@@ -260,7 +233,7 @@ public class Map {
 
     boolean gurbaExist(){
         for (Animal animal: getAnimalsInside()){
-            if(animal.getClass().getSimpleName().equals("backend.Cat")) {
+            if(animal.getClass().getSimpleName().equals("Cat")) {
                 Logg.LOGGER.info(animal + " exists in " + this);
                 return true;
             }
