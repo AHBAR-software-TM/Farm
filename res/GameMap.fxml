@@ -16,7 +16,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <SplitPane dividerPositions="1.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.WorldGui">
    <items>
       <Pane maxHeight="-Infinity" prefHeight="720.0" prefWidth="0.0" styleClass="woodBack2" stylesheets="@styles.css">
@@ -31,17 +30,17 @@
                         <Insets top="50.0" />
                      </VBox.margin>
                   </ImageView>
-                  <ProgressBar fx:id="wellBar" prefHeight="13.0" prefWidth="120.0" progress="0.0">
+                  <ProgressBar fx:id="wellBar" prefHeight="6.0" prefWidth="117.0" progress="0.0">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
                   </ProgressBar>
-                  <StackPane prefHeight="302.0" prefWidth="274.0">
+                  <StackPane prefHeight="285.0" prefWidth="274.0">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
                      <children>
-                        <ImageView fitHeight="160.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="160.0" fitWidth="225.0" onMouseClicked="#openTruck" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@truck.png" />
                            </image>
@@ -60,24 +59,32 @@
                               <Insets bottom="5.0" left="5.0" />
                            </padding>
                         </Label>
+                        <ProgressBar fx:id="truckBar" prefHeight="6.0" prefWidth="146.0" progress="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <StackPane.margin>
+                              <Insets top="250.0" />
+                           </StackPane.margin>
+                        </ProgressBar>
                      </children>
                   </StackPane>
-                  <Button mnemonicParsing="false" onAction="#buyHen" text="Button" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                  <Button mnemonicParsing="false" onAction="#stopStart" text="Button" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <ImageView fitHeight="67.0" fitWidth="64.0" onMouseClicked="#buyHen" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="70.0" fitWidth="66.0" onMouseClicked="#buyHen" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@hen.png" />
+                              <Image url="@hen54.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="69.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="83.0" fitWidth="89.0" onMouseClicked="#buyTurkey" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@turkey.png" />
+                              <Image url="@turkey54.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="72.0" fitWidth="79.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="78.0" fitWidth="81.0" onMouseClicked="#buyBuffalo" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@buffalo.png" />
+                              <Image url="@buffalo54.png" />
                            </image>
                         </ImageView>
                      </children>

@@ -1,40 +1,46 @@
 package frontend;
 
 import backend.*;
-import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
+import com.sun.javafx.binding.StringFormatter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.concurrent.CountDownLatch;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class WorldGui {
-    World world;
+    static World world;
     User user;
     int level;
-    final UpdateThread ut = new UpdateThread();
-    boolean waitThread = false;
+    static final UpdateThread ut = new UpdateThread();
+    HashMap<Label, Object> invLabelToObj = new HashMap<>();
+    HashMap<Label, Object> truckLabelToObj = new HashMap<>();
+
     @FXML
     GridPane grid;
     @FXML
-    ProgressBar wellBar;
+    ProgressBar wellBar, truckBar;
+    @FXML
+    Label truckLoad;
+    @FXML
+    VBox invVbox, truckVbox;
 
 
-    class UpdateThread extends Thread {
+    static class UpdateThread extends Thread {
         boolean exit = false;
-       volatile boolean waiting=false;
+        volatile boolean waiting = false;
         boolean shallIWait = false;
 
         @Override
@@ -42,16 +48,17 @@ public class WorldGui {
             while (!exit) {
                 if (!shallIWait) {
                     world.update();
+                    world.info();
                     try {
-                        TimeUnit.SECONDS.sleep(1);
+                        TimeUnit.SECONDS.sleep(2);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     waiting = true;
-                    synchronized (this){
-                        while (shallIWait){
+                    synchronized (this) {
+                        while (shallIWait) {
                             try {
                                 System.out.println("lets wait...");
                                 wait();
@@ -77,71 +84,77 @@ public class WorldGui {
         wellBar.progressProperty().bind(world.well.chargeForBar);
     }
 
+    void truckInit() {
+        truckBar.progressProperty().bind(world.truck.timeProperty);
+        truckLoad.textProperty().bind(world.truck.loadProperty);
+    }
+
     void threadInit() {
         //ut = new UpdateThread();
         ut.start();
     }
 
-    void makeWait() {
-
-            waitThread = true;
-            //System.out.println(1);
-            ut.shallIWait = true;
-            while (!ut.waiting){
-                try {
-                    TimeUnit.MILLISECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+    public static void makeUpdateThreadWait() {
+        //System.out.println(1);
+        ut.shallIWait = true;
+        while (!ut.waiting) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            //System.out.println(2);
-//        while (!ut.waiting) {
-//            //Logg.LOGGER.warning("");
-//        }
-
-
-
-//            if (ut.waiting) {
-//                try {
-//                    while (waitThread) {
-//                        ut.wait();
-//                    }
-//                } catch (InterruptedException interruptedException) {
-//                    interruptedException.printStackTrace();
-//                }
-//            } else {
-//                try {
-//                    TimeUnit.MILLISECONDS.sleep(100);
-//                    makeWait();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
+        }
 
     }
 
-    @FXML
-    void buyHen(ActionEvent e) {
-        makeWait();
-        System.out.println("Hen bought");
-        world.buy("Hen");
+    public static void releaseUpdateThread() {
+        synchronized (ut) {
 
-        synchronized (ut){
-            waitThread = false;
             ut.shallIWait = false;
             ut.waiting = false;
-            ut.notify();}
+            ut.notify();
+        }
+    }
+
+    @FXML
+    void buyHen(MouseEvent e) {
+        makeUpdateThreadWait();
+
+        if (world.buy("Hen") != null) {
+            Logg.LOGGER.warning("Hen bought.");
+        } else {
+            Logg.LOGGER.warning("Hen not bought.");
+        }
+
+        releaseUpdateThread();
+
 
     }
 
     @FXML
     void buyTurkey(MouseEvent e) {
+        makeUpdateThreadWait();
 
+        if (world.buy("Ostrich") != null) {
+            Logg.LOGGER.warning("Ostrich/Turkey bought.");
+        } else {
+            Logg.LOGGER.warning("Ostrich/Turkey not bought.");
+        }
+
+        releaseUpdateThread();
     }
 
     @FXML
     void buyBuffalo(MouseEvent e) {
+        makeUpdateThreadWait();
 
+        if (world.buy("Buffalo") != null) {
+            Logg.LOGGER.warning("Buffalo bought.");
+        } else {
+            Logg.LOGGER.warning("Buffalo not bought.");
+        }
+
+        releaseUpdateThread();
 
     }
 
@@ -165,7 +178,7 @@ public class WorldGui {
     }
 
     @FXML
-    public void wellClicked(MouseEvent e) throws InterruptedException {
+    public void wellClicked(MouseEvent e) {
         world.well.charge();
     }
 
@@ -173,6 +186,111 @@ public class WorldGui {
     public void closeGame(ActionEvent e) {
         ut.close();
         System.exit(0);
+    }
+
+    @FXML
+    public void stopStart(ActionEvent e) {
+        if (ut.waiting) {
+            releaseUpdateThread();
+        } else {
+            makeUpdateThreadWait();
+        }
+    }
+
+    @FXML
+    public void openTruck(MouseEvent e) {
+        makeUpdateThreadWait();
+        Stage s = new Stage();
+        s.initModality(Modality.APPLICATION_MODAL);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/res/inventoryToTruck.fxml"));
+            loader.setController(this);
+            s.setScene(new Scene(loader.load()));
+            initSellMenu();
+            s.showAndWait();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        } finally {
+            releaseUpdateThread();
+        }
+    }
+
+    void initSellMenu() {
+        initInvVbox();
+        initTruckVbox();
+    }
+
+    void initTruckVbox() {
+        int i = 0;
+
+        //truckLabelToObj.clear();
+
+        for (Animal a : world.truck.animals) {
+            Label l = ((Label) truckVbox.getChildren().get(2 * i));
+            l.setText(a.getClass().getSimpleName());
+            l.setDisable(false);
+            i++;
+            //invLabelToObj.put(l,a);
+        }
+        for (Product p : world.truck.products) {
+            Label l = ((Label) truckVbox.getChildren().get(2 * i));
+            l.setText(p.getClass().getSimpleName());
+            l.setDisable(false);
+            i++;
+            //invLabelToObj.put(l,p);
+        }
+        for (; i < 15; i++) {
+            (truckVbox.getChildren().get(2 * i)).setDisable(true);
+
+        }
+    }
+
+    void initInvVbox() {
+        int i = 0;
+
+        // invLabelToObj.clear();
+
+        for (Wild_animal w : world.inventory.wild_animals) {
+            Label l = ((Label) invVbox.getChildren().get(2 * i));
+            l.setText(w.getClass().getSimpleName());
+            l.setDisable(false);
+            i++;
+            //invLabelToObj.put(l,w);
+        }
+        for (Product p : world.inventory.products) {
+            Label l = ((Label) invVbox.getChildren().get(2 * i));
+            l.setText(p.getClass().getSimpleName());
+            l.setDisable(false);
+            i++;
+            // invLabelToObj.put(l,p);
+        }
+        for (; i < 15; i++) {
+            ((Label) invVbox.getChildren().get(2 * i)).setDisable(true);
+
+        }
+    }
+
+    @FXML
+    void invElementClicked(MouseEvent e) {
+        if (world.addToTruck(((Label) e.getSource()).getText())) {
+            initSellMenu();
+        }
+
+    }
+
+    @FXML
+    void truckElementClicked(MouseEvent e) {
+        if (!world.removeFromTruck(((Label) e.getSource()).getText())) {
+//            System.out.printf("Not enough space in inventory, Current space: %s\n",
+//                    (world.inventory.size - world.inventory.getFilledVolume()));
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setHeaderText("Not enough");
+            a.setContentText(String.valueOf(StringFormatter.format("Not enough space in inventory, Current space: %s\n"
+                    , (world.inventory.size - world.inventory.getFilledVolume()))));
+            a.showAndWait();
+        }else {
+            initSellMenu();
+        }
     }
 
 
@@ -188,6 +306,7 @@ public class WorldGui {
             world.worldMap[(int) (Math.random() * 6 % 6)][(int) (Math.random() * 6 % 6)].addGrass();
         }
         wellInit();
+        truckInit();
         threadInit();
         //world.printMapGrass();
         //Command command = getCommandFromConsole();

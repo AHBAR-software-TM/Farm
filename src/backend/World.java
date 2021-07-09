@@ -13,7 +13,7 @@ public class World   {
 
     //LinkedList<backend.Product> inventory = new LinkedList<>();
 
-    Inventory inventory = new Inventory();
+    public Inventory inventory = new Inventory();
     public int coin;
     LinkedList<Workshop> workshops = new LinkedList<>();
 
@@ -25,7 +25,7 @@ public class World   {
     HashMap<String, Integer> boughtTillNow = new HashMap<>();
 
     public Well well = new Well();
-    Truck truck = new Truck();
+    public Truck truck = new Truck();
 
 
     public void update() {
@@ -332,7 +332,7 @@ public class World   {
         }
     }
 
-    boolean addToTruck(String itemName) {
+    public boolean addToTruck(String itemName) {
         Product p = getProductFromInventoryByName(itemName);
         Animal a = getAnimalFromInventoryByName(itemName);
         Animal a2 = getAnimalFromMapByName(itemName);
@@ -422,7 +422,7 @@ public class World   {
         return a;
     }
 
-    boolean removeFromTruck(String itemName) {
+    public boolean removeFromTruck(String itemName) {
         Product p = getProductFromTruckByName(itemName);
         Animal a = getAnimalFromTruckByName(itemName);
         if (p == null && a == null) {
@@ -433,7 +433,8 @@ public class World   {
             if (inventory.add(p)) {
                 System.out.printf("%s removed from truck.\n", itemName);
                 Logg.LOGGER.info(p + "removed from truck.");
-                truck.products.remove(p);
+                truck.removeObj(p);
+
                 return true;
 
             }
@@ -442,7 +443,7 @@ public class World   {
             if (a instanceof Wild_animal) {
                 if (inventory.add((Wild_animal) a)) {
                     System.out.printf("%s removed from truck.\n", itemName);
-                    truck.animals.remove(a);
+                    truck.removeObj(a);
                     Logg.LOGGER.info(p + "removed from truck.");
                     return true;
 
@@ -453,7 +454,7 @@ public class World   {
                 worldMap[i][j].getAnimalsInside().add(a);
                 a.currentlyIn = worldMap[i][j];
                 System.out.printf("%s removed from truck.\n", itemName);
-                truck.animals.remove(a);
+                truck.removeObj(a);
                 Logg.LOGGER.info(p + "removed from truck.");
                 return true;
             }
@@ -615,6 +616,15 @@ public class World   {
                 dm.currentlyIn = worldMap[i][j];
                 dm.currentlyIn.getAnimalsInside().add(dm);
             }
+    }
+
+    public void info(){
+        //printMapGrass();
+        //taskAccompPrint();
+        printProducts();
+        printAnimals();
+        inventory.printInventory();
+        //truck.print();
     }
 
 

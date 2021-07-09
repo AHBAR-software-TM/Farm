@@ -3,10 +3,10 @@ package backend;
 import java.util.LinkedList;
 
 public class Inventory {
-    int size = 15;
-    LinkedList<Product> products = new LinkedList<>();
-    LinkedList<Wild_animal> wild_animals = new LinkedList<>();
-    int getFilledVolume(){
+    public int size = 15;
+    public LinkedList<Product> products = new LinkedList<>();
+    public LinkedList<Wild_animal> wild_animals = new LinkedList<>();
+    public int getFilledVolume(){
         int sum=0;
 
         for (Product p: products){
@@ -16,6 +16,13 @@ public class Inventory {
         sum += wild_animals.size()*15;
 
         return sum;
+
+    }
+    public void removeObj(Object obj){
+        if(obj instanceof Wild_animal)
+            wild_animals.remove(obj);
+        else if (obj instanceof Product)
+            products.remove(obj);
 
     }
 
