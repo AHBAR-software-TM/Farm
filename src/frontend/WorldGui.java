@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 
 public class WorldGui {
@@ -27,13 +28,14 @@ public class WorldGui {
     static final UpdateThread ut = new UpdateThread();
     HashMap<Label, Object> invLabelToObj = new HashMap<>();
     HashMap<Label, Object> truckLabelToObj = new HashMap<>();
+    boolean isTruckMenuShowingInv = true;
 
     @FXML
     GridPane grid;
     @FXML
     ProgressBar wellBar, truckBar;
     @FXML
-    Label truckLoad;
+    Label truckLoad,invOrFarmAnimal;
     @FXML
     VBox invVbox, truckVbox;
 
@@ -216,7 +218,12 @@ public class WorldGui {
     }
 
     void initSellMenu() {
-        initInvVbox();
+
+        if (isTruckMenuShowingInv)
+            initInvVbox();
+        else
+            initFarmAnimalSellVbox();
+
         initTruckVbox();
     }
 
@@ -246,10 +253,10 @@ public class WorldGui {
     }
 
     void initInvVbox() {
+
+        invOrFarmAnimal.setText("Inventory");
+
         int i = 0;
-
-        // invLabelToObj.clear();
-
         for (Wild_animal w : world.inventory.wild_animals) {
             Label l = ((Label) invVbox.getChildren().get(2 * i));
             l.setText(w.getClass().getSimpleName());
@@ -263,6 +270,31 @@ public class WorldGui {
             l.setDisable(false);
             i++;
             // invLabelToObj.put(l,p);
+        }
+        for (; i < 15; i++) {
+            ((Label) invVbox.getChildren().get(2 * i)).setDisable(true);
+
+        }
+    }
+
+    void initFarmAnimalSellVbox(){
+        invOrFarmAnimal.setText("Animals");
+
+        LinkedList<String> animalNamesInTheMap = new LinkedList<>();
+        for (int n = 0; n < 6; n++)
+            for (int m = 0; m < 6; m++)
+                for (Animal a : world.worldMap[n][m].getAnimalsInside())
+                    if (!animalNamesInTheMap.contains(a.getClass().getSimpleName())&& !(a instanceof Wild_animal))
+                        animalNamesInTheMap.add(a.getClass().getSimpleName());
+
+        int i = 0;
+
+        for (String s : animalNamesInTheMap) {
+            Label l = ((Label) invVbox.getChildren().get(2 * i));
+            l.setText(s);
+            l.setDisable(false);
+            i++;
+            //invLabelToObj.put(l,w);
         }
         for (; i < 15; i++) {
             ((Label) invVbox.getChildren().get(2 * i)).setDisable(true);
@@ -289,8 +321,23 @@ public class WorldGui {
                     , (world.inventory.size - world.inventory.getFilledVolume()))));
             a.showAndWait();
         }else {
+
             initSellMenu();
         }
+    }
+
+    @FXML
+    void changeInvToFarmAnimal(MouseEvent e){
+
+        if (isTruckMenuShowingInv) {
+            isTruckMenuShowingInv = false;
+            initFarmAnimalSellVbox();
+
+        }else {
+            isTruckMenuShowingInv = true;
+            initInvVbox();
+        }
+
     }
 
 
