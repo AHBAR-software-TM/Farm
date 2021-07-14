@@ -98,23 +98,27 @@ public class WorldGui {
 
     public static void makeUpdateThreadWait() {
         //System.out.println(1);
-        ut.shallIWait = true;
-        while (!ut.waiting) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if(!ut.shallIWait) {
+            ut.shallIWait = true;
+            while (!ut.waiting) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
     }
 
     public static void releaseUpdateThread() {
-        synchronized (ut) {
+        if (ut.shallIWait) {
+            synchronized (ut) {
 
-            ut.shallIWait = false;
-            ut.waiting = false;
-            ut.notify();
+                ut.shallIWait = false;
+                ut.waiting = false;
+                ut.notify();
+            }
         }
     }
 
@@ -317,8 +321,8 @@ public class WorldGui {
 //                    (world.inventory.size - world.inventory.getFilledVolume()));
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Not enough");
-            a.setContentText(String.valueOf(StringFormatter.format("Not enough space in inventory, Current space: %s\n"
-                    , (world.inventory.size - world.inventory.getFilledVolume()))));
+            a.setContentText("The inventory empty space is not enough to bring this item back.");
+            //(world.inventory.size - world.inventory.getFilledVolume())+"")
             a.showAndWait();
         }else {
 

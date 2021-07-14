@@ -35,7 +35,7 @@ public abstract class Wild_animal extends Animal {
             }
         }else {
             if(inv.add(this)){
-            System.out.println("backend.Animal moved to inventory.");
+            System.out.println("Animal moved to inventory.");
                 return 2;
             }
             return 1;
