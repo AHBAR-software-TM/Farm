@@ -1,6 +1,7 @@
 package backend;
 
 
+import javafx.application.Platform;
 import javafx.beans.property.*;
 
 import java.util.HashMap;
@@ -75,7 +76,13 @@ public class Truck {
         int value = estimateValue();
         animals.clear();
         products.clear();
-        loadProperty.set("");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                loadProperty.set("");
+            }
+        });
+        //loadProperty.set("");
         go = false;
         return value;
     }
@@ -92,7 +99,7 @@ public class Truck {
         return value;
     }
 
-    void go() {
+    public void go() {
         if (!go) {
             go = true;
             inTripTime = 0;

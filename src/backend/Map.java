@@ -251,16 +251,23 @@ public class Map {
 
     public void updatePic() {
         if (grass <= 0) {
-            microGrass.setVisible(false);
-            macroGrass.setVisible(false);
+//            microGrass.setVisible(false);
+//            macroGrass.setVisible(false);
+            microGrass.setOpacity(0);
+            macroGrass.setOpacity(0);
         } else if (grass == 1) {
-            microGrass.setVisible(true);
+//            microGrass.setVisible(true);
+//            microGrass.setOpacity(1);
+//            macroGrass.setVisible(false);
             microGrass.setOpacity(1);
-            macroGrass.setVisible(false);
+            microGrass.setOpacity(0);
         } else {
-            microGrass.setVisible(false);
-            macroGrass.setVisible(true);
-            macroGrass.setOpacity(1);
+//            microGrass.setVisible(false);
+//            macroGrass.setVisible(true);
+//            macroGrass.setOpacity(1);
+            microGrass.setOpacity(0);
+            microGrass.setOpacity(1);
+
         }
     }
 

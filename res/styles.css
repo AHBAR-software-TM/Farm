@@ -41,3 +41,20 @@
 .lightGlass{
     -fx-background-color: #ffffff7f;
 }
+.gameButt{
+    -fx-background-image: url("inButt.png");
+    -fx-background-position: center;
+    -fx-background-color: #00000000;
+    -fx-background-size: cover;
+}
+.gameButt:pressed{
+    -fx-background-image: url("inButtClicked.png");
+}
+.invBack{
+    -fx-background-image: url("farmBarn.jpg");
+}
+.darkInvElement{
+    -fx-background-color: #ffffff55;
+    -fx-background-radius: 10;
+
+}
