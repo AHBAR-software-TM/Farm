@@ -362,7 +362,6 @@ public class Map {
     public void show_animals(){
 
         double b=15;
-        //stackpane.getChildren().removeAll();
         stackpane.getChildren().clear();
         for(Animal a:animalsInside) {
             stackpane.getChildren().add(a.imageview);

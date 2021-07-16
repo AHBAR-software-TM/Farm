@@ -12,15 +12,10 @@ public class Feather extends Product{
         this.price=20;
         this.volume=1;
         this.disappear_time=4;
-        try {
-            imageview = new ImageView();
-            imageview.setImage(new Image(new FileInputStream("/res/Product/Feather.png")));
-            imageview.setFitHeight(this.image_height);
-            imageview.setFitWidth(this.image_width);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        imageview = new ImageView();
+        imageview.setImage(new Image("/res/Product/Feather.png"));
+        imageview.setFitHeight(this.image_height);
+        imageview.setFitWidth(this.image_width);
 
     }
 }

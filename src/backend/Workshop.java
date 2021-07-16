@@ -5,8 +5,8 @@ import javafx.scene.image.ImageView;
 public abstract class Workshop {
 
     public ImageView imageview;
-    public double image_height=15;
-    public double image_width=15;
+    public double image_height=100;
+    public double image_width=100;
 
     int level;
     int build_price;

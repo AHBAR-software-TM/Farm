@@ -5,8 +5,8 @@ import javafx.scene.image.ImageView;
 public abstract class Product implements Cloneable{
 
     public ImageView imageview;
-    public double image_height=5;
-    public double image_width=5;
+    public double image_height=50;
+    public double image_width=50;
 
     int price;
     int volume;

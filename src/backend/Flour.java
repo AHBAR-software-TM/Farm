@@ -12,14 +12,10 @@ public class Flour extends Product{
         this.price=40;
         this.volume=2;
         this.disappear_time=5;
-        try {
-            imageview = new ImageView();
-            imageview.setImage(new Image(new FileInputStream("/res/Product/Flour.png")));
-            imageview.setFitHeight(this.image_height);
-            imageview.setFitWidth(this.image_width);
+        imageview = new ImageView();
+        imageview.setImage(new Image("/res/Product/Flour.png"));
+        imageview.setFitHeight(this.image_height);
+        imageview.setFitWidth(this.image_width);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

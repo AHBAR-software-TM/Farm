@@ -13,15 +13,11 @@ public class EggPowderPlant extends Workshop{
         this.build_price=150;
         this.produce_time=4;
         resourceType="backend.Egg";
-        try {
-            imageview = new ImageView();
-            imageview.setImage(new Image(new FileInputStream("/res/Workshops/eggpowder1.png")));
-            imageview.setFitHeight(this.image_height);
-            imageview.setFitWidth(this.image_width);
+        imageview = new ImageView();
+        imageview.setImage(new Image("/res/Workshops/eggpowder1.png"));
+        imageview.setFitHeight(this.image_height);
+        imageview.setFitWidth(this.image_width);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

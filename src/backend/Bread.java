@@ -12,15 +12,11 @@ public class Bread extends Product{
         this.price=80;
         this.volume=4;
         this.disappear_time=6;
-        try {
-            imageview = new ImageView();
-            imageview.setImage(new Image(new FileInputStream("/res/Product/Bread.png")));
-            imageview.setFitHeight(this.image_height);
-            imageview.setFitWidth(this.image_width);
+        imageview = new ImageView();
+        imageview.setImage(new Image("/res/Product/Bread.png"));
+        imageview.setFitHeight(this.image_height);
+        imageview.setFitWidth(this.image_width);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
 
