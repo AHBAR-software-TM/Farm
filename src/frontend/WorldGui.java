@@ -191,6 +191,34 @@ public class WorldGui {
 
     }
 
+    @FXML
+    void buyCat(MouseEvent e) {
+        makeUpdateThreadWait();
+
+        if (world.buy("Cat") != null) {
+            Logg.LOGGER.warning("Cat bought.");
+        } else {
+            Logg.LOGGER.warning("Cat not bought.");
+        }
+
+        releaseUpdateThread();
+
+    }
+
+    @FXML
+    void buyDog(MouseEvent e) {
+        makeUpdateThreadWait();
+
+        if (world.buy("Dog") != null) {
+            Logg.LOGGER.warning("Dog bought.");
+        } else {
+            Logg.LOGGER.warning("Dog not bought.");
+        }
+
+        releaseUpdateThread();
+
+    }
+
     void fillGridPane() {
         for (int i = 0; i < grid.getRowCount(); i++) {
             for (int j = 0; j < grid.getColumnCount(); j++) {

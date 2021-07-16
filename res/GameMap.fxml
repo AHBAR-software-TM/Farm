@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -16,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="1.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.WorldGui">
+<SplitPane dividerPositions="1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.WorldGui">
    <items>
       <Pane maxHeight="-Infinity" prefHeight="720.0" prefWidth="0.0" styleClass="woodBack2" stylesheets="@styles.css">
          <children>
@@ -78,19 +84,29 @@
                      </padding>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#stopStart" text="Button" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                  <HBox alignment="CENTER" prefHeight="102.0" prefWidth="196.0" spacing="10.0">
                      <children>
-                        <ImageView fitHeight="70.0" fitWidth="66.0" onMouseClicked="#buyHen" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="27.0" fitWidth="46.0" onMouseClicked="#buyDog" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@dog54.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="51.0" fitWidth="49.0" onMouseClicked="#buyCat" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@cat54.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="39.0" fitWidth="32.0" onMouseClicked="#buyHen" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@hen54.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="83.0" fitWidth="89.0" onMouseClicked="#buyTurkey" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="42.0" fitWidth="39.0" onMouseClicked="#buyTurkey" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@turkey54.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="78.0" fitWidth="81.0" onMouseClicked="#buyBuffalo" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="43.0" fitWidth="42.0" onMouseClicked="#buyBuffalo" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@buffalo54.png" />
                            </image>
@@ -171,11 +187,7 @@
                               <Font name="Agency FB" size="14.0" />
                            </font>
                         </Button>
-                        <ImageView fitHeight="130.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </ImageView>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                         <ProgressBar prefHeight="15.0" prefWidth="166.0" progress="0.0" />
                         <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="75.0" styleClass="gameButt" stylesheets="@styles.css" text="Egg pwdr" textFill="#e4e4e4">
                            <font>
