@@ -18,10 +18,10 @@ public class MissionBuilder {
             fw = new FileWriter("missions.txt",true);
             Mission m = new Mission();
             m.WildAttack.put(5,new Lion());
-            m.productionTask.put("backend.Feather",7);
-            m.productionTask.put("backend.Cloth",3);
+            m.productionTask.put("Feather",7);
+            m.productionTask.put("Cloth",3);
             m.lvl=2;
-            m.animalTask.put("backend.Ostrich",2);
+            m.animalTask.put("Ostrich",2);
             m.MaximumTime = Integer.MAX_VALUE;
             m.speedGift = 1000;
             fw.append(Main.objectMapper.writeValueAsString(m)).append("\n");

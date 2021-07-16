@@ -107,7 +107,23 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" prefHeight="122.0" prefWidth="1001.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#showInv" prefHeight="82.0" prefWidth="187.0" styleClass="gameButt" stylesheets="@styles.css" text="Inventory" textFill="#efefef">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showTask" prefHeight="83.0" prefWidth="188.0" styleClass="gameButt" stylesheets="@styles.css" text="Tasks" textFill="#e7e7e7">
+                           <font>
+                              <Font name="Agency FB" size="34.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="6.0" />
+                           </padding>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showPause" prefHeight="83.0" prefWidth="188.0" styleClass="gameButt" stylesheets="@styles.css" text="Pause" textFill="#e7e7e7">
+                           <font>
+                              <Font name="Agency FB" size="34.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="6.0" />
+                           </padding>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showInv" prefHeight="82.0" prefWidth="187.0" styleClass="gameButt" stylesheets="@styles.css" text="Inventory" textFill="#efefef">
                            <font>
                               <Font name="Agency FB" size="34.0" />
                            </font>

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 
 public class World   {
-    Mission mission;
+    public Mission mission;
     int time = Integer.MIN_VALUE;
 
     public Map[][] worldMap = new Map[6][6];
@@ -21,8 +21,8 @@ public class World   {
     HashMap<Integer, Wild_animal> WildAttack;
 
     //task related data
-    HashMap<String, Integer> producedTillNow = new HashMap<>();
-    HashMap<String, Integer> boughtTillNow = new HashMap<>();
+    public HashMap<String, Integer> producedTillNow = new HashMap<>();
+    public HashMap<String, Integer> boughtTillNow = new HashMap<>();
 
     public Well well = new Well();
     public Truck truck = new Truck();
@@ -161,7 +161,8 @@ public class World   {
                     boughtTillNow.get(entry.getKey()),
                     entry.getValue());
         }
-        System.out.printf("Coin: %d/%d\n", coin, mission.coinTask);
+        if(mission.coinTask>0)
+            System.out.printf("Coin: %d/%d\n", coin, mission.coinTask);
     }
 
     Animal checkMoneyToBuy(Animal animal) {

@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -26,6 +27,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class WorldGui {
@@ -33,7 +35,7 @@ public class WorldGui {
     User user;
     int level;
     static IntegerProperty coinProperty;
-    static final UpdateThread ut = new UpdateThread();
+    static UpdateThread ut=null;
     HashMap<Label, Object> invLabelToObj = new HashMap<>();
     HashMap<Label, Object> truckLabelToObj = new HashMap<>();
     boolean isTruckMenuShowingInv = true;
@@ -47,9 +49,9 @@ public class WorldGui {
     @FXML
     Label truckLoad,invOrFarmAnimal,coinLabel;
     @FXML
-    VBox invVbox, truckVbox;
+    VBox invVbox, truckVbox, taskVbox;
     @FXML
-    Button invCloseButt;
+    Button invCloseButt,continueButt,usrLvlButt,exitButt;
 
 
 
@@ -117,6 +119,7 @@ public class WorldGui {
 
     void threadInit() {
         //ut = new UpdateThread();
+        ut = new UpdateThread();
         ut.start();
     }
 
@@ -269,6 +272,107 @@ public class WorldGui {
             ioException.printStackTrace();
         }
 
+    }
+
+    @FXML
+    void showPause(ActionEvent e){
+        makeUpdateThreadWait();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/res/PauseView.fxml"));
+        loader.setController(this);
+
+        try {
+            Stage s = new Stage();
+            s.initModality(Modality.APPLICATION_MODAL);
+            s.setScene(new Scene(loader.load()));
+            continueButt.setOnAction(ee-> s.close());
+            usrLvlButt.setOnMouseEntered(ee-> usrLvlButt.setText(user.level+""));
+            usrLvlButt.setOnMouseExited(ee-> usrLvlButt.setText("User LvL"));
+
+            exitButt.setOnAction(ee->
+            {
+                try {
+                    FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/res/LevelView.fxml"));
+                    LevelMenu lv = new LevelMenu();
+                    lv.user = user;
+                    loader2.setController(lv);
+                    Main.setSceneRoot(loader2.load());
+                    ut.close();
+                    s.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
+            s.showAndWait();
+
+            releaseUpdateThread();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+    @FXML
+    void showTask(ActionEvent e){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/res/TaskView.fxml"));
+        loader.setController(this);
+
+        try {
+            Stage s = new Stage();
+            s.initModality(Modality.APPLICATION_MODAL);
+            s.setScene(new Scene(loader.load()));
+
+            int i = 0;
+
+            for (Map.Entry<String, Integer> entry : world.mission.productionTask.entrySet()) {
+
+                HBox ith = ((HBox) taskVbox.getChildren().get(i));
+                ((Label) ith.getChildren().get(1)).setText(String.format(
+                        "%s: %d/%d\n", entry.getKey(),
+                        world.producedTillNow.get(entry.getKey()),
+                        entry.getValue()));
+                System.out.println(world.producedTillNow);
+                if(world.producedTillNow.get(entry.getKey())>=entry.getValue()){
+                    ith.getChildren().get(0).setVisible(true);
+                    System.out.println(ith.getChildren().get(0));
+                }else {
+                   // ith.getChildren().get(0).setVisible(false);
+                }
+                i++;
+            }
+            for (Map.Entry<String, Integer> entry : world.mission.animalTask.entrySet()) {
+                HBox ith = ((HBox) taskVbox.getChildren().get(i));
+                ((Label) ith.getChildren().get(1)).setText(String.format(
+                        "%s: %d/%d\n", entry.getKey(),
+                        world.boughtTillNow.get(entry.getKey()),
+                        entry.getValue()));
+                if(world.boughtTillNow.get(entry.getKey())>=entry.getValue()){
+                    (ith.getChildren().get(0)).setVisible(true);
+                }else {
+                    ith.getChildren().get(0).setVisible(false);
+                }
+                i++;
+            }
+            if(world.mission.coinTask>0){
+                HBox ith = ((HBox) taskVbox.getChildren().get(i));
+                ((Label) ith.getChildren().get(1)).setText(String.format(
+                        "Coin: %d/%d\n", world.coin, world.mission.coinTask));
+                if(world.coin>=world.mission.coinTask){
+                    (ith.getChildren().get(0)).setVisible(true);
+                }else {
+                    ith.getChildren().get(0).setVisible(false);
+                }
+                i++;
+
+            }
+
+            for(;i<taskVbox.getChildren().size();i++){
+                taskVbox.getChildren().get(i).setVisible(false);
+            }
+            //todo: correct picture
+            s.showAndWait();
+        }
+        catch (Exception ee){
+            ee.printStackTrace();
+        }
     }
 
     void initSellMenu() {
