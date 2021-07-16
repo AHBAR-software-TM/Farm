@@ -351,13 +351,13 @@ public class Map {
 
     public void show_animals(){
 
-        //double b=35;
-        stackpane.getChildren().removeAll();
+        double b=15;
+        //stackpane.getChildren().removeAll();
+        stackpane.getChildren().clear();
         for(Animal a:animalsInside) {
             stackpane.getChildren().add(a.imageview);
-            //stackpane.getChildren().add(new Label());
-            //stackpane.setMargin(a.imageview,new Insets(b));
-            //b+=5;
+            stackpane.setMargin(a.imageview,new Insets(b,b,20,20));
+            b+=10;
 
         }
 

@@ -15,8 +15,8 @@ public abstract class Animal {
     }
 
     public ImageView imageview;
-    public double image_height=10;
-    public double image_width=10;
+    public double image_height=60;
+    public double image_width=60;
 
     int price=-1;
     Map currentlyIn;
