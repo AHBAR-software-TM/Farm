@@ -201,6 +201,7 @@ public class WorldGui {
                     world.worldMap[i][j] = ij.getController();
                     world.worldMap[i][j].setCoordinate(i, j);
                     world.worldMap[i][j].world = this.world;
+                    System.out.println(world.worldMap[i][j].getGrass());
                     //world.worldMap[i][j].
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -334,7 +335,7 @@ public class WorldGui {
                     ith.getChildren().get(0).setVisible(true);
                     System.out.println(ith.getChildren().get(0));
                 }else {
-                   // ith.getChildren().get(0).setVisible(false);
+                    ith.getChildren().get(0).setVisible(false);
                 }
                 i++;
             }
@@ -367,7 +368,7 @@ public class WorldGui {
             for(;i<taskVbox.getChildren().size();i++){
                 taskVbox.getChildren().get(i).setVisible(false);
             }
-            //todo: correct picture
+
             s.showAndWait();
         }
         catch (Exception ee){
@@ -514,9 +515,6 @@ public class WorldGui {
         fillGridPane();
 
         world.coin += user.coin;
-        for (int i = 0; i < 20; i++) {
-            world.worldMap[(int) (Math.random() * 6 % 6)][(int) (Math.random() * 6 % 6)].addGrass();
-        }
         wellInit();
         truckInit();
         coinInit();

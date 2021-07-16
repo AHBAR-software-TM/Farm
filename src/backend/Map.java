@@ -3,7 +3,6 @@ package backend;
 import frontend.WorldGui;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -49,12 +48,22 @@ public class Map {
     }
 
     public Map() {
-
+        grass=0;
+//        try {
+////            battle_image_view = new ImageView();
+////            cage_image_view = new ImageView();
+////            battle_image_view.setImage(new Image(new FileInputStream("/res/Animal/battle.png")));
+////            cage_image_view.setImage(new Image(new FileInputStream("/res/Animal/cage.png")));
+//
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
     public World world;
-    private int grass = 0;
+    int grass = 0;
     private LinkedList<Animal> animalsInside = new LinkedList<>();
     private LinkedList<Product> productsInside = new LinkedList<>();
 
@@ -277,6 +286,7 @@ public class Map {
     }
 
     public void updatePic() {
+        //System.out.println(grass);
         if (grass <= 0) {
 //            microGrass.setVisible(false);
 //            macroGrass.setVisible(false);
@@ -287,13 +297,13 @@ public class Map {
 //            microGrass.setOpacity(1);
 //            macroGrass.setVisible(false);
             microGrass.setOpacity(1);
-            microGrass.setOpacity(0);
+            macroGrass.setOpacity(0);
         } else {
 //            microGrass.setVisible(false);
 //            macroGrass.setVisible(true);
 //            macroGrass.setOpacity(1);
             microGrass.setOpacity(0);
-            microGrass.setOpacity(1);
+            macroGrass.setOpacity(1);
 
         }
     }

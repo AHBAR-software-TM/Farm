@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 
-<Pane id="cell1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#clicked" prefHeight="100.0" prefWidth="100.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="backend.Map">
+<Pane id="cell1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#dragged" onMouseClicked="#clicked" prefHeight="100.0" prefWidth="100.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="backend.Map">
    <children>
-      <ImageView fx:id="microGrass" fitHeight="100.0" fitWidth="100.0" onDragDetected="#dragged" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="microGrass" fitHeight="100.0" fitWidth="100.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@gras-0۱.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="macroGrass" fitHeight="100.0" fitWidth="100.0" onDragDetected="#dragged" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="macroGrass" fitHeight="100.0" fitWidth="100.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@grasss-0۱.png" />
          </image>
