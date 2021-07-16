@@ -15,7 +15,7 @@ public class MilkPacking extends Workshop{
         resourceType = "backend.Milk";
         try {
             imageview = new ImageView();
-            imageview.setImage(new Image(new FileInputStream("/res/Workshops/milkpacking_better_not_found.png")));
+            imageview.setImage(new Image(new FileInputStream("/res/Workshops/milkpacking1.png")));
             imageview.setFitHeight(this.image_height);
             imageview.setFitWidth(this.image_width);
 
