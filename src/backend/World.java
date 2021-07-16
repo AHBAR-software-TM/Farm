@@ -241,7 +241,9 @@ public class World   {
         //System.out.println("anim p1:"+ dm.price);
         dm = checkMoneyToBuy(dm);
         //System.out.println("anim p1:"+ dm.price);
-
+        if (dm == null) {
+            return null;
+        }
         Integer bought = boughtTillNow.get(dm.getClass().getSimpleName());
         if (bought != null) {
             bought++;

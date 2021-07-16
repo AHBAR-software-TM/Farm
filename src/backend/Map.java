@@ -372,12 +372,12 @@ public class Map {
 
     public void show_products(){
 
-        double b=5;
+        //double b=5;
         hbox.getChildren().clear();
         for(Product p:productsInside){
             hbox.getChildren().add(p.imageview);
-            hbox.setMargin(p.imageview,new Insets(0,b,0,0));
-            b+=10;
+            //hbox.setMargin(p.imageview,new Insets(0,,0,0));
+            //b+=10;
 
         }
     }
