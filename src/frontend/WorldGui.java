@@ -66,7 +66,7 @@ public class WorldGui {
                 if (!shallIWait) {
                     world.update();
                     world.info();
-                    Platform.runLater(WorldGui::coinGuiUpdate);
+                    Platform.runLater( () ->  { coinGuiUpdate(); world.show(); });
                     try {
                         TimeUnit.SECONDS.sleep(2);
 

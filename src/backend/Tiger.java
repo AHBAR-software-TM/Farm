@@ -16,15 +16,10 @@ public class Tiger extends Wild_animal{
         this.cage=0;
         this.caged=false;
         cageRequired=4;
-        try {
-            imageview = new ImageView();
-            imageview.setImage(new Image(new FileInputStream("/res/Animal/tiger.png")));
-            imageview.setFitHeight(this.image_height);
-            imageview.setFitWidth(this.image_width);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        imageview = new ImageView();
+        imageview.setImage(new Image("/res/Animal/tiger.png"));
+        imageview.setFitHeight(this.image_height);
+        imageview.setFitWidth(this.image_width);
 
     }
     @Override

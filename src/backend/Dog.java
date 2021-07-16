@@ -13,15 +13,11 @@ public class Dog extends Animal{
     Dog(){
         this.price=100;
         volume = 10;
-        try {
-            imageview = new ImageView();
-            imageview.setImage(new Image(new FileInputStream("/res/Animal/dog.png")));
-            imageview.setFitHeight(this.image_height);
-            imageview.setFitWidth(this.image_width);
+        imageview = new ImageView();
+        imageview.setImage(new Image("/res/Animal/dog.png"));
+        imageview.setFitHeight(this.image_height);
+        imageview.setFitWidth(this.image_width);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
     @Override
     public int getPrice() {

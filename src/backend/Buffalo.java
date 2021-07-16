@@ -16,15 +16,11 @@ public class Buffalo extends Domestic_animal{
         //this.productToBeConed = new backend.Milk();
         PRODUCE_TIME = 5;
         volume =15;
-        try {
-            imageview = new ImageView();
-            imageview.setImage(new Image(new FileInputStream("/res/Animal/buffalo.png")));
-            imageview.setFitHeight(this.image_height);
-            imageview.setFitWidth(this.image_width);
+        imageview = new ImageView();
+        imageview.setImage(new Image("/res/Animal/buffalo.png"));
+        imageview.setFitHeight(this.image_height);
+        imageview.setFitWidth(this.image_width);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
     @Override
     public int getPrice() {
