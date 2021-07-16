@@ -499,7 +499,7 @@ public class World   {
         return false;
     }
 
-    Workshop openWorkShop(String workshopName) {
+    public Workshop openWorkShop(String workshopName) {
         Workshop w = null;
         if (workshopName.equalsIgnoreCase("bakery"))
             w = new Bakery();
@@ -536,7 +536,7 @@ public class World   {
         return w;
     }
 
-    Workshop getWorkshop(String workName) {
+    public Workshop getWorkshop(String workName) {
         //Workshop w = null;
         if (workName.equalsIgnoreCase("eggpdr")) {
             workName = "eggpowderplant";

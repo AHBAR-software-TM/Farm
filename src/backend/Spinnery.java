@@ -12,7 +12,7 @@ public class Spinnery extends Workshop{
         this.level=1;
         this.build_price=250;
         this.produce_time=5;
-        resourceType="backend.Feather";
+        resourceType="Feather";
         imageview = new ImageView();
         imageview.setImage(new Image("/res/Workshops/spinnery1.png"));
         imageview.setFitHeight(this.image_height);

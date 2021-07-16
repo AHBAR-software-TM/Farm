@@ -45,13 +45,15 @@ public class WorldGui {
     @FXML
     GridPane grid,invGrid;
     @FXML
-    ProgressBar wellBar, truckBar;
+    ProgressBar wellBar, truckBar, bakeryProg, eggPwdrProg, milkPackProg, spinProg, iceCreamProg, sewingProg;
     @FXML
     Label truckLoad,invOrFarmAnimal,coinLabel;
     @FXML
     VBox invVbox, truckVbox, taskVbox;
     @FXML
     Button invCloseButt,continueButt,usrLvlButt,exitButt;
+    @FXML
+    ImageView BakeryView,EggPwdrView,SpinneryView,IceCreamView,SewingView,MilkPackView;
 
 
 
@@ -374,6 +376,255 @@ public class WorldGui {
         catch (Exception ee){
             ee.printStackTrace();
         }
+    }
+
+    @FXML
+    void buyBakery(ActionEvent e){
+
+        Bakery b = ((Bakery) world.openWorkShop("Bakery"));
+        if ( b != null){
+            BakeryView .setImage (b.imageview.getImage());
+            bakeryProg.setDisable(false);
+            bakeryProg.progressProperty().bind(b.progress);
+            ((Button) e.getSource()).setText("300 ^");
+        }
+        else {
+            b = (Bakery) world.getWorkshop("Bakery");
+            if (b.isWorking||world.coin < 300){
+                //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
+                //todo: play an error sound
+                return;
+                }
+
+            if (b.upgrade(world)){
+                ((Button) e.getSource()).setVisible(false);
+                BakeryView .setImage(new Image("/res/Workshops/bakery2.png"));
+            }
+            //todo: play a diring sound sound
+                //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
+        }
+
+    }
+    @FXML
+    void workBakery(){
+        makeUpdateThreadWait();
+        Workshop w2 = world.getWorkshop("Bakery");
+        if (w2 == null) {
+            //todo:play error sound
+            return;
+
+        }
+        w2.startWorking(world.inventory);
+        releaseUpdateThread();
+    }
+
+    @FXML
+    void buyEggPwdr(ActionEvent e){
+        EggPowderPlant b = ((EggPowderPlant) world.openWorkShop("EggPowderPlant"));
+        if ( b != null){
+            EggPwdrView .setImage (b.imageview.getImage());
+            eggPwdrProg.setDisable(false);
+            eggPwdrProg.progressProperty().bind(b.progress);
+            ((Button) e.getSource()).setText("300 ^");
+        }
+        else {
+            b = (EggPowderPlant) world.getWorkshop("EggPowderPlant");
+            if (b.isWorking||world.coin < 300){
+                //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
+                //todo: play an error sound
+                return;
+            }
+
+            if (b.upgrade(world)){
+                ((Button) e.getSource()).setVisible(false);
+                EggPwdrView .setImage(new Image("/res/Workshops/eggpowder2.png"));
+            }
+            //todo: play a diring sound sound
+            //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
+        }
+
+    }
+    @FXML
+    void workEggPwdr(){
+        makeUpdateThreadWait();
+        Workshop w2 = world.getWorkshop("EggPowderPlant");
+        if (w2 == null) {
+            //todo:play error sound
+            return;
+
+        }
+        w2.startWorking(world.inventory);
+        releaseUpdateThread();
+        //System.err.println("settowork");
+    }
+
+
+
+    @FXML
+    void buyMilkPack(ActionEvent e){
+        MilkPacking b = ((MilkPacking) world.openWorkShop("MilkPacking"));
+        if ( b != null){
+            MilkPackView .setImage (b.imageview.getImage());
+            milkPackProg.setDisable(false);
+            milkPackProg.progressProperty().bind(b.progress);
+            ((Button) e.getSource()).setText("300 ^");
+        }
+        else {
+            b = (MilkPacking) world.getWorkshop("MilkPacking");
+            if (b.isWorking||world.coin < 300){
+                //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
+                //todo: play an error sound
+                return;
+            }
+
+            if (b.upgrade(world)){
+                ((Button) e.getSource()).setVisible(false);
+                MilkPackView .setImage(new Image("/res/Workshops/milkpacking2.png"));
+            }
+            //todo: play a diring sound sound
+            //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
+        }
+
+    }
+    @FXML
+    void workMilkPack(){
+        makeUpdateThreadWait();
+        Workshop w2 = world.getWorkshop("MilkPacking");
+        if (w2 == null) {
+            //todo:play error sound
+            return;
+
+        }
+        w2.startWorking(world.inventory);
+        //System.err.println("settowork");
+        releaseUpdateThread();
+    }
+
+    @FXML
+    void buyIceCream(ActionEvent e){
+        IcecreamFactory b = ((IcecreamFactory) world.openWorkShop("IcecreamFactory"));
+        if ( b != null){
+            IceCreamView .setImage (b.imageview.getImage());
+            iceCreamProg.setDisable(false);
+            iceCreamProg.progressProperty().bind(b.progress);
+            ((Button) e.getSource()).setText("300 ^");
+        }
+        else {
+            b = (IcecreamFactory) world.getWorkshop("IcecreamFactory");
+            if (b.isWorking||world.coin < 300){
+                //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
+                //todo: play an error sound
+                return;
+            }
+
+            if (b.upgrade(world)){
+                ((Button) e.getSource()).setVisible(false);
+                IceCreamView .setImage(new Image("/res/Workshops/icecreamfactory2.png"));
+            }
+            //todo: play a diring sound sound
+            //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
+        }
+
+    }
+    @FXML
+    void workIceCream(){
+        makeUpdateThreadWait();
+        Workshop w2 = world.getWorkshop("IcecreamFactory");
+        if (w2 == null) {
+            //todo:play error sound
+            return;
+
+        }
+        w2.startWorking(world.inventory);
+        releaseUpdateThread();
+        //System.err.println("settowork");
+    }
+
+
+    @FXML
+    void buySpinnery(ActionEvent e){
+        Spinnery b = ((Spinnery) world.openWorkShop("Spinnery"));
+        if ( b != null){
+            SpinneryView .setImage (b.imageview.getImage());
+            spinProg.setDisable(false);
+            spinProg.progressProperty().bind(b.progress);
+            ((Button) e.getSource()).setText("300 ^");
+        }
+        else {
+            b = (Spinnery) world.getWorkshop("Spinnery");
+            if (b.isWorking||world.coin < 300){
+                //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
+                //todo: play an error sound
+                return;
+            }
+
+            if (b.upgrade(world)){
+                ((Button) e.getSource()).setVisible(false);
+                SpinneryView .setImage(new Image("/res/Workshops/spinnery2.png"));
+            }
+            //todo: play a diring sound sound
+            //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
+        }
+
+    }
+    @FXML
+    void workSpinnery(){
+        makeUpdateThreadWait();
+        Workshop w2 = world.getWorkshop("Spinnery");
+        if (w2 == null) {
+            //todo:play error sound
+            return;
+
+        }
+        w2.startWorking(world.inventory);
+        //System.err.println("settowork");
+        releaseUpdateThread();
+    }
+
+    @FXML
+    void buySewing(ActionEvent e){
+        SewingFactory b = ((SewingFactory) world.openWorkShop("SewingFactory"));
+        if ( b != null){
+            SewingView .setImage (b.imageview.getImage());
+            sewingProg.setDisable(false);
+            sewingProg.progressProperty().bind(b.progress);
+            ((Button) e.getSource()).setText("300 ^");
+        }
+        else {
+            b = (SewingFactory) world.getWorkshop("SewingFactory");
+            if (b.isWorking||world.coin < 300){
+                //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
+                //todo: play an error sound
+                return;
+            }
+
+            if (b.upgrade(world)){
+                ((Button) e.getSource()).setVisible(false);
+                SewingView .setImage(new Image("/res/Workshops/sewingfactory2.png"));
+            }
+            //todo: play a diring sound sound
+            //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
+        }
+
+    }
+    @FXML
+    void workSewing(){
+        makeUpdateThreadWait();
+        Workshop w2 = world.getWorkshop("SewingFactory");
+        if (w2 == null) {
+            //todo:play error sound
+            return;
+
+        }
+        w2.startWorking(world.inventory);
+        //System.err.println("settowork");
+        releaseUpdateThread();
     }
 
     void initSellMenu() {

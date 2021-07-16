@@ -12,7 +12,7 @@ public class Bakery extends Workshop{
         this.level=1;
         this.build_price=250;
         this.produce_time=5;
-        resourceType = "backend.Flour";
+        resourceType = "Flour";
         imageview = new ImageView();
         imageview.setImage(new Image("/res/Workshops/bakery1.png"));
         imageview.setFitHeight(this.image_height);

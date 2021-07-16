@@ -1,5 +1,7 @@
 package backend;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
 
 public abstract class Workshop {
@@ -12,16 +14,19 @@ public abstract class Workshop {
     int build_price;
     int produce_time;
     int current_time = 0;
-    boolean isWorking = false;
+    public boolean isWorking = false;
     String resourceType;
+    public DoubleProperty progress = new  SimpleDoubleProperty(0);
 
     Product update() {
         if (isWorking) {
             current_time++;
+            progress.set((float) current_time / produce_time);
             if (current_time == produce_time) {
 
                 Product p = produce();
                 current_time = 0;
+                progress.set(0);
                 isWorking = false;
                 return p;
 
@@ -30,7 +35,7 @@ public abstract class Workshop {
         return null;
     }
 
-    boolean upgrade(World w){
+    public boolean upgrade(World w){
         if (level!=2){
             level = 2;
             w.coin-=300;
@@ -42,7 +47,7 @@ public abstract class Workshop {
 
     abstract Product produce();
 
-    boolean startWorking(Inventory inv){
+    public boolean startWorking(Inventory inv){
         if(isWorking){
             System.out.println(this.getClass().getSimpleName()+" is already assigned to work.");
             Logg.LOGGER.info(this+" is already assigned to work.");

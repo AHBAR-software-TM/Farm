@@ -12,7 +12,7 @@ public class EggPowderPlant extends Workshop{
         this.level=1;
         this.build_price=150;
         this.produce_time=4;
-        resourceType="backend.Egg";
+        resourceType="Egg";
         imageview = new ImageView();
         imageview.setImage(new Image("/res/Workshops/eggpowder1.png"));
         imageview.setFitHeight(this.image_height);

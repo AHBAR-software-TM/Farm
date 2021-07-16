@@ -12,7 +12,7 @@ public class IcecreamFactory extends Workshop{
         this.level=1;
         this.build_price=550;
         this.produce_time=7;
-        resourceType = "backend.PackedMilk";
+        resourceType = "PackedMilk";
         imageview = new ImageView();
         imageview.setImage(new Image("/res/Workshops/icecreamfactory1.png"));
         imageview.setFitHeight(this.image_height);
