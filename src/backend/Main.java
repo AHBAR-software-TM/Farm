@@ -6,6 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +20,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import static java.util.logging.Level.ALL;
 
 public class Main extends Application{
     public static LinkedList<User> allUsers = new LinkedList<>();
@@ -91,13 +98,14 @@ public class Main extends Application{
 
         //return m;
     }
-    public static void main(String[] a)  {
+    public static void main(String[] a) {
+
         launch(a);
 
-//        ConsoleReader cr = new ConsoleReader();
-//
-//        //cr.firstMenu.stage = stage;
-//        cr.firstMenu.execute.execute(null,null);
+      //ConsoleReader cr = new ConsoleReader();
+      //cr.firstMenu.stage = stage;
+      //cr.firstMenu.execute.execute(null,null);
+
     }
 
     @Override

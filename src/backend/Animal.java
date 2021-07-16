@@ -1,5 +1,7 @@
 package backend;
 
+import javafx.scene.image.ImageView;
+
 public abstract class Animal {
 
     //public static enum backend.Dir { RIGHT,LEFT,UP,DOWN };
@@ -11,6 +13,10 @@ public abstract class Animal {
     public int getPrice() {
         return price;
     }
+
+    public ImageView imageview;
+    public double image_height=10;
+    public double image_width=10;
 
     int price=-1;
     Map currentlyIn;

@@ -2,9 +2,13 @@ package backend;
 
 import frontend.WorldGui;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -13,12 +17,26 @@ public class Map {
 
     @FXML
     ImageView microGrass, macroGrass;
-
+    @FXML
+    StackPane stackpane;
     int x, y;
+
+    public ImageView battle_image_view;
+    public ImageView cage_image_view;
 
     public Map(World world) {
         this.setGrass(0);
         this.world = world;
+        try {
+            battle_image_view = new ImageView();
+            cage_image_view = new ImageView();
+            battle_image_view.setImage(new Image(new FileInputStream("/res/Animal/battle.png")));
+            cage_image_view.setImage(new Image(new FileInputStream("/res/Animal/cage.png")));
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public Map() {
