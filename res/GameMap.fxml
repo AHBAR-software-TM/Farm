@@ -69,6 +69,14 @@
                         </ProgressBar>
                      </children>
                   </StackPane>
+                  <Button mnemonicParsing="false" onAction="#sendTruck" prefHeight="46.0" prefWidth="105.0" styleClass="gameButt" stylesheets="@styles.css" text="send truck" textFill="#efefef">
+                     <font>
+                        <Font name="Agency FB" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="6.0" />
+                     </padding>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#stopStart" text="Button" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
@@ -95,7 +103,47 @@
       </Pane>
       <VBox alignment="BOTTOM_RIGHT" prefHeight="720.0" prefWidth="1280.0">
          <children>
-            <Pane maxWidth="-Infinity" prefHeight="120.0" prefWidth="1013.0" styleClass="woodBack" stylesheets="@styles.css" />
+            <Pane maxWidth="-Infinity" prefHeight="120.0" prefWidth="1013.0" styleClass="woodBack" stylesheets="@styles.css">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="122.0" prefWidth="1001.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#showInv" prefHeight="82.0" prefWidth="187.0" styleClass="gameButt" stylesheets="@styles.css" text="Inventory" textFill="#efefef">
+                           <font>
+                              <Font name="Agency FB" size="34.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="6.0" />
+                           </padding>
+                        </Button>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="97.0" fitWidth="338.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@coinBoxImg.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="44.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@coinImg.png" />
+                                 </image>
+                                 <StackPane.margin>
+                                    <Insets left="25.0" />
+                                 </StackPane.margin>
+                              </ImageView>
+                              <Label fx:id="coinLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="103.0" text="1000" textFill="#ffaa00">
+                                 <StackPane.margin>
+                                    <Insets left="70.0" />
+                                 </StackPane.margin>
+                                 <font>
+                                    <Font name="Tw Cen MT Condensed Extra Bold" size="27.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
             <HBox alignment="BOTTOM_CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="skyBack" stylesheets="@styles.css">
                <children>
                   <GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0">

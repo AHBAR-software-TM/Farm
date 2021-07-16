@@ -2,15 +2,22 @@ package frontend;
 
 import backend.*;
 import com.sun.javafx.binding.StringFormatter;
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -25,19 +32,25 @@ public class WorldGui {
     static World world;
     User user;
     int level;
+    static IntegerProperty coinProperty;
     static final UpdateThread ut = new UpdateThread();
     HashMap<Label, Object> invLabelToObj = new HashMap<>();
     HashMap<Label, Object> truckLabelToObj = new HashMap<>();
     boolean isTruckMenuShowingInv = true;
 
+
+    final int GRID_W=5,GRID_H=3;
     @FXML
-    GridPane grid;
+    GridPane grid,invGrid;
     @FXML
     ProgressBar wellBar, truckBar;
     @FXML
-    Label truckLoad,invOrFarmAnimal;
+    Label truckLoad,invOrFarmAnimal,coinLabel;
     @FXML
     VBox invVbox, truckVbox;
+    @FXML
+    Button invCloseButt;
+
 
 
     static class UpdateThread extends Thread {
@@ -51,6 +64,7 @@ public class WorldGui {
                 if (!shallIWait) {
                     world.update();
                     world.info();
+                    Platform.runLater(WorldGui::coinGuiUpdate);
                     try {
                         TimeUnit.SECONDS.sleep(2);
 
@@ -89,6 +103,16 @@ public class WorldGui {
     void truckInit() {
         truckBar.progressProperty().bind(world.truck.timeProperty);
         truckLoad.textProperty().bind(world.truck.loadProperty);
+    }
+
+    void coinInit(){
+        coinProperty = new SimpleIntegerProperty(world.coin);
+        coinLabel.textProperty().bind(coinProperty.asString());
+
+    }
+
+    static public void coinGuiUpdate(){
+        coinProperty.setValue(world.coin);
     }
 
     void threadInit() {
@@ -221,6 +245,32 @@ public class WorldGui {
         }
     }
 
+    @FXML
+    void showInv(ActionEvent e){
+        makeUpdateThreadWait();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/res/InvView.fxml"));
+        loader.setController(this);
+        try {
+            Stage s = new Stage();
+            s.setScene(new Scene(loader.load()));
+
+
+            for (int i = 0; i < GRID_W*GRID_H; i++) {
+                String imgPath = world.inventory.getPathForNthElement(i);
+                if(imgPath != null)
+                    ((ImageView) ((AnchorPane) invGrid.getChildren().get(i)).getChildren().get(0)).setImage(new Image(imgPath));
+            }
+            invCloseButt.setOnAction(ee -> s.close());
+            s.showAndWait();
+
+            releaseUpdateThread();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+    }
+
     void initSellMenu() {
 
         if (isTruckMenuShowingInv)
@@ -344,6 +394,13 @@ public class WorldGui {
 
     }
 
+    @FXML
+    void sendTruck(ActionEvent e){
+        makeUpdateThreadWait();
+        world.truck.go();
+        releaseUpdateThread();
+    }
+
 
     public void run() {
 
@@ -358,6 +415,7 @@ public class WorldGui {
         }
         wellInit();
         truckInit();
+        coinInit();
         threadInit();
         //world.printMapGrass();
         //Command command = getCommandFromConsole();

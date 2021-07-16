@@ -69,4 +69,19 @@ public class Inventory {
         System.out.println("Empty inv space: " + (size - getFilledVolume()));
     }
 
+    public String getPathForNthElement(int n){
+        try {
+            Product p = products.get(n);
+            return p.imagePath;
+        }catch (IndexOutOfBoundsException e){
+            try {
+                Animal a = wild_animals.get(n - products.size());
+                return a.imagePath;
+            }catch (IndexOutOfBoundsException ee){
+                return null;
+            }
+        }
+
+    }
+
 }
