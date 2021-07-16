@@ -3,6 +3,7 @@ package backend;
 import frontend.WorldGui;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -350,12 +351,13 @@ public class Map {
 
     public void show_animals(){
 
-        double b=35;
+        //double b=35;
         stackpane.getChildren().removeAll();
         for(Animal a:animalsInside) {
             stackpane.getChildren().add(a.imageview);
-            stackpane.setMargin(a.imageview,new Insets(b));
-            b+=5;
+            //stackpane.getChildren().add(new Label());
+            //stackpane.setMargin(a.imageview,new Insets(b));
+            //b+=5;
 
         }
 

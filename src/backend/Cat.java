@@ -14,14 +14,10 @@ public class Cat extends Animal{
     Cat(){
         this.price=150;
         volume = 5;
-        try {
-            imageview = new ImageView();
-            imageview.setImage(new Image(new FileInputStream("/res/Animal/cat.png")));
-            imageview.setFitHeight(this.image_height);
-            imageview.setFitWidth(this.image_width);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        imageview = new ImageView();
+        imageview.setImage(new Image("/res/Animal/cat.png"));
+        imageview.setFitHeight(this.image_height);
+        imageview.setFitWidth(this.image_width);
     }
 
     @Override

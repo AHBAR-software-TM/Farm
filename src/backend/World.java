@@ -69,6 +69,11 @@ public class World   {
         move();
 
     }
+    public void show(){
+        for(int i=0;i<6;i++)
+            for(int j=0;j<6;j++)
+                worldMap[i][j].show_animals();
+    }
 
     int didUserWin() {
         //return 0 if not, return 1 if won, return 2 if won fast
