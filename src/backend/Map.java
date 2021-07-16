@@ -24,6 +24,8 @@ public class Map {
     ImageView microGrass, macroGrass;
     @FXML
     StackPane stackpane;
+    @FXML
+    HBox hbox;
 
     public ImageView battle_image_view;
     public ImageView cage_image_view;
@@ -35,16 +37,12 @@ public class Map {
     public Map(World world) {
         this.setGrass(0);
         this.world = world;
-        try {
-            battle_image_view = new ImageView();
-            cage_image_view = new ImageView();
-            battle_image_view.setImage(new Image(new FileInputStream("/res/Animal/battle.png")));
-            cage_image_view.setImage(new Image(new FileInputStream("/res/Animal/cage.png")));
+        battle_image_view = new ImageView();
+        cage_image_view = new ImageView();
+        battle_image_view.setImage(new Image("/res/Animal/battle.png"));
+        cage_image_view.setImage(new Image("/res/Animal/cage.png"));
 
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     public Map() {
@@ -370,5 +368,17 @@ public class Map {
 
         }
 
+    }
+
+    public void show_products(){
+
+        double b=5;
+        hbox.getChildren().clear();
+        for(Product p:productsInside){
+            hbox.getChildren().add(p.imageview);
+            hbox.setMargin(p.imageview,new Insets(0,b,0,0));
+            b+=10;
+
+        }
     }
 }

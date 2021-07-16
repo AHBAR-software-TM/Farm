@@ -70,9 +70,13 @@ public class World   {
 
     }
     public void show(){
-        for(int i=0;i<6;i++)
-            for(int j=0;j<6;j++)
+        for(int i=0;i<6;i++) {
+            for (int j = 0; j < 6; j++) {
                 worldMap[i][j].show_animals();
+                worldMap[i][j].show_products();
+
+            }
+        }
     }
 
     int didUserWin() {
