@@ -2,9 +2,18 @@ package backend;
 
 import frontend.WorldGui;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Region;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -13,12 +22,29 @@ public class Map {
 
     @FXML
     ImageView microGrass, macroGrass;
+    @FXML
+    StackPane stackpane;
+
+    public ImageView battle_image_view;
+    public ImageView cage_image_view;
+
+
 
     int x, y;
 
     public Map(World world) {
         this.setGrass(0);
         this.world = world;
+        try {
+            battle_image_view = new ImageView();
+            cage_image_view = new ImageView();
+            battle_image_view.setImage(new Image(new FileInputStream("/res/Animal/battle.png")));
+            cage_image_view.setImage(new Image(new FileInputStream("/res/Animal/cage.png")));
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public Map() {
@@ -320,5 +346,18 @@ public class Map {
     public void setCoordinate(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void show_animals(){
+
+        double b=35;
+        stackpane.getChildren().removeAll();
+        for(Animal a:animalsInside) {
+            stackpane.getChildren().add(a.imageview);
+            stackpane.setMargin(a.imageview,new Insets(b));
+            b+=5;
+
+        }
+
     }
 }
