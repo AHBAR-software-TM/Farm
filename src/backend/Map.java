@@ -2,10 +2,15 @@ package backend;
 
 import frontend.WorldGui;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Region;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,10 +24,13 @@ public class Map {
     ImageView microGrass, macroGrass;
     @FXML
     StackPane stackpane;
-    int x, y;
 
     public ImageView battle_image_view;
     public ImageView cage_image_view;
+
+
+
+    int x, y;
 
     public Map(World world) {
         this.setGrass(0);
@@ -338,5 +346,18 @@ public class Map {
     public void setCoordinate(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void show_animals(){
+
+        double b=35;
+        stackpane.getChildren().removeAll();
+        for(Animal a:animalsInside) {
+            stackpane.getChildren().add(a.imageview);
+            stackpane.setMargin(a.imageview,new Insets(b));
+            b+=5;
+
+        }
+
     }
 }
