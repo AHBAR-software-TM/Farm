@@ -26,6 +26,7 @@ public class LevelMenu {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/res/MissionElement.fxml"));
                 vbox.getChildren().add(loader.load());
+
                 ((MissionElement) loader.getController()).label.setText("Level "+m.lvl);
                 ((MissionElement) loader.getController()).level = m.lvl;
                 ((MissionElement) loader.getController()).user = user;

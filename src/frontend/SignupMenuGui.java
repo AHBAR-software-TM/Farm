@@ -31,6 +31,8 @@ public class SignupMenuGui {
             return;
         }
         User user = signup();
+        if(user == null)
+            return;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/res/LevelView.fxml"));
             LevelMenu lv = new LevelMenu();
