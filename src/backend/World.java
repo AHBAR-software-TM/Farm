@@ -79,7 +79,7 @@ public class World   {
         }
     }
 
-    int didUserWin() {
+    public int didUserWin() {
         //return 0 if not, return 1 if won, return 2 if won fast
 
         //boolean doneIt = true;

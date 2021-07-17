@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 public class WorldGui {
     static World world;
-    User user;
+    static User user;
     int level;
     static IntegerProperty coinProperty;
     static UpdateThread ut=null;
@@ -66,6 +66,30 @@ public class WorldGui {
         public void run() {
             while (!exit) {
                 if (!shallIWait) {
+                    if (didWin()){
+                        Platform.runLater(()->{
+
+                            Alert a = new Alert(Alert.AlertType.INFORMATION);
+                            a.setHeaderText("YOU WON");
+                            a.setTitle("You won be mola");
+                            a.showAndWait();
+                            //todo:diring sound
+
+                        });
+
+                        try {
+                            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/res/LevelView.fxml"));
+                            LevelMenu lv = new LevelMenu();
+                            lv.user = user;
+                            loader2.setController(lv);
+                            Main.setSceneRoot(loader2.load());
+                            return;
+                            //ut.close();
+                            //s.close();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    }
                     world.update();
                     world.info();
                     Platform.runLater( () ->  { coinGuiUpdate(); world.show(); });
@@ -98,6 +122,26 @@ public class WorldGui {
         }
 
 
+    }
+    static boolean didWin(){
+        int win = world.didUserWin();
+        if (win != 0) {
+            switch (win) {
+                case 2:
+                    user.coin = world.mission.speedGift;
+                    break;
+                case 1:
+                    user.coin = 0;
+                    break;
+
+            }
+            user.level++;
+            Main.updateUser();
+            ut.close();
+            //interMenu.execute.execute(user,stage);
+            return true;
+        }
+        return false;
     }
 
     void wellInit() {
@@ -798,6 +842,7 @@ public class WorldGui {
         truckInit();
         coinInit();
         threadInit();
+
         //world.printMapGrass();
         //Command command = getCommandFromConsole();
 //        while (command != Command.EXIT) {

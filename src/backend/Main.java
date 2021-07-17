@@ -46,7 +46,7 @@ public class Main extends Application{
             e.printStackTrace();
         }
     }
-    static void updateUser(){
+    public static void updateUser(){
         FileWriter fw;
         try {
             fw = new FileWriter("users.txt");
