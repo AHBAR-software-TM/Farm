@@ -359,11 +359,11 @@ public class Map {
 
     public void show_animals(){
 
-        double b=15;
+        double b=25;
         stackpane.getChildren().clear();
         for(Animal a:animalsInside) {
             stackpane.getChildren().add(a.imageview);
-            stackpane.setMargin(a.imageview,new Insets(b,b-15,0,0));
+            stackpane.setMargin(a.imageview,new Insets(0,0,b,0));
             b+=10;
 
         }
