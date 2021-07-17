@@ -15,10 +15,16 @@ public class Lion extends Wild_animal{
         this.cage=0;
         this.caged=false;
         cageRequired=3;
-        imageview = new ImageView();
-        imageview.setImage(new Image("/res/Animal/lion.png"));
-        imageview.setFitHeight(this.image_height);
-        imageview.setFitWidth(this.image_width);
+
+        uncagedImg.setImage(new Image("/res/Animal/lion.png"));
+        uncagedImg.setFitHeight(this.image_height);
+        uncagedImg.setFitWidth(this.image_width);
+
+        cagedImg.setImage(new Image("/res/Animal/lioncaged.png"));
+        cagedImg.setFitHeight(this.image_height);
+        cagedImg.setFitWidth(this.image_width);
+
+        imageview = uncagedImg;
 
     }
 //    public boolean cage(){

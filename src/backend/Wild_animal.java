@@ -1,11 +1,15 @@
 package backend;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import javafx.scene.image.ImageView;
+
 @JsonDeserialize(using = WildAnimalDeserial.class)
 public abstract class Wild_animal extends Animal {
 
 
     int price;
+    public ImageView cagedImg = new ImageView();
+    public ImageView uncagedImg= new ImageView();
     int volume;
     int speed;
     int disappear_time;
@@ -20,6 +24,7 @@ public abstract class Wild_animal extends Animal {
         if (!caged && cage>0){
             this.cage -= 1;
         }
+
     }
 
     public int cage(Inventory inv) {
@@ -29,6 +34,7 @@ public abstract class Wild_animal extends Animal {
             this.cage += 1;
             if (this.cage == cageRequired) {
                 caged = true;
+                imageview = cagedImg;
                 cagedTime = 0;
                 return 1;
 
@@ -67,6 +73,7 @@ public abstract class Wild_animal extends Animal {
             cagedTime++;
             if (cagedTime==disappear_time){
                 caged=false;
+                imageview = uncagedImg;
                 cagedTime=0;
                 cage=0;
                 isCagePutThisTurn = false;
