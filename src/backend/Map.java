@@ -341,16 +341,15 @@ public class Map {
 
     @FXML
     public void clicked(MouseEvent e) {
-        world.plant(x + 1, y + 1);
-    }
-
-    @FXML
-    public void dragged(MouseEvent e) {
         WorldGui.makeUpdateThreadWait();
+        world.plant(x + 1, y + 1);
         cage();
         pickup();
         WorldGui.releaseUpdateThread();
+
     }
+
+
 
     public void setCoordinate(int x, int y) {
         this.x = x;
