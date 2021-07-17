@@ -363,7 +363,7 @@ public class Map {
         stackpane.getChildren().clear();
         for(Animal a:animalsInside) {
             stackpane.getChildren().add(a.imageview);
-            stackpane.setMargin(a.imageview,new Insets(b,b,20,20));
+            stackpane.setMargin(a.imageview,new Insets(b,b-15,0,0));
             b+=10;
 
         }

@@ -291,9 +291,9 @@ public class WorldGui {
 
 
             for (int i = 0; i < GRID_W*GRID_H; i++) {
-                String imgPath = world.inventory.getPathForNthElement(i);
-                if(imgPath != null)
-                    ((ImageView) ((AnchorPane) invGrid.getChildren().get(i)).getChildren().get(0)).setImage(new Image(imgPath));
+                ImageView img = world.inventory.getImageViewForNthElement(i);
+                if(img != null)
+                    ((ImageView) ((AnchorPane) invGrid.getChildren().get(i)).getChildren().get(0)).setImage(img.getImage());
             }
             invCloseButt.setOnAction(ee -> s.close());
             s.showAndWait();

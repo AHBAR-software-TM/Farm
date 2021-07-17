@@ -1,5 +1,7 @@
 package backend;
 
+import javafx.scene.image.ImageView;
+
 import java.util.LinkedList;
 
 public class Inventory {
@@ -77,6 +79,21 @@ public class Inventory {
             try {
                 Animal a = wild_animals.get(n - products.size());
                 return a.imagePath;
+            }catch (IndexOutOfBoundsException ee){
+                return null;
+            }
+        }
+
+    }
+
+    public ImageView getImageViewForNthElement(int n){
+        try {
+            Product p = products.get(n);
+            return p.imageview;
+        }catch (IndexOutOfBoundsException e){
+            try {
+                Animal a = wild_animals.get(n - products.size());
+                return a.imageview;
             }catch (IndexOutOfBoundsException ee){
                 return null;
             }
