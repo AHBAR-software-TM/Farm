@@ -145,6 +145,7 @@ public class Truck {
         for (Map.Entry<String,Integer> ent: thingToCount.entrySet()){
             ans.append(ent.getKey()).append(": ").append(ent.getValue()).append('\n');
         }
+        ans.append("Earn: ").append(estimateValue());
         return ans.toString();
     }
 
