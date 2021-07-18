@@ -1,0 +1,60 @@
+.skyBack {
+    -fx-background-image: url("sky.jpg");
+}
+.woodBack {
+    -fx-background-image: url("wood5.jpg");
+}
+.woodBack2 {
+    -fx-background-image: url("wood4.jpg");
+}
+#cell1 {
+    -fx-background-color: #00000000;
+    -fx-background-image: url("cell-01.png");
+}
+#loginB {
+    -fx-background-image: url("login.jpg");
+}
+#levelPage{
+    -fx-background-image: url("lvl.jpg");
+}
+.firstButt:hover{
+    -fx-text-fill: #000000aa;
+}
+.firstButt:pressed {
+    -fx-text-fill: #000000bb;
+}
+.TransParentScroll{
+    -fx-background-color: transparent;
+}
+.TransParentScroll > .viewport{
+    -fx-background-color: transparent;
+}
+.darkButt{
+    -fx-background-color: #00000044;
+}
+.darkButt:hover{
+     -fx-background-color: #00000066;
+}
+.darkButt:pressed{
+    -fx-background-color: #00000088;
+}
+.lightGlass{
+    -fx-background-color: #ffffff7f;
+}
+.gameButt{
+    -fx-background-image: url("inButt.png");
+    -fx-background-position: center;
+    -fx-background-color: #00000000;
+    -fx-background-size: cover;
+}
+.gameButt:pressed{
+    -fx-background-image: url("inButtClicked.png");
+}
+.invBack{
+    -fx-background-image: url("farmBarn.jpg");
+}
+.darkInvElement{
+    -fx-background-color: #ffffff55;
+    -fx-background-radius: 10;
+
+}

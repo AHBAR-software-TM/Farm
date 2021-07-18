@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.48663101604278064" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="467.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <VBox fx:id="invVbox" layoutX="28.0" layoutY="75.0" prefHeight="366.0" prefWidth="217.0" style="-fx-background-radius: 10;" styleClass="lightGlass" stylesheets="@styles.css">
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+               <children>
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#invElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Label fx:id="invOrFarmAnimal" layoutX="104.0" layoutY="26.0" onMouseClicked="#changeInvToFarmAnimal" prefHeight="35.0" prefWidth="79.0" styleClass="firstButt" stylesheets="@styles.css" text="Inventory" textFill="#d7d7d7">
+               <font>
+                  <Font name="Agency FB" size="26.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="493.0">
+         <children>
+            <VBox fx:id="truckVbox" layoutX="36.0" layoutY="74.0" prefHeight="377.0" prefWidth="232.0" style="-fx-background-radius: 10;" styleClass="lightGlass" stylesheets="@styles.css">
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+               <children>
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+                  <Label disable="true" onMouseClicked="#truckElementClicked" text="Label">
+                     <font>
+                        <Font name="Agency FB" size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Label layoutX="128.0" layoutY="26.0" prefHeight="35.0" prefWidth="48.0" text="Truck" textFill="#d7d7d7">
+               <font>
+                  <Font name="Agency FB" size="26.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+  </items>
+   <styleClass>
+      <String fx:value="woodBack" />
+      <String fx:value="woodBack2" />
+   </styleClass>
+</SplitPane>
