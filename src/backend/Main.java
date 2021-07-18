@@ -115,6 +115,7 @@ public class Main extends Application{
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+
         loadUsers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/res/EnterView.fxml"));
         mainScene = new Scene(loader.load());

@@ -21,9 +21,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -39,6 +43,8 @@ public class WorldGui {
     HashMap<Label, Object> invLabelToObj = new HashMap<>();
     HashMap<Label, Object> truckLabelToObj = new HashMap<>();
     boolean isTruckMenuShowingInv = true;
+    static MediaPlayer mediaPlayer;
+    public static AudioClip error;
 
 
     final int GRID_W=5,GRID_H=3;
@@ -75,6 +81,7 @@ public class WorldGui {
                             a.setHeaderText("YOU WON");
                             a.setTitle("You won be mola");
                             a.showAndWait();
+                            mediaPlayer.stop();
                             //todo:diring sound
 
                         });
@@ -204,6 +211,7 @@ public class WorldGui {
         if (world.buy("Hen") != null) {
             Logg.LOGGER.warning("Hen bought.");
         } else {
+            error.play();
             Logg.LOGGER.warning("Hen not bought.");
         }
 
@@ -219,6 +227,7 @@ public class WorldGui {
         if (world.buy("Ostrich") != null) {
             Logg.LOGGER.warning("Ostrich/Turkey bought.");
         } else {
+            error.play();
             Logg.LOGGER.warning("Ostrich/Turkey not bought.");
         }
 
@@ -232,6 +241,7 @@ public class WorldGui {
         if (world.buy("Buffalo") != null) {
             Logg.LOGGER.warning("Buffalo bought.");
         } else {
+            error.play();
             Logg.LOGGER.warning("Buffalo not bought.");
         }
 
@@ -246,6 +256,7 @@ public class WorldGui {
         if (world.buy("Cat") != null) {
             Logg.LOGGER.warning("Cat bought.");
         } else {
+            error.play();
             Logg.LOGGER.warning("Cat not bought.");
         }
 
@@ -260,6 +271,7 @@ public class WorldGui {
         if (world.buy("Dog") != null) {
             Logg.LOGGER.warning("Dog bought.");
         } else {
+            error.play();
             Logg.LOGGER.warning("Dog not bought.");
         }
 
@@ -374,6 +386,7 @@ public class WorldGui {
                     lv.user = user;
                     loader2.setController(lv);
                     Main.setSceneRoot(loader2.load());
+                    mediaPlayer.stop();
                     ut.close();
                     s.close();
                 } catch (IOException ioException) {
@@ -461,6 +474,8 @@ public class WorldGui {
             ((Button) e.getSource()).setDisable(true);
             ((Button) e.getSource()).setVisible(false);
         }
+        else
+            error.play();
 
     }
 
@@ -469,11 +484,14 @@ public class WorldGui {
         makeUpdateThreadWait();
         Aviculture w2 = world.getAviculture("Aviculture");
         if (w2 == null) {
-            //todo:play error sound
+            error.play();
+            releaseUpdateThread();
             return;
 
         }
-        w2.startWorking(world.inventory);
+        if (!w2.startWorking(world.inventory)){
+            error.play();
+        }
         releaseUpdateThread();
     }
 
@@ -489,9 +507,10 @@ public class WorldGui {
         }
         else {
             b = (Bakery) world.getWorkshop("Bakery");
-            if (b.isWorking||world.coin < 300){
+
+            if (b == null||b.isWorking||world.coin < 300){
                 //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
-                //todo: play an error sound
+                error.play();
                 return;
                 }
 
@@ -510,11 +529,14 @@ public class WorldGui {
         makeUpdateThreadWait();
         Workshop w2 = world.getWorkshop("Bakery");
         if (w2 == null) {
-            //todo:play error sound
+            error.play();
+            releaseUpdateThread();
             return;
 
         }
-        w2.startWorking(world.inventory);
+        if (!w2.startWorking(world.inventory)){
+            error.play();
+        }
         releaseUpdateThread();
     }
 
@@ -529,9 +551,9 @@ public class WorldGui {
         }
         else {
             b = (EggPowderPlant) world.getWorkshop("EggPowderPlant");
-            if (b.isWorking||world.coin < 300){
+            if (b == null||b.isWorking||world.coin < 300){
                 //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
-                //todo: play an error sound
+                error.play();
                 return;
             }
 
@@ -550,11 +572,14 @@ public class WorldGui {
         makeUpdateThreadWait();
         Workshop w2 = world.getWorkshop("EggPowderPlant");
         if (w2 == null) {
-            //todo:play error sound
+            error.play();
+            releaseUpdateThread();
             return;
 
         }
-        w2.startWorking(world.inventory);
+        if (!w2.startWorking(world.inventory)){
+            error.play();
+        }
         releaseUpdateThread();
         //System.err.println("settowork");
     }
@@ -572,9 +597,9 @@ public class WorldGui {
         }
         else {
             b = (MilkPacking) world.getWorkshop("MilkPacking");
-            if (b.isWorking||world.coin < 300){
+            if (b == null||b.isWorking||world.coin < 300){
                 //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
-                //todo: play an error sound
+                error.play();
                 return;
             }
 
@@ -593,11 +618,14 @@ public class WorldGui {
         makeUpdateThreadWait();
         Workshop w2 = world.getWorkshop("MilkPacking");
         if (w2 == null) {
-            //todo:play error sound
+            error.play();
+            releaseUpdateThread();
             return;
 
         }
-        w2.startWorking(world.inventory);
+        if (!w2.startWorking(world.inventory)){
+            error.play();
+        }
         //System.err.println("settowork");
         releaseUpdateThread();
     }
@@ -613,9 +641,9 @@ public class WorldGui {
         }
         else {
             b = (IcecreamFactory) world.getWorkshop("IcecreamFactory");
-            if (b.isWorking||world.coin < 300){
+            if (b == null||b.isWorking||world.coin < 300){
                 //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
-                //todo: play an error sound
+                error.play();
                 return;
             }
 
@@ -634,11 +662,14 @@ public class WorldGui {
         makeUpdateThreadWait();
         Workshop w2 = world.getWorkshop("IcecreamFactory");
         if (w2 == null) {
-            //todo:play error sound
+            error.play();
+            releaseUpdateThread();
             return;
 
         }
-        w2.startWorking(world.inventory);
+        if (!w2.startWorking(world.inventory)){
+            error.play();
+        }
         releaseUpdateThread();
         //System.err.println("settowork");
     }
@@ -655,9 +686,9 @@ public class WorldGui {
         }
         else {
             b = (Spinnery) world.getWorkshop("Spinnery");
-            if (b.isWorking||world.coin < 300){
+            if (b == null||b.isWorking||world.coin < 300){
                 //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
-                //todo: play an error sound
+                error.play();
                 return;
             }
 
@@ -676,11 +707,14 @@ public class WorldGui {
         makeUpdateThreadWait();
         Workshop w2 = world.getWorkshop("Spinnery");
         if (w2 == null) {
-            //todo:play error sound
+            error.play();
+            releaseUpdateThread();
             return;
 
         }
-        w2.startWorking(world.inventory);
+        if (!w2.startWorking(world.inventory)){
+            error.play();
+        }
         //System.err.println("settowork");
         releaseUpdateThread();
     }
@@ -696,9 +730,9 @@ public class WorldGui {
         }
         else {
             b = (SewingFactory) world.getWorkshop("SewingFactory");
-            if (b.isWorking||world.coin < 300){
+            if (b == null||b.isWorking||world.coin < 300){
                 //System.out.println(b.getClass().getSimpleName()+" is Working. Upgrade not possible.");
-                //todo: play an error sound
+                error.play();
                 return;
             }
 
@@ -717,11 +751,14 @@ public class WorldGui {
         makeUpdateThreadWait();
         Workshop w2 = world.getWorkshop("SewingFactory");
         if (w2 == null) {
-            //todo:play error sound
+            error.play();
+            releaseUpdateThread();
             return;
 
         }
-        w2.startWorking(world.inventory);
+        if (!w2.startWorking(world.inventory)){
+            error.play();
+        }
         //System.err.println("settowork");
         releaseUpdateThread();
     }
@@ -816,19 +853,22 @@ public class WorldGui {
         if (world.addToTruck(((Label) e.getSource()).getText())) {
             initSellMenu();
         }
+        else
+            error.play();
 
     }
 
     @FXML
     void truckElementClicked(MouseEvent e) {
         if (!world.removeFromTruck(((Label) e.getSource()).getText())) {
+            error.play();
 //            System.out.printf("Not enough space in inventory, Current space: %s\n",
 //                    (world.inventory.size - world.inventory.getFilledVolume()));
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setHeaderText("Not enough");
-            a.setContentText("The inventory empty space is not enough to bring this item back.");
+//            Alert a = new Alert(Alert.AlertType.WARNING);
+//            a.setHeaderText("Not enough");
+//            a.setContentText("The inventory empty space is not enough to bring this item back.");
             //(world.inventory.size - world.inventory.getFilledVolume())+"")
-            a.showAndWait();
+            //a.showAndWait();
         }else {
 
             initSellMenu();
@@ -856,6 +896,17 @@ public class WorldGui {
         releaseUpdateThread();
     }
 
+    void mediaPlayerInit(){
+        mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/res/sound.mp3").toExternalForm()));
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setVolume(0.5);
+        mediaPlayer.play();
+
+        String uri = getClass().getResource("/res/error.mp3").toExternalForm();
+        System.out.println(uri);
+        error = new AudioClip(uri);
+    }
+
 
     public void run() {
 
@@ -869,6 +920,8 @@ public class WorldGui {
         truckInit();
         coinInit();
         threadInit();
+        mediaPlayerInit();
+
 
         //world.printMapGrass();
         //Command command = getCommandFromConsole();

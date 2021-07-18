@@ -1,5 +1,7 @@
 package backend;
 
+import frontend.WorldGui;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
@@ -328,6 +330,7 @@ public class World   {
                 System.out.printf("%s moved to inventory.\n", p.getClass().getSimpleName());
                 Logg.LOGGER.config("product "+p+" moved to inventory");
             } else {
+                WorldGui.error.play();
                 System.out.printf("Not enough space for %s", p.getClass().getSimpleName());
                 Logg.LOGGER.config("Not enough space for product "+p);
             }
