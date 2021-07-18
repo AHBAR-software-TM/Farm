@@ -54,6 +54,8 @@ public class WorldGui {
     Button invCloseButt,continueButt,usrLvlButt,exitButt;
     @FXML
     ImageView BakeryView,EggPwdrView,SpinneryView,IceCreamView,SewingView,MilkPackView;
+    @FXML
+    ImageView AvicultureView;
 
 
 
@@ -448,6 +450,31 @@ public class WorldGui {
         catch (Exception ee){
             ee.printStackTrace();
         }
+    }
+
+    @FXML
+    void buyAviculture(ActionEvent e){
+
+        Aviculture a = world.openAviculture("Aviculture");
+        if ( a != null){
+            AvicultureView.setImage (a.imageview.getImage());
+            ((Button) e.getSource()).setDisable(true);
+            ((Button) e.getSource()).setVisible(false);
+        }
+
+    }
+
+    @FXML
+    void workAviculture(){
+        makeUpdateThreadWait();
+        Aviculture w2 = world.getAviculture("Aviculture");
+        if (w2 == null) {
+            //todo:play error sound
+            return;
+
+        }
+        w2.startWorking(world.inventory);
+        releaseUpdateThread();
     }
 
     @FXML
