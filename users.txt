@@ -5,3 +5,4 @@
 {"userName":"ata","password":"1","level":2,"coin":0,"userWantsToPlayLvl":0}
 {"userName":"ata1","password":"1","level":1,"coin":0,"userWantsToPlayLvl":0}
 {"userName":"diring","password":"34","level":3,"coin":1000,"userWantsToPlayLvl":0}
+{"userName":"ataaa","password":"12","level":1,"coin":0,"userWantsToPlayLvl":0}

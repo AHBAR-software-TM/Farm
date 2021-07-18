@@ -32,5 +32,13 @@
             <Font name="Agency FB Bold" size="18.0" />
          </font>
       </Button>
+      <Button fx:id="backButt" focusTraversable="false" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="145.0" styleClass="darkButt" stylesheets="@styles.css" text="Back" textFill="WHITE">
+         <font>
+            <Font name="Agency FB Bold" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="300.0" top="15.0" />
+         </VBox.margin>
+      </Button>
    </children>
 </VBox>

@@ -5,8 +5,11 @@ import backend.Mission;
 import backend.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class LevelMenu {
@@ -18,7 +21,16 @@ public class LevelMenu {
     User user;
 
 
-
+    @FXML
+    void logout(){
+        user = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/res/EnterView.fxml"));
+        try {
+            Main.setSceneRoot(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     void showMissionElements(){
         LinkedList<Mission> missions = Main.loadMissions();

@@ -17,6 +17,15 @@ public class LoginMenuGui {
     TextField usr,pass;
     @FXML
     Button enterButt;
+    @FXML
+    void back(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/res/EnterView.fxml"));
+        try {
+            Main.setSceneRoot(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     void initialize(){
         enterButt.setOnAction(this::enterAction);
