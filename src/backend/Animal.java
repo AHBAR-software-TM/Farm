@@ -25,7 +25,6 @@ public abstract class Animal {
     boolean wannaMove;
     int volume;
     public String imagePath="/res/hen54.png";
-    //todo: set picture path in the constructors
     AnimalColor col = AnimalColor.values()[(int)(Math.random()*5)];
 
     public Dir random_move(Map[][] map, int x, int y) {

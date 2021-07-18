@@ -15,8 +15,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class SignupMenuGui {
-    //todo: check logic
-    @FXML
+
     TextField usr,pass;
     @FXML
     Button enterButt;

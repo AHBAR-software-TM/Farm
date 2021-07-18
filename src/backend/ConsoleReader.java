@@ -668,9 +668,6 @@ public class ConsoleReader {
             case "setting":
                 return Command.SETTING;
 
-
-                //todo : string index change
-
         }
         Logg.LOGGER.warning("unrecognizable command.");
 

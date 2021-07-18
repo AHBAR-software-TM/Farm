@@ -13,7 +13,6 @@ public abstract class Product implements Cloneable{
     int disappear_time;
     int currentTime=0;
     String imagePath="/res/hen54.png";
-    //todo: set picture path in the constructors
 
     @Override
     protected Product clone() throws CloneNotSupportedException {
