@@ -1,6 +1,7 @@
 package backend;
 
 
+import frontend.WorldGui;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 
@@ -66,6 +67,7 @@ public class Truck {
             inTripTime++;
             timeProperty.set((double) inTripTime / RETURN_TIME);
             if (inTripTime == RETURN_TIME) {
+                Platform.runLater(()-> WorldGui.diring.play());
                 return convertToCoin();
             }
         }

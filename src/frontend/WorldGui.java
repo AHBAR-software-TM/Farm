@@ -44,7 +44,7 @@ public class WorldGui {
     HashMap<Label, Object> truckLabelToObj = new HashMap<>();
     boolean isTruckMenuShowingInv = true;
     static MediaPlayer mediaPlayer;
-    public static AudioClip error;
+    public static AudioClip error,diring;
 
 
     final int GRID_W=5,GRID_H=3;
@@ -76,13 +76,13 @@ public class WorldGui {
                 if (!shallIWait) {
                     if (didWin()){
                         Platform.runLater(()->{
-
+                            mediaPlayer.stop();
+                            diring.play();
                             Alert a = new Alert(Alert.AlertType.INFORMATION);
                             a.setHeaderText("YOU WON");
                             a.setTitle("You won be mola");
                             a.showAndWait();
-                            mediaPlayer.stop();
-                            //todo:diring sound
+
 
                         });
 
@@ -518,10 +518,11 @@ public class WorldGui {
                 ((Button) e.getSource()).setVisible(false);
                 BakeryView .setImage(new Image("/res/Workshops/bakery2.png"));
             }
-            //todo: play a diring sound sound
+
                 //System.out.println(b.getClass().getSimpleName()+" upgraded.");
 
         }
+        diring.play();
 
     }
     @FXML
@@ -561,10 +562,10 @@ public class WorldGui {
                 ((Button) e.getSource()).setVisible(false);
                 EggPwdrView .setImage(new Image("/res/Workshops/eggpowder2.png"));
             }
-            //todo: play a diring sound sound
             //System.out.println(b.getClass().getSimpleName()+" upgraded.");
 
         }
+        diring.play();
 
     }
     @FXML
@@ -607,10 +608,10 @@ public class WorldGui {
                 ((Button) e.getSource()).setVisible(false);
                 MilkPackView .setImage(new Image("/res/Workshops/milkpacking2.png"));
             }
-            //todo: play a diring sound sound
-            //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
 
         }
+        diring.play();
 
     }
     @FXML
@@ -651,10 +652,10 @@ public class WorldGui {
                 ((Button) e.getSource()).setVisible(false);
                 IceCreamView .setImage(new Image("/res/Workshops/icecreamfactory2.png"));
             }
-            //todo: play a diring sound sound
-            //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
 
         }
+        diring.play();
 
     }
     @FXML
@@ -696,10 +697,10 @@ public class WorldGui {
                 ((Button) e.getSource()).setVisible(false);
                 SpinneryView .setImage(new Image("/res/Workshops/spinnery2.png"));
             }
-            //todo: play a diring sound sound
-            //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
 
         }
+        diring.play();
 
     }
     @FXML
@@ -740,10 +741,10 @@ public class WorldGui {
                 ((Button) e.getSource()).setVisible(false);
                 SewingView .setImage(new Image("/res/Workshops/sewingfactory2.png"));
             }
-            //todo: play a diring sound sound
-            //System.out.println(b.getClass().getSimpleName()+" upgraded.");
+
 
         }
+        diring.play();
 
     }
     @FXML
@@ -905,6 +906,10 @@ public class WorldGui {
         String uri = getClass().getResource("/res/error.mp3").toExternalForm();
         System.out.println(uri);
         error = new AudioClip(uri);
+
+         uri = getClass().getResource("/res/diring.wav").toExternalForm();
+        System.out.println(uri);
+        diring = new AudioClip(uri);
     }
 
 

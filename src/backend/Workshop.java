@@ -1,5 +1,7 @@
 package backend;
 
+import frontend.WorldGui;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
@@ -25,6 +27,7 @@ public abstract class Workshop {
             if (current_time == produce_time) {
 
                 Product p = produce();
+                Platform.runLater(()-> WorldGui.diring.play());
                 current_time = 0;
                 progress.set(0);
                 isWorking = false;

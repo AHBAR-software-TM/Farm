@@ -1,5 +1,7 @@
 package backend;
 
+import frontend.WorldGui;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
@@ -36,6 +38,7 @@ public class Well {
         if (timeToCharge == 0){
             water = 5;
             chargeForBar.set(1.0);
+            Platform.runLater(()-> WorldGui.diring.play());
         }
 
 
