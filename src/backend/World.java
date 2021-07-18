@@ -16,6 +16,8 @@ public class World   {
     public Inventory inventory = new Inventory();
     public int coin;
     LinkedList<Workshop> workshops = new LinkedList<>();
+    LinkedList<Aviculture> avicultures = new LinkedList<>();
+
 
 
     HashMap<Integer, Wild_animal> WildAttack;
@@ -43,6 +45,14 @@ public class World   {
                 if (W.level == 2) {
                     worldMap[i][j].getProductsInside().add(W.produce());
                 }
+            }
+        });
+        avicultures.forEach(W -> {
+            Animal a = W.update();
+            if (a != null) {
+                int i = (int) (Math.random() * 6 % 6);
+                int j = (int) (Math.random() * 6 % 6);
+                worldMap[i][j].getAnimalsInside().add(a);
             }
         });
 
@@ -192,6 +202,17 @@ public class World   {
         if (workshop.getPrice() <= coin) {
             coin -= workshop.getPrice();
             return workshop;
+        }
+        return null;
+
+    }
+
+    Aviculture checkMoneyToBuy(Aviculture aviculture) {
+        if (aviculture == null)
+            return null;
+        if (aviculture.getPrice() <= coin) {
+            coin -= aviculture.getPrice();
+            return aviculture;
         }
         return null;
 
@@ -499,6 +520,14 @@ public class World   {
         return false;
     }
 
+    boolean isAvicultureOpened(String workshopName) {
+        for (Aviculture a : avicultures) {
+            if (a.getClass().getSimpleName().equalsIgnoreCase(workshopName))
+                return true;
+        }
+        return false;
+    }
+
     public Workshop openWorkShop(String workshopName) {
         Workshop w = null;
         if (workshopName.equalsIgnoreCase("bakery"))
@@ -542,6 +571,38 @@ public class World   {
             workName = "eggpowderplant";
         }
         for (Workshop W : workshops) {
+            if (workName.equalsIgnoreCase(W.getClass().getSimpleName()))
+                return W;
+        }
+        return null;
+    }
+
+    public Aviculture openAviculture(String workshopName) {
+        Aviculture w = null;
+        if (workshopName.equalsIgnoreCase("aviculture"))
+            w = new Aviculture();
+
+        if (isAvicultureOpened(workshopName)) {
+            System.out.println("This workshop is created before.");
+            return null;
+        }
+
+        w = checkMoneyToBuy(w);
+
+        if (w == null) {
+            System.out.printf("Not enough money.\nMoney: %d\n", coin);
+            return null;
+        }
+
+        avicultures.add(w);
+        Logg.LOGGER.info("Workshop" + w + " created.");
+
+        return w;
+    }
+
+    public Aviculture getAviculture(String workName) {
+
+        for (Aviculture W : avicultures) {
             if (workName.equalsIgnoreCase(W.getClass().getSimpleName()))
                 return W;
         }

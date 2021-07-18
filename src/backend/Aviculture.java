@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 public class Aviculture {
 
     Aviculture(){
-        this.level=1;
         this.build_price=200;
         this.produce_time=5;
         resourceType = "Egg";
@@ -22,7 +21,6 @@ public class Aviculture {
     public double image_height=80;
     public double image_width=80;
 
-    int level;
     int build_price;
     int produce_time;
     int current_time = 0;
@@ -47,20 +45,6 @@ public class Aviculture {
         return null;
     }
 
-    public boolean upgrade(World w){
-        if (level!=2){
-            level = 2;
-            w.coin-=300;
-            return true;
-        }
-        System.out.println("level is 2 already.");
-        return false;
-    }
-
-    Animal produce(){
-        return new Hen();
-    }
-
     public boolean startWorking(Inventory inv){
         if(isWorking){
             System.out.println(this.getClass().getSimpleName()+" is already assigned to work.");
@@ -80,6 +64,10 @@ public class Aviculture {
         System.out.println("Not enough resource.");
         Logg.LOGGER.info(" Not enough resource for "+this);
         return false;
+    }
+
+    Animal produce(){
+        return new Hen();
     }
     int getPrice(){
         return build_price;
