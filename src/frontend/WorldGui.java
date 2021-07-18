@@ -144,8 +144,10 @@ public class WorldGui {
                     break;
 
             }
-            user.level++;
-            Main.updateUser();
+            if(user.level==world.mission.lvl) {
+                user.level++;
+                Main.updateUser();
+            }
             ut.close();
             //interMenu.execute.execute(user,stage);
             return true;
